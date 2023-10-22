@@ -2,12 +2,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { account } from "../appwrite";
-import { useRouter, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import Profile from "../profile/page";
+import { login } from "../auth";
 
-export default function LogIn() {
+const LogIn = () => {
   const [, navigate] = useLocation();
-  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -18,23 +18,22 @@ export default function LogIn() {
     const fetchData = async () => {
       try {
         const userData = await account.get();
-        console.log("User data:", userData);
+        console.log("current user", userData);
         navigate("profile");
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user data: ", error);
       }
     };
     fetchData();
   }, [isSession]);
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = await account.createEmailSession(user.email, user.password);
-    console.log("success? createEmailSession", data);
-    setIsSession(true);
-
-    if (data !== null || data !== undefined) {
-      navigate("profile");
+    try {
+      await login(user.email, user.password);
+      setIsSession(true);
+    } catch (error) {
+      console.log("Login Error: ", error);
     }
   };
 
@@ -62,8 +61,12 @@ export default function LogIn() {
           </form>
         </>
       ) : (
-        <h1><Profile /></h1>
+        <h1>
+          <Profile />
+        </h1>
       )}
     </>
   );
-}
+};
+
+export default LogIn;

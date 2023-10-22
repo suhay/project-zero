@@ -2,11 +2,10 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import { account } from "../appwrite";
-import { ID } from "appwrite";
-import { verifyEmail, googleAuth } from "../auth";
-import { useRouter, useLocation } from "wouter";
+import { ID, Models } from "appwrite";
+import { verifyEmail, googleAuth, login } from "../auth";
+import { useLocation } from "wouter";
 import Link from "next/link";
-import router from "next/router";
 
 export default function SignUp() {
   const [, navigate] = useLocation();
@@ -15,53 +14,29 @@ export default function SignUp() {
     username: "",
     password: "",
   });
-  const [isLoaded, setIsLoaded] = useState(false);
+
+  const [isVerified, setIsVerified] = useState(false);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-
-    // await account.create(ID.unique(), user.email, user.username, user.password);
-    const newAccount = account.create(
-      ID.unique(),
-      user.email,
-      user.password,
-      user.username
-    );
-
-    newAccount
-      .then((response) => {
-        console.log("User created", response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-      
     try {
-      const data = await verifyEmail();
-      console.log("verify email data", data);
-    } catch (error) {
-      console.log("Error", (error as Error).message);
-    }
+      // await account.create(ID.unique(), user.email, user.username, user.password);
+      const newAccount: Promise<Models.User<Models.Preferences>> =
+        account.create(ID.unique(), user.email, user.password, user.username);
 
-    navigate("verify");
+      await newAccount;
+      await login(user.email, user.password);
+      await verifyEmail();
+      setIsVerified(true);
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   useEffect(() => {
-    //console.log("signup/ useEffect");
-    async function fetchData() {
-      try {
-        const user = await account.get();
-        console.log("signup get user", user);
-        setIsLoaded(true);
-        navigate("verify");
-      } catch (error) {
-        //setIsLoaded(true);
-        console.log("Error", (error as Error).message);
-      }
-    }
-
-    fetchData();
-  }, [router]);
+    //console.log("email is verified");
+    navigate("profile");
+  }, [isVerified]);
 
   const signWithGoogle = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -71,34 +46,37 @@ export default function SignUp() {
   return (
     <>
       <Link href={"/"}>Link to Home</Link>
-      {!isLoaded ? (
+      {!isVerified ? (
         <>
           <h2>Sign up</h2>
           <form onSubmit={(e) => handleSubmit(e)}>
             <input
-              id="username"
+              id='username'
               type='text' //
               placeholder='username'
               value={user.username}
-              data-testid="username"
+              data-testid='username'
+              required
               onChange={(e) => setUser({ ...user, username: e.target.value })}
             />
             <hr />
             <input
-              id="email"
+              id='email'
               type='email' //
               placeholder='Email address'
               value={user.email}
-              data-testid="email"
+              data-testid='email'
+              required
               onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
             <hr />
             <input
-              id="password"
+              id='password'
               type='password' //
               placeholder='password'
               value={user.password}
-              data-testid="password"
+              data-testid='password'
+              required
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
             <hr />

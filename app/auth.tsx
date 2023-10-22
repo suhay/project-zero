@@ -1,18 +1,34 @@
 import { account } from "./appwrite";
 
-export async function verifyEmail() {
-  console.log("in auth.tsx  verify email");
-  const data = await account.createVerification("http://localhost:3000/verify");
-  console.log("auth.tsx  verifyEmail data", data);
-  return data;
-}
+export const verifyEmail = async () => {
+  try {
+    const data = await account.createVerification(
+      "http://localhost:3000/verify"
+    );
+    console.log("created verification", data);
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
 
-export async function googleAuth() {
-  const data = account.createOAuth2Session(
-    "google",
-    "http://localhost:3000",
-    "http://localhost:3000/signup"
-  );
-  console.log("google log in");
-  return data;
-}
+export const login = async (email: string, password: string) => {
+  try {
+    const data = await account.createEmailSession(email, password);
+    console.log("created email session", data);
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+export const googleAuth = async () => {
+  try {
+    const data = account.createOAuth2Session(
+      "google",
+      "http://localhost:3000",
+      "http://localhost:3000/signup"
+    );
+    return data;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
