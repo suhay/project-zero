@@ -20,7 +20,7 @@ export const login = async (email: string, password: string) => {
   }
 };
 
-export const googleAuth = async () => {
+export const googleAuth = () => {
   try {
     const data = account.createOAuth2Session(
       "google",

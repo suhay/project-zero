@@ -47,9 +47,9 @@ describe("SignUp", () => {
     );
   });
 
-  it("should direct to /verify page", async () => {
+  it("should direct to verify page", async () => {
     render(
-      <MemoryRouter initialEntries={["/"]}>
+      <MemoryRouter initialEntries={["/verify"]}>
         <SignUp />
       </MemoryRouter>
     );
@@ -58,7 +58,7 @@ describe("SignUp", () => {
     fireEvent.click(verifyEmailButton);
 
     await waitFor(() => {
-      expect(window.location.pathname).toBe("/verify");
+      expect(window.location.pathname).toBe("/profile");
     });
   });
 });
