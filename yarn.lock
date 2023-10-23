@@ -6604,6 +6604,7 @@ __metadata:
     autoprefixer: ^10
     classnames: ^2.3.2
     dotenv: ^16.3.1
+    encoding: ^0.1.13
     eslint: ^8
     eslint-config-next: 13.5.4
     eslint-plugin-jest-dom: ^5.1.0
