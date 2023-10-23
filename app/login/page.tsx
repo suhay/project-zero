@@ -6,14 +6,14 @@ import { useRouter } from "next/navigation";
 import { login } from "../utils/auth";
 import { Preferences, User } from "../type/User";
 
-const LogIn = () => {
+export default function LogIn() {
   const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
   const [loggedInUser, setLoggedInUser] = useState<User<Preferences> | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -55,15 +55,15 @@ const LogIn = () => {
       <h2>Login</h2>
       <form onSubmit={(e) => handleSubmit(e)}>
         <input
-          type='email' //
-          placeholder='Email address'
+          type="email" //
+          placeholder="Email address"
           value={user.email}
           onChange={(e) => setUser({ ...user, email: e.target.value })}
         />
         <hr />
         <input
-          type='password' //
-          placeholder='password'
+          type="password" //
+          placeholder="password"
           value={user.password}
           onChange={(e) => setUser({ ...user, password: e.target.value })}
         />
@@ -72,4 +72,4 @@ const LogIn = () => {
       </form>
     </>
   );
-};
+}
