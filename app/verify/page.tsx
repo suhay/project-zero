@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
-import { useLocation } from "wouter";
-import { account } from "../appwrite";
+import { useRouter } from "next/navigation";
+import { account } from "../utils/appwrite";
 
 export const verifyAndNavigate = async (
   userId: string | null,
@@ -10,7 +10,7 @@ export const verifyAndNavigate = async (
   try {
     if (userId && secret) {
       await account.updateVerification(userId, secret);
-      return "profile";
+      return "login";
     }
   } catch (error) {
     console.log("Error during email verification", error);
@@ -19,7 +19,7 @@ export const verifyAndNavigate = async (
 };
 
 export default function VerifyPage() {
-  const [, navigate] = useLocation();
+  const router = useRouter();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -30,11 +30,11 @@ export default function VerifyPage() {
       const destination = await verifyAndNavigate(userId, secret);
 
       if (destination) {
-        navigate(destination);
+        router.push(destination);
       }
     };
     performVerification();
   }, []);
 
-  return <div>Signing Up...</div>;
+  return <div>Verifying...</div>;
 }

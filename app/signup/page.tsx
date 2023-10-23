@@ -1,14 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import React from "react";
-import { account } from "../appwrite";
+import { account } from "../utils/appwrite";
 import { ID, Models } from "appwrite";
-import { verifyEmail, googleAuth, login } from "../auth";
-import { useLocation } from "wouter";
+import { verifyEmail, googleAuth, login } from "../utils/auth";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function SignUp() {
-  const [, navigate] = useLocation();
   const [user, setUser] = useState({
     email: "",
     username: "",
@@ -20,7 +19,6 @@ export default function SignUp() {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      // await account.create(ID.unique(), user.email, user.username, user.password);
       const newAccount: Promise<Models.User<Models.Preferences>> =
         account.create(ID.unique(), user.email, user.password, user.username);
 
@@ -33,11 +31,6 @@ export default function SignUp() {
     }
   };
 
-  useEffect(() => {
-    //console.log("email is verified");
-    navigate("profile");
-  }, [isVerified]);
-
   const signWithGoogle = (e: React.SyntheticEvent) => {
     e.preventDefault();
     googleAuth();
@@ -45,7 +38,7 @@ export default function SignUp() {
 
   return (
     <>
-      <Link href={"/"}>Link to Home</Link>
+      <Link href={"/"}>Home</Link>
       {!isVerified ? (
         <>
           <h2>Sign up</h2>
@@ -90,7 +83,7 @@ export default function SignUp() {
           </form>
         </>
       ) : (
-        <h1>Loading</h1>
+        <h1>Signing Up...</h1>
       )}
     </>
   );

@@ -1,23 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { account } from "../appwrite";
-import { useLocation, useRouter } from "wouter";
+import { account } from "../utils/appwrite";
+import { useRouter } from "next/navigation";
 
 export default function Profile() {
-  const [, navigate] = useLocation();
+  const router = useRouter();
   const [userProfile, setUserProfile] = useState("");
-  const [sessionDeleted, setSessionDeleted] = useState(false);
 
   const handleLogout = async () => {
     const data = await account.deleteSession("current");
-    console.log("session delete resolved?", data);
-    setSessionDeleted(true);
+    //console.log("session delete resolved?", data);
+    router.push("/");
   };
-
-  useEffect(() => {
-    console.log("log out and direct to home");
-    navigate("/");
-  }, [sessionDeleted]);
 
   //update and display current user's profile name
   useEffect(() => {
@@ -26,7 +20,7 @@ export default function Profile() {
         const userData = await account.get();
         console.log("User data:", userData);
         setUserProfile(userData.name);
-        navigate("profile");
+        router.push("/profile");
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -36,7 +30,7 @@ export default function Profile() {
 
   return (
     <>
-      {userProfile && !sessionDeleted && (
+      {userProfile && (
         <div>
           <h1>{userProfile ? `Welcome, ${userProfile}!` : "Loading..."}</h1>
           <button onClick={handleLogout}>Logout</button>

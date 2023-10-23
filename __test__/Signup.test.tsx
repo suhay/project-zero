@@ -1,7 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SignUp from "@/app/signup/page";
 import { MemoryRouter } from "react-router-dom";
-import { account } from "@/app/appwrite";
+import { account } from "@/app/utils/appwrite";
+import React from "react";
 
 describe("SignUp", () => {
   it("should have Sign up text", () => {
@@ -37,8 +38,6 @@ describe("SignUp", () => {
     jest.spyOn(account, "create").mockImplementation(userSignUpMock);
     fireEvent.click(getByText("Verify Email"));
 
-    //await screen.findByText('User created');
-
     expect(userSignUpMock).toHaveBeenCalledWith(
       expect.any(String),
       "test@test.com",
@@ -58,7 +57,7 @@ describe("SignUp", () => {
     fireEvent.click(verifyEmailButton);
 
     await waitFor(() => {
-      expect(window.location.pathname).toBe("/profile");
+      expect(window.location.pathname).toBe("/");
     });
   });
 });
