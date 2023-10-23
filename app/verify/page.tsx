@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { account } from "../utils/appwrite";
 
-export const verifyAndNavigate = async (
+const verifyAndNavigate = async (
   userId: string | null,
-  secret: string | null
+  secret: string | null,
 ) => {
   try {
     if (userId && secret) {
@@ -34,7 +34,7 @@ export default function VerifyPage() {
       }
     };
     performVerification();
-  }, []);
+  }, [router]);
 
   return <div>Verifying...</div>;
 }
