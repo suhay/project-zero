@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 import { login } from "../../src/utils/auth";
-import { Preferences, User } from "../../src/types/User"
+import { Preferences, User } from "../../src/types/user"
 
 export default function LogIn() {
   const router = useRouter();
