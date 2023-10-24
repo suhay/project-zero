@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
-import React from "react";
-import { account } from "../../src/utils/appwrite";
-import { ID, Models } from "appwrite";
-import { verifyEmail, googleAuth, login } from "../../src/utils/auth";
+import React, { useState } from "react";
+
+import { ID } from "appwrite";
 import Link from "next/link";
+
+import { account } from "../../src/utils/appwrite";
+import { googleAuth, login, verifyEmail } from "../../src/utils/auth";
 
 export default function SignUp() {
   const [user, setUser] = useState({
@@ -18,10 +19,12 @@ export default function SignUp() {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      const newAccount: Promise<Models.User<Models.Preferences>> =
-        account.create(ID.unique(), user.email, user.password, user.username);
-
-      await newAccount;
+      await account.create(
+        ID.unique(),
+        user.email,
+        user.password,
+        user.username,
+      );
       await login(user.email, user.password);
       await verifyEmail();
       setIsVerified(true);

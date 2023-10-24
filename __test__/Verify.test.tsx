@@ -1,8 +1,6 @@
-import React from "react";
-import { MemoryRouter } from "react-router-dom";
-import { render, screen, waitFor, act } from "@testing-library/react";
-import VerifyPage from "../app/verify/page";
+import { waitFor } from "@testing-library/react";
 import { verifyAndNavigate } from "../src/utils/auth";
+
 describe("VerifyPage", () => {
   it("should have secret and userId in the URL parameters", async () => {
     const mockSecret = "mockSecret";
@@ -17,13 +15,13 @@ describe("VerifyPage", () => {
     // );
 
     await waitFor(() => {
-      const [path, queryParams] = mockURL.split("?");
+      const [, queryParams] = mockURL.split("?");
       const queryParameters = queryParams.split("&");
       expect(queryParameters).toContain(`userId=${mockUserId}`);
     });
 
     await waitFor(() => {
-      const [path, queryParams] = mockURL.split("?");
+      const [, queryParams] = mockURL.split("?");
       const queryParameters = queryParams.split("&");
       expect(queryParameters).toContain(`secret=${mockSecret}`);
     });
