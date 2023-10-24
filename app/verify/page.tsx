@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { account } from "../../src/utils/appwrite";
 import { verifyAndNavigate } from "@/src/utils/auth";
 
 export default function VerifyPage() {

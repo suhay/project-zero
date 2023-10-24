@@ -1,18 +1,18 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SignUp from "@/app/signup/page";
-import { MemoryRouter } from "react-router-dom";
 import { account } from "@/src/utils/appwrite";
-import React from "react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 
 describe("SignUp", () => {
   it("should have Sign up text", () => {
     render(<SignUp />);
+
     const myElem = screen.getByText("Sign up");
     expect(myElem).toBeInTheDocument();
   });
 
   it("should render sign up form", () => {
-    const { getByTestId, getByText } = render(<SignUp />);
+    render(<SignUp />);
 
     expect(screen.getByTestId("username")).toBeInTheDocument();
     expect(screen.getByTestId("email")).toBeInTheDocument();
@@ -21,7 +21,8 @@ describe("SignUp", () => {
   });
 
   it("should handle form submission", async () => {
-    const { getByTestId, getByText } = render(<SignUp />);
+    render(<SignUp />);
+
     fireEvent.change(screen.getByTestId("username"), {
       target: { value: "test_username" },
     });
@@ -36,6 +37,9 @@ describe("SignUp", () => {
     userSignUpMock.mockResolvedValue({ response: "User created" });
 
     jest.spyOn(account, "create").mockImplementation(userSignUpMock);
+    jest.spyOn(account, "createEmailSession").mockImplementation(jest.fn());
+    jest.spyOn(account, "createVerification").mockImplementation(jest.fn());
+
     fireEvent.click(screen.getByText("Verify Email"));
 
     expect(userSignUpMock).toHaveBeenCalledWith(

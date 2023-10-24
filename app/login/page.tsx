@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 import { login } from "../../src/utils/auth";
-import { Preferences, User } from "../../src/types/user"
+import { Preferences, User } from "../../src/types/user";
 
 export default function LogIn() {
   const router = useRouter();
@@ -12,9 +12,7 @@ export default function LogIn() {
     email: "",
     password: "",
   });
-  const [loggedInUser, setLoggedInUser] = useState<User<Preferences> | null>(
-    null,
-  );
+  const [, setLoggedInUser] = useState<User<Preferences> | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -8,7 +8,7 @@ export default function Profile() {
   const [userProfile, setUserProfile] = useState("");
 
   const handleLogout = async () => {
-    const data = await account.deleteSession("current");
+    await account.deleteSession("current");
     //console.log("session delete resolved?", data);
     router.push("/");
   };

@@ -48,7 +48,7 @@ export default async function Post({ params }: Params) {
       <h2>{title}</h2>
       <span>By: {post.author?.name}</span>
       <Suspense fallback={<div>Loading...</div>}>
-        <p dangerouslySetInnerHTML={{ __html: content }} />
+        <div dangerouslySetInnerHTML={{ __html: content }} />
       </Suspense>
     </article>
   );
