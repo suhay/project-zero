@@ -1,22 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { account } from "../utils/appwrite";
-
-const verifyAndNavigate = async (
-  userId: string | null,
-  secret: string | null,
-) => {
-  try {
-    if (userId && secret) {
-      await account.updateVerification(userId, secret);
-      return "login";
-    }
-  } catch (error) {
-    console.log("Error during email verification", error);
-  }
-  return null;
-};
+import { account } from "../../src/utils/appwrite";
+import { verifyAndNavigate } from "@/src/utils/auth";
 
 export default function VerifyPage() {
   const router = useRouter();

@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-import { account } from "../utils/appwrite";
+import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
-import { login } from "../utils/auth";
-import { Preferences, User } from "../type/User";
+import { login } from "../../src/utils/auth";
+import { Preferences, User } from "../../src/types/User"
 
 export default function LogIn() {
   const router = useRouter();
@@ -15,24 +15,6 @@ export default function LogIn() {
   const [loggedInUser, setLoggedInUser] = useState<User<Preferences> | null>(
     null,
   );
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userData = await account.get();
-        const userWithPreferences: User<Preferences> = {
-          email: user.email,
-          password: user.password || "",
-        };
-
-        setLoggedInUser(userWithPreferences);
-        router.push("/profile");
-      } catch (error) {
-        console.error("Error fetching user data: ", error);
-      }
-    };
-    fetchData();
-  }, [loggedInUser]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,6 +27,7 @@ export default function LogIn() {
       };
 
       setLoggedInUser(userWithPreferences);
+      router.push("/profile");
     } catch (error) {
       console.log("Login Error: ", error);
     }

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import SignUp from "@/app/signup/page";
 import { MemoryRouter } from "react-router-dom";
-import { account } from "@/app/utils/appwrite";
+import { account } from "@/src/utils/appwrite";
 import React from "react";
 
 describe("SignUp", () => {
@@ -14,21 +14,21 @@ describe("SignUp", () => {
   it("should render sign up form", () => {
     const { getByTestId, getByText } = render(<SignUp />);
 
-    expect(getByTestId("username")).toBeInTheDocument();
-    expect(getByTestId("email")).toBeInTheDocument();
-    expect(getByTestId("password")).toBeInTheDocument();
-    expect(getByText("Verify Email")).toBeInTheDocument();
+    expect(screen.getByTestId("username")).toBeInTheDocument();
+    expect(screen.getByTestId("email")).toBeInTheDocument();
+    expect(screen.getByTestId("password")).toBeInTheDocument();
+    expect(screen.getByText("Verify Email")).toBeInTheDocument();
   });
 
   it("should handle form submission", async () => {
     const { getByTestId, getByText } = render(<SignUp />);
-    fireEvent.change(getByTestId("username"), {
+    fireEvent.change(screen.getByTestId("username"), {
       target: { value: "test_username" },
     });
-    fireEvent.change(getByTestId("email"), {
+    fireEvent.change(screen.getByTestId("email"), {
       target: { value: "test@test.com" },
     });
-    fireEvent.change(getByTestId("password"), {
+    fireEvent.change(screen.getByTestId("password"), {
       target: { value: "test_password" },
     });
 
@@ -36,13 +36,13 @@ describe("SignUp", () => {
     userSignUpMock.mockResolvedValue({ response: "User created" });
 
     jest.spyOn(account, "create").mockImplementation(userSignUpMock);
-    fireEvent.click(getByText("Verify Email"));
+    fireEvent.click(screen.getByText("Verify Email"));
 
     expect(userSignUpMock).toHaveBeenCalledWith(
       expect.any(String),
       "test@test.com",
       "test_password",
-      "test_username"
+      "test_username",
     );
   });
 
@@ -50,7 +50,7 @@ describe("SignUp", () => {
     render(
       <MemoryRouter initialEntries={["/verify"]}>
         <SignUp />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const verifyEmailButton = screen.getByText("Verify Email");

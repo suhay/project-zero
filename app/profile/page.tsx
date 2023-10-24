@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { account } from "../utils/appwrite";
+import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 
 export default function Profile() {

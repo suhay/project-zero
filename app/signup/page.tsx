@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import React from "react";
-import { account } from "../utils/appwrite";
+import { account } from "../../src/utils/appwrite";
 import { ID, Models } from "appwrite";
-import { verifyEmail, googleAuth, login } from "../utils/auth";
+import { verifyEmail, googleAuth, login } from "../../src/utils/auth";
 import Link from "next/link";
 
 export default function SignUp() {
