@@ -1,7 +1,7 @@
 import fs from "fs";
-import { join } from "path";
 import matter from "gray-matter";
 import { DateTime } from "luxon";
+import { join } from "path";
 
 import type { Post } from "../types/posts";
 
@@ -11,7 +11,10 @@ export function getPostSlugs() {
   return fs.readdirSync(postsDirectory);
 }
 
-export function getPostBySlug(slug: string, fields: string[] = []) {
+export function getPostBySlug(
+  slug: string,
+  fields: ("title" | "excerpt" | "coverImage" | "author" | string)[] = [],
+) {
   const realSlug = slug.replace(/\.md$/, "");
   const fullPath = join(postsDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");

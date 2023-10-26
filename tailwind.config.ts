@@ -8,10 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      width: {
+        "128": "32rem",
+        "168": "42rem",
+      },
+      fontFamily: {
+        Roboto: ['"Roboto"', "sans-serif"],
+        "Source-Serif": ['"Source Serif 4"', "serif"],
       },
     },
   },
