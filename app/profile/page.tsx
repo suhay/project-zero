@@ -3,13 +3,12 @@ import React, { useEffect, useState } from "react";
 import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 
-export default function Profile() {
+const Profile = () => {
   const router = useRouter();
   const [userProfile, setUserProfile] = useState("");
 
   const handleLogout = async () => {
     await account.deleteSession("current");
-    //console.log("session delete resolved?", data);
     router.push("/");
   };
 
@@ -38,4 +37,5 @@ export default function Profile() {
       )}
     </>
   );
-}
+};
+export default Profile;

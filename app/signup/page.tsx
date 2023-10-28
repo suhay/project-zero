@@ -7,7 +7,7 @@ import Link from "next/link";
 import { account } from "../../src/utils/appwrite";
 import { googleAuth, login, verifyEmail } from "../../src/utils/auth";
 
-export default function SignUp() {
+const SignUp = () => {
   const [user, setUser] = useState({
     email: "",
     username: "",
@@ -89,4 +89,6 @@ export default function SignUp() {
       )}
     </>
   );
-}
+};
+
+export default SignUp;
