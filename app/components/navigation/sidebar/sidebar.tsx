@@ -7,14 +7,15 @@ interface SidebarParams {
 }
 
 const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleResize = () => {
-        setIsSmallScreen(window.innerWidth < 640);
-      };
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
 
+    if (typeof window !== "undefined") {
+      handleResize();
       window.addEventListener("resize", handleResize);
       return () => {
         window.removeEventListener("resize", handleResize);
