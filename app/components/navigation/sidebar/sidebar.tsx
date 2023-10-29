@@ -10,14 +10,16 @@ const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 640);
-    };
+    if (typeof window !== "undefined") {
+      const handleResize = () => {
+        setIsSmallScreen(window.innerWidth < 640);
+      };
 
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
 
   return (
@@ -29,6 +31,7 @@ const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
           ? "w-full opacity-100 transition-opacity top-0"
           : "hidden"
       }`}
+      data-testid="sidebar"
     >
       <button onClick={toggle}>{isShown ? "✕" : "⪙"}</button>
       <ul className={`mr-4 ${isShown ? "" : "hidden"}`}>
