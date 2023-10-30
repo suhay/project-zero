@@ -1,6 +1,12 @@
 import SignUp from "@/app/signup/page";
 import { account } from "@/src/utils/appwrite";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 describe("SignUp", () => {
@@ -40,7 +46,10 @@ describe("SignUp", () => {
     jest.spyOn(account, "createEmailSession").mockImplementation(jest.fn());
     jest.spyOn(account, "createVerification").mockImplementation(jest.fn());
 
-    fireEvent.click(screen.getByText("Verify Email"));
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      fireEvent.click(screen.getByText("Verify Email"));
+    });
 
     expect(userSignUpMock).toHaveBeenCalledWith(
       expect.any(String),

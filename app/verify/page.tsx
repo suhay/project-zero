@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { verifyAndNavigate } from "@/src/utils/auth";
 
-export default function VerifyPage() {
+const VerifyPage = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -22,4 +22,6 @@ export default function VerifyPage() {
   }, [router]);
 
   return <div>Verifying...</div>;
-}
+};
+
+export default VerifyPage;

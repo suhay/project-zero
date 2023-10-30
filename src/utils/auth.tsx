@@ -28,8 +28,7 @@ export const verifyAndNavigate = async (
 
 export const login = async (email: string, password: string) => {
   try {
-    const data = await account.createEmailSession(email, password);
-    console.log("created email session", data);
+    await account.createEmailSession(email, password);
   } catch (error) {
     console.log("Error: ", error);
   }

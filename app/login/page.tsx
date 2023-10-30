@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { login } from "../../src/utils/auth";
 import { Preferences, User } from "../../src/types/user";
 
-export default function LogIn() {
+const LogIn = () => {
   const router = useRouter();
   const [user, setUser] = useState({
     email: "",
@@ -53,4 +53,6 @@ export default function LogIn() {
       </form>
     </>
   );
-}
+};
+
+export default LogIn;
