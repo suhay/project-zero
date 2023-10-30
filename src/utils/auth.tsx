@@ -2,10 +2,7 @@ import { account } from "./appwrite";
 
 export const verifyEmail = async () => {
   try {
-    const data = await account.createVerification(
-      "http://localhost:3000/verify",
-    );
-    console.log("created verification", data);
+    await account.createVerification("http://localhost:3000/verify");
   } catch (error) {
     console.log("Error: ", error);
   }
