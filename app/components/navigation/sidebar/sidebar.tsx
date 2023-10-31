@@ -1,27 +1,13 @@
+import { useResize } from "@/src/utils/resize";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
-
+import React from "react";
 interface SidebarParams {
   isShown: boolean;
   toggle: () => void;
 }
 
 const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 640);
-    };
-
-    if (typeof window !== "undefined") {
-      handleResize();
-      window.addEventListener("resize", handleResize);
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-  }, []);
+  const isSmallScreen = useResize();
 
   return (
     <div

@@ -1,18 +1,34 @@
-import { render, screen } from "@testing-library/react";
-import Navigation from "@/app/components/navigation";
+import { act, render, screen } from "@testing-library/react";
+import Navbar from "@/app/components/navigation/navbar";
+import React from "react";
 
-describe("Navigation", () => {
-  it("should have two Sign Up texts in navbar and sidebar", () => {
-    render(<Navigation />);
+const resizeWindow = (width: number) => {
+  window.innerWidth = width;
+  window.dispatchEvent(new Event("resize"));
+};
 
-    const navElem = screen.getAllByText("Sign Up");
-    expect(navElem).toHaveLength(2);
+describe("Navbar", () => {
+  it("should render navbar class name", () => {
+    render(<Navbar hideNavbar={false} />);
+
+    const navbarElem = screen.getByTestId("navbar");
+    expect(navbarElem).toHaveClass("navbar");
   });
 
-  it("should have Sign In text in navbar and sidebar", () => {
-    render(<Navigation />);
+  it("navbar div element is visible in normal window size", () => {
+    render(<Navbar hideNavbar={false} />);
+    const divElement = screen.getByTestId("navbar");
+    expect(divElement).toBeVisible();
+  });
 
-    const navElem = screen.getAllByText("Sign In");
-    expect(navElem).toHaveLength(2);
+  it("navbar div element is hidden in small window size", async () => {
+    render(<Navbar hideNavbar={true} />);
+    const navElement = screen.getByTestId("navbar");
+
+    act(() => {
+      resizeWindow(500);
+    });
+
+    expect(navElement).toHaveClass("hidden sm:block");
   });
 });

@@ -10,7 +10,8 @@
     "test": "jest",
     "test:watch": "jest --watchAll",
     "coverage": "jest --coverage",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "precommit": "yarn lint && yarn test"
   },
   "dependencies": {
     "appwrite": "^13.0.0",
