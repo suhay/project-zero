@@ -48,39 +48,45 @@ const SignUp = () => {
             <input
               id="username"
               type="text" //
+              className="border border-gray-300 m-4"
               placeholder="username"
               value={user.username}
               data-testid="username"
               required
               onChange={(e) => setUser({ ...user, username: e.target.value })}
             />
-            <hr />
+            <br />
             <input
               id="email"
               type="email" //
+              className="border border-gray-300 m-4"
               placeholder="Email address"
               value={user.email}
               data-testid="email"
               required
               onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
-            <hr />
+            <br />
             <input
               id="password"
               type="password" //
+              className="border border-gray-300 m-4"
               placeholder="password"
               value={user.password}
               data-testid="password"
               required
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
-            <hr />
-            <button> Verify Email </button>
+            <br />
+            <button className="m-4"> Verify Email </button>
             <br />
             <h2>or</h2>
-            <button type="button" onClick={(e) => signWithGoogle(e)}>
-              {" "}
-              Continue with Google{" "}
+            <button
+              type="button"
+              className="m-4"
+              onClick={(e) => signWithGoogle(e)}
+            >
+              Continue with Google
             </button>
           </form>
         </>
