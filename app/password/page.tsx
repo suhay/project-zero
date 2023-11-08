@@ -18,7 +18,6 @@ const Password = () => {
   } = useForm<Input>();
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
-    console.log("submit email", data);
     try {
       await account.createRecovery(data.email, "http://localhost:3000/resetpw");
       localStorage.setItem("email", data.email.toString());

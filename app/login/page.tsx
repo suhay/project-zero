@@ -4,11 +4,13 @@ import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 import { login } from "../../src/utils/auth";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { AppwriteException } from "appwrite";
 import Link from "next/link";
 
 type Inputs = {
   email: string;
   password: string;
+  credentialError: string;
 };
 
 const LogIn = () => {
@@ -17,6 +19,7 @@ const LogIn = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<Inputs>();
 
@@ -26,7 +29,14 @@ const LogIn = () => {
       await account.get();
       router.push("/profile");
     } catch (error) {
-      console.log("Login Error: ", error);
+      if (error instanceof AppwriteException) {
+        setError("credentialError", {
+          type: "appwrite server error",
+          message: "Invalid credentials. Please check the email and password.",
+        });
+      } else {
+        console.log("Other error", error);
+      }
     }
   };
 
@@ -40,7 +50,7 @@ const LogIn = () => {
           placeholder="Email address"
           {...register("email", { required: "Email is required" })}
         />
-        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+        {errors.email && <p className="text-red-500">This field is required</p>}
         <br />
         <input
           type="password"
@@ -49,7 +59,10 @@ const LogIn = () => {
           {...register("password", { required: "Password is required" })}
         />
         {errors.password && (
-          <p className="text-red-500">{errors.password.message}</p>
+          <p className="text-red-500">This field is required</p>
+        )}
+        {errors.credentialError && (
+          <p className="text-red-500 ml-4">{errors.credentialError.message}</p>
         )}
         <br />
         <Link href="/password">Forgot Password?</Link>

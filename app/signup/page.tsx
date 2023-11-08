@@ -35,13 +35,14 @@ const SignUp = () => {
       await verifyEmail();
       setIsVerified(true);
     } catch (error) {
-      if (error as AppwriteException) {
+      if (error instanceof AppwriteException) {
         setError("customError", {
           type: "appwrite server error",
           message:
             "Password must be at least 8 characters and should not be one of the commonly used password.",
         });
-        console.log("Error", error);
+      } else {
+        console.log("Signup Error: ", error);
       }
     }
   };

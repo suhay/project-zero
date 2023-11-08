@@ -1,6 +1,7 @@
 "use client";
 import { account } from "@/src/utils/appwrite";
 import { getWindowUserIdSecret, login } from "@/src/utils/auth";
+import { AppwriteException } from "appwrite";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -9,6 +10,7 @@ export type Inputs = {
   email: string;
   password: string;
   confirmPassword: string;
+  customError: string;
 };
 
 const RestPassword = () => {
@@ -25,19 +27,19 @@ const RestPassword = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const resetData = await account.updateRecovery(
+      await account.updateRecovery(
         userId,
         secret,
         data.password,
         data.confirmPassword,
       );
 
-      console.log("Password updated successfully", resetData);
       const email = localStorage.getItem("email");
       if (email) {
         const loginData = await login(email, data.password);
@@ -46,7 +48,14 @@ const RestPassword = () => {
         }
       }
     } catch (error) {
-      console.log("Error: ", error);
+      if (error instanceof AppwriteException) {
+        setError("customError", {
+          type: "appwrite server error",
+          message: "Passwords do not match.",
+        });
+      } else {
+        console.log("Other Error: ", error);
+      }
     }
   };
 
@@ -67,6 +76,9 @@ const RestPassword = () => {
         {...register("confirmPassword", { required: true })}
       />
       {errors.confirmPassword && <span>This field is required</span>}
+      {errors.customError && (
+        <p className="text-red-500">{errors.customError.message}</p>
+      )}
       <br />
       <button className="reset mt-4" type="submit">
         Submit
