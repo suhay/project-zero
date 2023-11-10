@@ -1,24 +1,21 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { verifyAndNavigate } from "@/src/utils/auth";
+import { getWindowUserIdSecret, verifyAndNavigate } from "@/src/utils/auth";
 
 const VerifyPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const secret = urlParams.get("secret");
-    const userId = urlParams.get("userId");
+    const { secret, userId } = getWindowUserIdSecret();
 
-    const performVerification = async () => {
+    const performVerificationAndNavigate = async () => {
       const destination = await verifyAndNavigate(userId, secret);
-
       if (destination) {
         router.push(destination);
       }
     };
-    performVerification();
+    performVerificationAndNavigate();
   }, [router]);
 
   return <div>Verifying...</div>;
