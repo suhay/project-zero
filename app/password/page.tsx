@@ -2,7 +2,6 @@
 import React from "react";
 import { account } from "@/src/utils/appwrite";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { AppwriteException } from "appwrite";
 
 type Input = {
   email: string;
@@ -13,7 +12,6 @@ const Password = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm<Input>();
 
@@ -22,17 +20,7 @@ const Password = () => {
       await account.createRecovery(data.email, "http://localhost:3000/resetpw");
       localStorage.setItem("email", data.email.toString());
     } catch (error) {
-      if (
-        (error as AppwriteException).message ===
-        "User with the requested ID could not be found."
-      ) {
-        setError("customError", {
-          type: "appwrite server error",
-          message: "Email doesn't exist",
-        });
-      } else {
-        console.log("Rest Password Error: ", error);
-      }
+      console.log("Reset Password Error: ", error);
     }
   };
 
@@ -49,9 +37,6 @@ const Password = () => {
           placeholder="email"
         />
         {errors.email && <p>This field is required</p>}
-        {errors.customError && (
-          <p className="text-red-500">{errors.customError.message}</p>
-        )}
         <br />
         <button type="submit">Submit</button>
       </form>

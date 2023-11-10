@@ -13,7 +13,7 @@ export type Inputs = {
   customError: string;
 };
 
-const RestPassword = () => {
+const ResetPassword = () => {
   const router = useRouter();
   const [secret, setSecret] = useState("");
   const [userId, setUserId] = useState("");
@@ -87,4 +87,4 @@ const RestPassword = () => {
   );
 };
 
-export default RestPassword;
+export default ResetPassword;
