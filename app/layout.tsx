@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 
 import type { Metadata } from "next";
-import Navigation from "./components/navigation";
+import Navigation from "@/src/components/navigation";
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,10 +22,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        {/* <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Source+Serif+4:opsz,wght@8..60,300&display=swap"
+        <link
+          href="https://fonts.googleapis.com/css2?Merriweather+Sans:wght@700&family=Montserrat:wght@200&family=Source+Serif+4:opsz,wght@8..60,300&display=swap"
           rel="stylesheet"
-        /> */}
+        />
       </head>
       <body className={inter.className}>
         <Navigation />

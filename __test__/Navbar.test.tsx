@@ -1,5 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
-import Navbar from "@/app/components/navigation/navbar";
+import Navbar from "@/src/components/navigation/navbar";
 import React from "react";
 
 const resizeWindow = (width: number) => {
