@@ -23,11 +23,21 @@ export const verifyAndNavigate = async (
   return null;
 };
 
+export const getWindowUserIdSecret = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const secret = urlParams.get("secret");
+  const userId = urlParams.get("userId");
+
+  return { secret, userId };
+};
+
 export const login = async (email: string, password: string) => {
   try {
-    await account.createEmailSession(email, password);
+    const data = await account.createEmailSession(email, password);
+    return data;
   } catch (error) {
     console.log("Error: ", error);
+    return null;
   }
 };
 

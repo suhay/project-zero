@@ -6688,6 +6688,7 @@ __metadata:
     prettier: 3.0.3
     react: ^18
     react-dom: ^18
+    react-hook-form: ^7.48.1
     react-router-dom: ^6.17.0
     remark: ^15.0.1
     remark-html: ^16.0.1
@@ -6780,6 +6781,15 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.48.1":
+  version: 7.48.1
+  resolution: "react-hook-form@npm:7.48.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: a7a854e38b3400331a9b5799f5e3b76e410ba4a51983b723caa09f0498eed1e1373777d44580290b7e127689e1540192e60cece19aa1c0523212cada6d20f1ef
   languageName: node
   linkType: hard
 

@@ -1,55 +1,72 @@
 "use client";
 import React from "react";
-import { useState } from "react";
 import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 import { login } from "../../src/utils/auth";
-import { Preferences, User } from "../../src/types/user";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { AppwriteException } from "appwrite";
+import Link from "next/link";
+
+type Inputs = {
+  email: string;
+  password: string;
+  credentialError: string;
+};
 
 const LogIn = () => {
   const router = useRouter();
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-  const [, setLoggedInUser] = useState<User<Preferences> | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     try {
-      await login(user.email, user.password);
+      await login(data.email, data.password);
       await account.get();
-      const userWithPreferences: User<Preferences> = {
-        email: user.email,
-        password: user.password || "",
-      };
-
-      setLoggedInUser(userWithPreferences);
       router.push("/profile");
     } catch (error) {
-      console.log("Login Error: ", error);
+      if (error instanceof AppwriteException) {
+        setError("credentialError", {
+          type: "appwrite server error",
+          message: "Invalid credentials. Please check the email and password.",
+        });
+      } else {
+        console.log("Other error", error);
+      }
     }
   };
 
   return (
     <>
       <h2>Login</h2>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <input
-          type="email" //
+          type="email"
+          className="border border-gray-300 m-4"
           placeholder="Email address"
-          value={user.email}
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          {...register("email", { required: "Email is required" })}
         />
-        <hr />
+        {errors.email && <p className="text-red-500">This field is required</p>}
+        <br />
         <input
-          type="password" //
+          type="password"
+          className="border border-gray-300 m-4"
           placeholder="password"
-          value={user.password}
-          onChange={(e) => setUser({ ...user, password: e.target.value })}
+          {...register("password", { required: "Password is required" })}
         />
-        <hr />
-        <button> Login </button>
+        {errors.password && (
+          <p className="text-red-500">This field is required</p>
+        )}
+        {errors.credentialError && (
+          <p className="text-red-500 ml-4">{errors.credentialError.message}</p>
+        )}
+        <br />
+        <Link href="/password">Forgot Password?</Link>
+        <button className="m-4"> Login </button>
       </form>
     </>
   );
