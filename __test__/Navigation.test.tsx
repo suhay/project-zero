@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Navigation from "@/app/components/navigation";
-import Sidebar from "@/app/components/navigation/sidebar/sidebar";
-import Navbar from "@/app/components/navigation/navbar";
+import Navigation from "@/src/components/navigation";
+import Sidebar from "@/src/components/navigation/sidebar/sidebar";
+import Navbar from "@/src/components/navigation/navbar";
 
 describe("Navigation", () => {
   it("should have two Sign Up texts in navbar and sidebar", () => {
