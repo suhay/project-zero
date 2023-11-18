@@ -1,10 +1,33 @@
 import "@/styles/globals.css";
 
 import type { Metadata } from "next";
-import Navigation from "@/src/components/navigation";
-import { Inter } from "next/font/google";
+import {
+  Merriweather_Sans,
+  Montserrat,
+  Source_Serif_4,
+} from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+import Navigation from "@/src/components/navigation";
+
+const headerFont = Merriweather_Sans({
+  subsets: ["latin"],
+  variable: "--font-header",
+  display: "swap",
+  weight: "700",
+});
+
+const subheaderFont = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-subheader",
+  display: "swap",
+  weight: "200",
+});
+
+const pFont = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-p",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "project-zero",
@@ -14,20 +37,11 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?Merriweather+Sans:wght@700&family=Montserrat:wght@200&family=Source+Serif+4:opsz,wght@8..60,300&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className={inter.className}>
+    <html
+      lang="en"
+      className={`${headerFont.variable} ${subheaderFont.variable} ${pFont.variable}`}
+    >
+      <body>
         <Navigation />
         {children}
       </body>

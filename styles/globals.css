@@ -15,3 +15,45 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+
+body,
+a,
+p,
+span {
+  font-family: var(--font-p);
+}
+
+h1 {
+  font-family: var(--font-header);
+  font-weight: bold;
+  font-size: 24px;
+}
+
+h2 {
+  font-family: var(--font-header);
+  font-weight: bold;
+  font-size: 20px;
+}
+
+h3 {
+  font-family: var(--font-header);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+h4 {
+  font-family: var(--font-header);
+  font-weight: bold;
+  font-size: 15px;
+}
+
+h5 {
+  font-family: var(--font-header);
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.subHeader {
+  font-family: var(--font-subheader);
+  font-weight: 200;
+}
