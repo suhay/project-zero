@@ -2,18 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+  margin: 10px;
+  box-sizing: border-box;
 }
 
 body,
@@ -56,4 +47,21 @@ h5 {
 .subHeader {
   font-family: var(--font-subheader);
   font-weight: 200;
+}
+
+@layer utilities {
+  .flexBetween {
+    @apply flex items-center justify-between;
+  }
+  .btn_green {
+    @apply bg-green border-none rounded-lg p-2 text-white hover:bg-dark;
+  }
+
+  .authContainer {
+    @apply border-gray py-4 mx-auto w-[800px] text-center;
+  }
+
+  .authInputBox {
+    @apply border border-gray rounded-sm px-8 py-2 my-2 text-left;
+  }
 }

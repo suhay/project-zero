@@ -4,7 +4,6 @@ import { AppwriteException, ID } from "appwrite";
 import { account } from "../../src/utils/appwrite";
 import { googleAuth, login, verifyEmail } from "../../src/utils/auth";
 import { useForm, SubmitHandler } from "react-hook-form";
-import Link from "next/link";
 
 type Inputs = {
   email: string;
@@ -53,16 +52,15 @@ const SignUp = () => {
   };
 
   return (
-    <>
-      <Link href={"/"}>Home</Link>
+    <div className="authContainer">
       {!isVerified ? (
-        <>
-          <h2>Sign up</h2>
+        <div className="mx-auto">
+          <h2>Welcome to ZeroIn</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               id="username"
               type="text"
-              className="border border-gray-300 m-4"
+              className="authInputBox"
               placeholder="username"
               data-testid="username"
               {...register("username", { required: "Username is required" })}
@@ -74,7 +72,7 @@ const SignUp = () => {
             <input
               id="email"
               type="email"
-              className="border border-gray-300 m-4"
+              className="authInputBox"
               placeholder="Email address"
               data-testid="email"
               {...register("email", { required: "Email is required" })}
@@ -87,7 +85,7 @@ const SignUp = () => {
               id="password"
               type="password"
               autoComplete="false"
-              className="border border-gray-300 m-4"
+              className="authInputBox"
               placeholder="password"
               data-testid="password"
               {...register("password", { required: "Password is required" })}
@@ -99,22 +97,22 @@ const SignUp = () => {
               <p className="text-red-500 ml-4">{errors.customError.message}</p>
             )}
             <br />
-            <button className="m-4"> Verify Email </button>
+            <button className="m-4 btn_green"> Verify Email </button>
             <br />
             <h2>or</h2>
             <button
               type="button"
-              className="m-4"
+              className="m-4 btn_green"
               onClick={(e) => signWithGoogle(e)}
             >
               Continue with Google
             </button>
           </form>
-        </>
+        </div>
       ) : (
         <h1>Signing Up...</h1>
       )}
-    </>
+    </div>
   );
 };
 

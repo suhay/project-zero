@@ -41,12 +41,12 @@ const LogIn = () => {
   };
 
   return (
-    <>
-      <h2>Login</h2>
+    <div className="authContainer">
+      <h2>Welcome to ZeroIn</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="email"
-          className="border border-gray-300 m-4"
+          className="authInputBox"
           placeholder="Email address"
           {...register("email", { required: "Email is required" })}
         />
@@ -54,7 +54,7 @@ const LogIn = () => {
         <br />
         <input
           type="password"
-          className="border border-gray-300 m-4"
+          className="authInputBox"
           placeholder="password"
           {...register("password", { required: "Password is required" })}
         />
@@ -65,10 +65,12 @@ const LogIn = () => {
           <p className="text-red-500 ml-4">{errors.credentialError.message}</p>
         )}
         <br />
-        <Link href="/password">Forgot Password?</Link>
-        <button className="m-4"> Login </button>
+        <Link href="/password" className=" text-gray hover:font-bold">
+          Forgot Password?
+        </Link>
+        <button className="m-4 btn_green"> Login </button>
       </form>
-    </>
+    </div>
   );
 };
 

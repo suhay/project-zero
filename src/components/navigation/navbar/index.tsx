@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { NAV_LINKS } from "@/constants";
 interface NavbarProps {
   hideNavbar: boolean;
 }
@@ -7,13 +8,20 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ hideNavbar }) => {
   return (
     <div
-      className={`${hideNavbar ? "hidden sm:block" : "navbar"}`}
+      className={`border-red ${
+        hideNavbar ? "hidden md:block" : "navbar justify-end"
+      }`}
       data-testid="navbar"
     >
-      <Link href="signup" className="mr-10">
-        Sign Up
-      </Link>
-      <Link href="login">Sign In</Link>
+      {NAV_LINKS.map((link) => (
+        <Link
+          href={link.href}
+          key={link.key}
+          className="cursor-pointer hover:font-bold"
+        >
+          {link.label}
+        </Link>
+      ))}
     </div>
   );
 };

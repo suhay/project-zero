@@ -13,19 +13,17 @@ const Navigation = () => {
   };
 
   return (
-    <div>
-      <ul className="flex justify-between items-center">
-        <li className="mr-10">
-          <Logo />
-        </li>
-        <li className="flex-1 text-center">
-          <Navbar hideNavbar={hideNavbar} />
-        </li>
-        <li className="mr-10">
-          <Sidebar isShown={isShown} toggle={toggle} />
-        </li>
+    <nav className="border flexBetween">
+      <Logo />
+
+      <ul className="">
+        <Navbar hideNavbar={hideNavbar} />
       </ul>
-    </div>
+
+      <div className="mr-10">
+        <Sidebar isShown={isShown} toggle={toggle} />
+      </div>
+    </nav>
   );
 };
 

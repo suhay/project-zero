@@ -1,3 +1,4 @@
+import { NAV_LINKS } from "@/constants";
 import { useResize } from "@/src/utils/resize";
 import Link from "next/link";
 import React from "react";
@@ -13,7 +14,7 @@ const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
     <div
       className={`sidebar ${
         isShown
-          ? "w-full opacity-100 transition-opacity top-0"
+          ? "w-16 opacity-100 transition-opacity top-0"
           : isSmallScreen
           ? "w-full opacity-100 transition-opacity top-0"
           : "hidden"
@@ -22,12 +23,15 @@ const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
     >
       <button onClick={toggle}>{isShown ? "✕" : "⪙"}</button>
       <ul className={`mr-4 ${isShown ? "" : "hidden"}`}>
-        <li className="mb-2">
-          <Link href="signup">Sign Up</Link>
-        </li>
-        <li className="mb-2">
-          <Link href="login">Sign In</Link>
-        </li>
+        {NAV_LINKS.map((link) => (
+          <Link
+            href={link.href}
+            key={link.key}
+            className="flex cursor-pointer hover:font-bold"
+          >
+            {link.label}
+          </Link>
+        ))}
       </ul>
     </div>
   );
