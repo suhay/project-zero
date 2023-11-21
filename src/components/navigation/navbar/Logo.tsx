@@ -1,7 +1,11 @@
 import Link from "next/link";
 
 const Logo = () => {
-  return <Link href="/">ZeroIn</Link>;
+  return (
+    <Link className="text-green" href="/">
+      ZeroIn
+    </Link>
+  );
 };
 
 export default Logo;

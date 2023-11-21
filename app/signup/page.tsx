@@ -4,6 +4,7 @@ import { AppwriteException, ID } from "appwrite";
 import { account } from "../../src/utils/appwrite";
 import { googleAuth, login, verifyEmail } from "../../src/utils/auth";
 import { useForm, SubmitHandler } from "react-hook-form";
+import AuthBackground from "@/src/components/image/authBackground";
 
 type Inputs = {
   email: string;
@@ -52,11 +53,20 @@ const SignUp = () => {
   };
 
   return (
-    <div className="authContainer">
+    <div className="authContainer relative">
       {!isVerified ? (
-        <div className="mx-auto">
-          <h2>Welcome to ZeroIn</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="relative flex">
+          <AuthBackground />
+          <form className="formBox z-10" onSubmit={handleSubmit(onSubmit)}>
+            <h2 className="p-4">Welcome to ZeroIn</h2>
+            <button
+              type="button"
+              className="m-4 btnDark"
+              onClick={(e) => signWithGoogle(e)}
+            >
+              Continue with Google
+            </button>
+            <p>or</p>
             <input
               id="username"
               type="text"
@@ -97,16 +107,8 @@ const SignUp = () => {
               <p className="text-red-500 ml-4">{errors.customError.message}</p>
             )}
             <br />
-            <button className="m-4 btn_green"> Verify Email </button>
+            <button className="m-4 btnDark"> Verify Email </button>
             <br />
-            <h2>or</h2>
-            <button
-              type="button"
-              className="m-4 btn_green"
-              onClick={(e) => signWithGoogle(e)}
-            >
-              Continue with Google
-            </button>
           </form>
         </div>
       ) : (

@@ -6,6 +6,7 @@ import { login } from "../../src/utils/auth";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AppwriteException } from "appwrite";
 import Link from "next/link";
+import AuthBackground from "@/src/components/image/authBackground";
 
 type Inputs = {
   email: string;
@@ -42,34 +43,42 @@ const LogIn = () => {
 
   return (
     <div className="authContainer">
-      <h2>Welcome to ZeroIn</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="email"
-          className="authInputBox"
-          placeholder="Email address"
-          {...register("email", { required: "Email is required" })}
-        />
-        {errors.email && <p className="text-red-500">This field is required</p>}
-        <br />
-        <input
-          type="password"
-          className="authInputBox"
-          placeholder="password"
-          {...register("password", { required: "Password is required" })}
-        />
-        {errors.password && (
-          <p className="text-red-500">This field is required</p>
-        )}
-        {errors.credentialError && (
-          <p className="text-red-500 ml-4">{errors.credentialError.message}</p>
-        )}
-        <br />
-        <Link href="/password" className=" text-gray hover:font-bold">
-          Forgot Password?
-        </Link>
-        <button className="m-4 btn_green"> Login </button>
-      </form>
+      <div className="relative z-10 flex justify-center py-20">
+        <AuthBackground />
+        <form className="formBox z-10" onSubmit={handleSubmit(onSubmit)}>
+          <h2 className="p-4">Welcome to ZeroIn</h2>
+          <input
+            type="email"
+            className="authInputBox"
+            placeholder="Email address"
+            {...register("email", { required: "Email is required" })}
+          />
+          {errors.email && (
+            <p className="text-red-500">This field is required</p>
+          )}
+          <br />
+          <input
+            type="password"
+            className="authInputBox"
+            placeholder="password"
+            {...register("password", { required: "Password is required" })}
+          />
+          {errors.password && (
+            <p className="text-red-500">This field is required</p>
+          )}
+          {errors.credentialError && (
+            <p className="text-red-500 ml-4">
+              {errors.credentialError.message}
+            </p>
+          )}
+          <br />
+          <button className="btnDark"> Login </button>
+          <br />
+          <Link href="/password" className=" text-gray hover:font-bold">
+            Forgot Password?
+          </Link>
+        </form>
+      </div>
     </div>
   );
 };

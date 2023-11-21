@@ -1,7 +1,8 @@
 import { NAV_LINKS } from "@/constants";
 import { useResize } from "@/src/utils/resize";
 import Link from "next/link";
-import React from "react";
+import Image from "next/image";
+
 interface SidebarParams {
   isShown: boolean;
   toggle: () => void;
@@ -9,6 +10,16 @@ interface SidebarParams {
 
 const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
   const isSmallScreen = useResize();
+
+  const menu = (
+    <Image
+      src="/assets/menu.svg"
+      alt="menu"
+      width={30}
+      height={30}
+      className="cursor-pointer"
+    />
+  );
 
   return (
     <div
@@ -21,7 +32,7 @@ const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
       }`}
       data-testid="sidebar"
     >
-      <button onClick={toggle}>{isShown ? "✕" : "⪙"}</button>
+      <button onClick={toggle}>{isShown ? "✕" : menu}</button>
       <ul className={`mr-4 ${isShown ? "" : "hidden"}`}>
         {NAV_LINKS.map((link) => (
           <Link

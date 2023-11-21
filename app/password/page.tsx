@@ -2,6 +2,7 @@
 import React from "react";
 import { account } from "@/src/utils/appwrite";
 import { SubmitHandler, useForm } from "react-hook-form";
+import AuthBackground from "@/src/components/image/authBackground";
 
 type Input = {
   email: string;
@@ -25,22 +26,27 @@ const Password = () => {
   };
 
   return (
-    <>
-      <p className="my-6">
-        Please provide email address when signed up for your account.
-      </p>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="email">Email Address</label>
-        <input
-          className="border border-gray-300 m-4 w-60"
-          {...register("email", { required: true })}
-          placeholder="email"
-        />
-        {errors.email && <p>This field is required</p>}
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-    </>
+    <div className="authContainer">
+      <div className="relative z-10 flex justify-center py-20">
+        <AuthBackground />
+        <form className="formBox z-10" onSubmit={handleSubmit(onSubmit)}>
+          <p className="p-6">
+            Please provide email address <br /> when signed up for your account.
+          </p>
+          {/* <label htmlFor="email">Email Address</label> */}
+          <input
+            className="authInputBox"
+            {...register("email", { required: true })}
+            placeholder="email"
+          />
+          {errors.email && <p>This field is required</p>}
+          <br />
+          <button className="btnDark" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 
