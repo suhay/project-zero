@@ -53,6 +53,11 @@ h5 {
   .flexBetween {
     @apply flex items-center justify-between;
   }
+
+  .flexEnd {
+    @apply flex justify-end;
+  }
+
   .btnGreen {
     @apply bg-green border-none rounded-lg p-2 text-white hover:bg-dark;
   }

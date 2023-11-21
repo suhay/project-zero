@@ -29,7 +29,7 @@ const Profile = () => {
       }
     };
     fetchData();
-  }, [router]);
+  }, [router, setProfileStatus]);
 
   return (
     <div className="authContainer relative">

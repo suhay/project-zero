@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { NAV_LINKS } from "@/constants";
+import AccountMenu from "../../account/account";
 interface NavbarProps {
   hideNavbar: boolean;
   profileStatus: string;
@@ -14,9 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
     >
       {NAV_LINKS.map((link) =>
         profileStatus && link.key === "signin" ? (
-          <Link className="userNameNav" href={link.href} key={profileStatus}>
-            {profileStatus}
-          </Link>
+          <AccountMenu key={link.key} userName={profileStatus} />
         ) : (
           <Link
             href={link.href}
