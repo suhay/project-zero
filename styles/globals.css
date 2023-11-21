@@ -7,17 +7,26 @@
   box-sizing: border-box;
 }
 
-body,
+body {
+  font-size: 16px;
+}
+
 a,
 p,
 span {
   font-family: var(--font-p);
 }
 
+p {
+  margin-bottom: 16px;
+}
+
 h1 {
   font-family: var(--font-header);
   font-weight: bold;
-  font-size: 24px;
+  font-size: 44px;
+  line-height: 1.2em;
+  margin-bottom: 16px;
 }
 
 h2 {
