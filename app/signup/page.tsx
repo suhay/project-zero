@@ -59,7 +59,7 @@ const SignUp = () => {
         <div className="relative flex">
           <AuthBackground />
           <form className="formBox z-10" onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="p-2">Welcome to ZeroIn</h2>
+            <h2 className="my-1">Welcome to ZeroIn</h2>
             <button
               type="button"
               className="btnDark"

@@ -14,9 +14,9 @@ const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
       data-testid="navbar"
     >
       {NAV_LINKS.map((link) =>
-        profileStatus && link.key === "signin" ? (
+        profileStatus && (link.key === "signin" || link.key === "sigup") ? (
           <AccountMenu key={link.key} userName={profileStatus} />
-        ) : (
+        ) : profileStatus && link.key === "signup" ? null : (
           <Link
             href={link.href}
             key={link.key}

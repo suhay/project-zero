@@ -63,7 +63,7 @@ h5 {
   }
 
   .btnDark {
-    @apply bg-dark border-none w-2/4 rounded-lg py-2 my-4 text-white hover:bg-dark;
+    @apply bg-dark border-none w-2/4 rounded-lg py-2 text-white hover:bg-dark;
   }
 
   .authContainer {
@@ -71,7 +71,7 @@ h5 {
   }
 
   .authInputBox {
-    @apply border border-gray rounded-sm px-8 py-2 my-3 text-left;
+    @apply border border-gray rounded-sm px-8 py-2 my-2 text-left;
   }
 
   .formBox {
