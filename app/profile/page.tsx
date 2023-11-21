@@ -20,7 +20,7 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const userData = await account.get();
-        console.log("User data:", userData);
+        // console.log("User data:", userData);
         setUserProfile(userData.name);
         setProfileStatus(userData.name);
         router.push("/profile");

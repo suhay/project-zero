@@ -10,10 +10,10 @@ import {
 import { MemoryRouter } from "react-router-dom";
 
 describe("SignUp", () => {
-  it("should have Sign up text", () => {
+  it("should have Sign Up text", () => {
     render(<SignUp />);
 
-    const myElem = screen.getByText("Sign up");
+    const myElem = screen.getByText("Welcome to ZeroIn");
     expect(myElem).toBeInTheDocument();
   });
 

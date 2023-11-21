@@ -14,7 +14,7 @@ const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
   const menu = (
     <Image
       src="/assets/menu.svg"
-      alt="menu"
+      alt="sidebar-icon"
       width={30}
       height={30}
       className="cursor-pointer"
@@ -25,7 +25,7 @@ const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
     <div
       className={`sidebar ${
         isShown
-          ? "w-16 opacity-100 transition-opacity top-0"
+          ? "w-full opacity-100 transition-opacity top-0"
           : isSmallScreen
           ? "w-full opacity-100 transition-opacity top-0"
           : "hidden"

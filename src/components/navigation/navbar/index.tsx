@@ -7,12 +7,9 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
-  console.log("in Navbar profileStatus?", profileStatus);
   return (
     <div
-      className={`border-red ${
-        hideNavbar ? "hidden md:block" : "navbar justify-end"
-      }`}
+      className={`${hideNavbar ? "hidden sm:block" : "navbar justify-end"}`}
       data-testid="navbar"
     >
       {NAV_LINKS.map((link) =>
