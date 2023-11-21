@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Logo from "./navbar/Logo";
 import Sidebar from "./sidebar/sidebar";
 import Navbar from "./navbar/index";
 import { useResize } from "@/src/utils/resize";
+import { profileData } from "../../context/context";
 
 const Navigation = () => {
   const [isShown, setIsShown] = useState(false);
@@ -11,13 +12,14 @@ const Navigation = () => {
   const toggle = () => {
     setIsShown(!isShown);
   };
+  const { profileStatus } = useContext(profileData);
 
   return (
-    <nav className="border flexBetween">
+    <nav className="flexBetween sticky top-0">
       <Logo />
 
       <ul className="">
-        <Navbar hideNavbar={hideNavbar} />
+        <Navbar hideNavbar={hideNavbar} profileStatus={profileStatus} />
       </ul>
 
       <div className="mr-10">

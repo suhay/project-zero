@@ -5,6 +5,7 @@ import { account } from "../../src/utils/appwrite";
 import { googleAuth, login, verifyEmail } from "../../src/utils/auth";
 import { useForm, SubmitHandler } from "react-hook-form";
 import AuthBackground from "@/src/components/image/authBackground";
+import Link from "next/link";
 
 type Inputs = {
   email: string;
@@ -58,10 +59,10 @@ const SignUp = () => {
         <div className="relative flex">
           <AuthBackground />
           <form className="formBox z-10" onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="p-4">Welcome to ZeroIn</h2>
+            <h2 className="p-2">Welcome to ZeroIn</h2>
             <button
               type="button"
-              className="m-4 btnDark"
+              className="btnDark"
               onClick={(e) => signWithGoogle(e)}
             >
               Continue with Google
@@ -108,7 +109,12 @@ const SignUp = () => {
             )}
             <br />
             <button className="m-4 btnDark"> Verify Email </button>
-            <br />
+            <div>
+              Already have an account?
+              <Link href="/login" className="text-green hover:font-bold">
+                LogIn
+              </Link>
+            </div>
           </form>
         </div>
       ) : (

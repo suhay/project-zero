@@ -8,6 +8,7 @@ import {
 } from "next/font/google";
 
 import Navigation from "@/src/components/navigation";
+import Context from "../src/context/context";
 
 const headerFont = Merriweather_Sans({
   subsets: ["latin"],
@@ -42,8 +43,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       className={`${headerFont.variable} ${subheaderFont.variable} ${pFont.variable}`}
     >
       <body>
-        <Navigation />
-        {children}
+        <Context>
+          <Navigation />
+          {children}
+        </Context>
       </body>
     </html>
   );
