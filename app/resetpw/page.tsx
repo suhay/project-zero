@@ -1,4 +1,5 @@
 "use client";
+import AuthBackground from "@/src/components/image/authBackground";
 import { account } from "@/src/utils/appwrite";
 import { getWindowUserIdSecret, login } from "@/src/utils/auth";
 import { AppwriteException } from "appwrite";
@@ -60,30 +61,38 @@ const ResetPassword = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="password">New Password</label>
-      <input
-        className="border border-gray-300 m-4"
-        type="password"
-        {...register("password", { required: true })}
-      />
-      {errors.password && <span>This field is required</span>}
-      <br />
-      <label htmlFor="confirmPassword">Confirm New Password</label>
-      <input
-        className="border border-gray-300 ml-4"
-        type="password"
-        {...register("confirmPassword", { required: true })}
-      />
-      {errors.confirmPassword && <span>This field is required</span>}
-      {errors.customError && (
-        <p className="text-red-500">{errors.customError.message}</p>
-      )}
-      <br />
-      <button className="reset mt-4" type="submit">
-        Submit
-      </button>
-    </form>
+    <div className="authContainer">
+      <div className="relative flex justify-center py-20">
+        <AuthBackground />
+        <form className="formBox z-10" onSubmit={handleSubmit(onSubmit)}>
+          <p className="p-6">New password must be at least 8 chars.</p>
+          {/* <label htmlFor="password">New Password</label> */}
+          <input
+            className="authInputBox"
+            type="password"
+            placeholder="New Password"
+            {...register("password", { required: true })}
+          />
+          {errors.password && <span>This field is required</span>}
+          <br />
+          {/* <label htmlFor="confirmPassword">Confirm New Password</label> */}
+          <input
+            className="authInputBox"
+            type="password"
+            placeholder="Confirm New Password"
+            {...register("confirmPassword", { required: true })}
+          />
+          {errors.confirmPassword && <span>This field is required</span>}
+          {errors.customError && (
+            <p className="text-red-500">{errors.customError.message}</p>
+          )}
+          <br />
+          <button className="reset btnDark" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

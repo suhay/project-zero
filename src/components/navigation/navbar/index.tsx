@@ -1,19 +1,31 @@
 import React from "react";
 import Link from "next/link";
+import { NAV_LINKS } from "@/constants";
+import AccountMenu from "../../account/account";
 interface NavbarProps {
   hideNavbar: boolean;
+  profileStatus: string;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ hideNavbar }) => {
+const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
   return (
     <div
-      className={`${hideNavbar ? "hidden sm:block" : "navbar"}`}
+      className={`${hideNavbar ? "hidden sm:block" : "navbar justify-end"}`}
       data-testid="navbar"
     >
-      <Link href="signup" className="mr-10">
-        Sign Up
-      </Link>
-      <Link href="login">Sign In</Link>
+      {NAV_LINKS.map((link) =>
+        profileStatus && (link.key === "signin" || link.key === "sigup") ? (
+          <AccountMenu key={link.key} userName={profileStatus} />
+        ) : profileStatus && link.key === "signup" ? null : (
+          <Link
+            href={link.href}
+            key={link.key}
+            className="cursor-pointer hover:font-bold"
+          >
+            {link.label}
+          </Link>
+        ),
+      )}
     </div>
   );
 };

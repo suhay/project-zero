@@ -4,6 +4,7 @@ import { AppwriteException, ID } from "appwrite";
 import { account } from "../../src/utils/appwrite";
 import { googleAuth, login, verifyEmail } from "../../src/utils/auth";
 import { useForm, SubmitHandler } from "react-hook-form";
+import AuthBackground from "@/src/components/image/authBackground";
 import Link from "next/link";
 
 type Inputs = {
@@ -53,16 +54,24 @@ const SignUp = () => {
   };
 
   return (
-    <>
-      <Link href={"/"}>Home</Link>
+    <div className="authContainer relative">
       {!isVerified ? (
-        <>
-          <h2>Sign up</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="relative flex">
+          <AuthBackground />
+          <form className="formBox z-10" onSubmit={handleSubmit(onSubmit)}>
+            <h2 className="my-1">Welcome to ZeroIn</h2>
+            <button
+              type="button"
+              className="btnDark"
+              onClick={(e) => signWithGoogle(e)}
+            >
+              Continue with Google
+            </button>
+            <p>or</p>
             <input
               id="username"
               type="text"
-              className="border border-gray-300 m-4"
+              className="authInputBox"
               placeholder="username"
               data-testid="username"
               {...register("username", { required: "Username is required" })}
@@ -74,7 +83,7 @@ const SignUp = () => {
             <input
               id="email"
               type="email"
-              className="border border-gray-300 m-4"
+              className="authInputBox"
               placeholder="Email address"
               data-testid="email"
               {...register("email", { required: "Email is required" })}
@@ -87,7 +96,7 @@ const SignUp = () => {
               id="password"
               type="password"
               autoComplete="false"
-              className="border border-gray-300 m-4"
+              className="authInputBox"
               placeholder="password"
               data-testid="password"
               {...register("password", { required: "Password is required" })}
@@ -99,22 +108,19 @@ const SignUp = () => {
               <p className="text-red-500 ml-4">{errors.customError.message}</p>
             )}
             <br />
-            <button className="m-4"> Verify Email </button>
-            <br />
-            <h2>or</h2>
-            <button
-              type="button"
-              className="m-4"
-              onClick={(e) => signWithGoogle(e)}
-            >
-              Continue with Google
-            </button>
+            <button className="m-4 btnDark"> Verify Email </button>
+            <div>
+              Already have an account?
+              <Link href="/login" className="text-green hover:font-bold">
+                LogIn
+              </Link>
+            </div>
           </form>
-        </>
+        </div>
       ) : (
         <h1>Signing Up...</h1>
       )}
-    </>
+    </div>
   );
 };
 
