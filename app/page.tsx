@@ -15,7 +15,7 @@ const Home = () => {
     <div>
       <HeroWrapper>
         <Image
-          src="/image.png"
+          src="/assets/home.png"
           alt=""
           priority
           style={{
