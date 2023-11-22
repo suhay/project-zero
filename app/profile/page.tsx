@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 import { profileData } from "../../src/context/context";
+import Journey from "@/src/components/journey/Journey";
 
 const Profile = () => {
   const router = useRouter();
@@ -42,6 +43,7 @@ const Profile = () => {
           >
             Logout
           </button>
+          <Journey />
         </div>
       )}
     </div>

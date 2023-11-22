@@ -90,4 +90,8 @@ h5 {
   .userNameNav {
     @apply bg-dark text-white rounded-full;
   }
+
+  .CategoryAndGoodList {
+    @apply border p-4 m-4 rounded-full stroke-red-400 stroke-2;
+  }
 }
