@@ -74,14 +74,17 @@ const LogIn = () => {
           <br />
           <button className="btnDark"> Login </button>
           <br />
-          <div>
+          <div className="my-3">
             <Link href="/password" className=" text-gray hover:font-bold">
               Forgot Password?
             </Link>
           </div>
-          <div>
+          <div className="my-3">
             Does not have an account?
-            <Link href="/signup" className="text-green hover:font-bold">
+            <Link
+              href="/signup"
+              className="text-green-300 ml-2 hover:font-bold"
+            >
               SignUp
             </Link>
           </div>

@@ -109,9 +109,12 @@ const SignUp = () => {
             )}
             <br />
             <button className="m-4 btnDark"> Verify Email </button>
-            <div>
+            <div className="my-2">
               Already have an account?
-              <Link href="/login" className="text-green hover:font-bold">
+              <Link
+                href="/login"
+                className="text-green-300 ml-2 hover:font-bold"
+              >
                 LogIn
               </Link>
             </div>

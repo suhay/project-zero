@@ -10,7 +10,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
   return (
     <div
-      className={`${hideNavbar ? "hidden sm:block" : "navbar justify-end"}`}
+      className={`${hideNavbar ? "hidden sm:block" : "navbar"}`}
       data-testid="navbar"
     >
       {NAV_LINKS.map((link) =>
@@ -20,7 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
           <Link
             href={link.href}
             key={link.key}
-            className="cursor-pointer hover:font-bold"
+            className="cursor-pointer hover:font-bold mr-4"
           >
             {link.label}
           </Link>

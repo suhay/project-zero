@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Logo = () => {
   return (
-    <Link className="text-green" href="/">
+    <Link className="ml-4" href="/">
       ZeroIn
     </Link>
   );

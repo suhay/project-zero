@@ -15,9 +15,9 @@ const Navigation = () => {
   const { profileStatus } = useContext(profileData);
 
   return (
-    <nav className="flex sticky top-0">
+    <nav className="flex z-10">
       <Logo />
-      <ul className="ml-auto right-0">
+      <ul className="ml-auto">
         <Navbar hideNavbar={hideNavbar} profileStatus={profileStatus} />
       </ul>
 
