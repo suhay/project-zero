@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 import Navigation from "@/src/components/navigation";
 import Context from "../src/context/context";
-// import ThemeRegistry from "@/src/components/ThemeRegistry/ThemeRegistry";
+import ThemeRegistry from "@/src/components/ThemeRegistry/ThemeRegistry";
 import {
   baseFont,
   headerFont,
@@ -24,10 +24,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       className={`${headerFont.variable} ${subheaderFont.variable} ${baseFont.variable}`}
     >
       <body>
-        <Context>
-          <Navigation />
-          {children}
-        </Context>
+        <ThemeRegistry>
+          <Context>
+            <Navigation />
+            {children}
+          </Context>
+        </ThemeRegistry>
       </body>
     </html>
   );

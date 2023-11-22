@@ -76,11 +76,11 @@ h5 {
   }
 
   .authContainer {
-    @apply border-gray mx-auto my-12 text-center;
+    @apply border-medium mx-auto my-12 text-center;
   }
 
   .authInputBox {
-    @apply border border-gray rounded-sm px-8 py-2 my-2 text-left;
+    @apply border border-medium rounded-sm px-8 py-2 my-2 text-left;
   }
 
   .formBox {
