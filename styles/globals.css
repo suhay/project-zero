@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 * {
-  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -32,7 +31,8 @@ h1 {
 h2 {
   font-family: var(--font-header);
   font-weight: bold;
-  font-size: 20px;
+  font-size: 35px;
+  margin-bottom: 30px;
 }
 
 h3 {

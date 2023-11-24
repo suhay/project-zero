@@ -1,27 +1,17 @@
 import { Suspense } from "react";
 
-import { Metadata } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { allPosts } from "contentlayer/generated";
 
-import { getAllPosts, getPostBySlug } from "@/src/utils/getPosts";
-import markdownToHtml from "@/src/utils/markdownToHtml";
+export const generateStaticParams = async () =>
+  allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
 
-export async function generateStaticParams() {
-  const posts = getAllPosts(["slug"]);
-
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
-}
-
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const post = getPostBySlug(params.slug, ["title"]);
-
-  return {
-    title: post.title,
-  };
-}
+export const generateMetadata = ({ params }: { params: { slug: string } }) => {
+  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
+  return { title: post.title };
+};
 
 type Params = {
   params: {
@@ -30,17 +20,10 @@ type Params = {
 };
 
 export default async function Post({ params }: Params) {
-  const post = getPostBySlug(params.slug, [
-    "title",
-    "date",
-    "slug",
-    "author",
-    "content",
-    "coverImage",
-  ]);
+  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
 
-  const content = await markdownToHtml(post.content || "");
-  const title = `${post.title}`;
+  const { title, author, coverImage, body } = post;
 
   return (
     <div>
@@ -50,15 +33,15 @@ export default async function Post({ params }: Params) {
         </Head>
         <header className="md:w-168 md:px-0 px-10">
           <h1 className="text-4xl font-Roboto">{title}</h1>
-          <span className="font-Roboto">By: {post.author?.name}</span>
+          <span className="font-Roboto">By: {author?.name}</span>
         </header>
-        {post.coverImage && (
-          <Image alt="" src={post.coverImage} width={1024} height={675} />
+        {coverImage && (
+          <Image alt="" src={coverImage} width={1024} height={675} />
         )}
         <Suspense fallback={<div>Loading...</div>}>
           <div
             className="flex-col space-y-4 font-Source-Serif text-xl text-slate-900 md:w-168 md:px-0 px-10"
-            dangerouslySetInnerHTML={{ __html: content }}
+            dangerouslySetInnerHTML={{ __html: body.html }}
           />
         </Suspense>
       </article>
