@@ -59,6 +59,10 @@ h5 {
 }
 
 @layer utilities {
+  .maxContainer {
+    @apply mx-auto max-w-[1440px];
+  }
+
   .flexBetween {
     @apply flex items-center justify-between;
   }
@@ -92,6 +96,6 @@ h5 {
   }
 
   .CategoryAndGoodList {
-    @apply border p-4 m-4 rounded-full stroke-red-400 stroke-2;
+    @apply border p-3 m-4 rounded-full;
   }
 }
