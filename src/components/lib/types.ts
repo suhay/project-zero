@@ -1,4 +1,1 @@
-export enum Variant {
-  primary,
-  secondary,
-}
+export type Variant = "primary" | "secondary" | "google";

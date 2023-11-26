@@ -1,8 +1,7 @@
 import Image from "next/image";
 
 import { Layout } from "@/src/components/lib/Layout";
-import { GetStarted } from "../lib/Button/GetStarted";
-import { Variant } from "../lib/types";
+import { Link } from "../lib/Button/Link";
 
 export function RaiseAwareness() {
   return (
@@ -28,7 +27,7 @@ export function RaiseAwareness() {
           Think you have something to teach? Then join us and spread what you’ve
           learned!
         </p>
-        <GetStarted variant={Variant.primary} />
+        <Link variant="primary" href="/signup" label="Get Started" />
       </div>
     </Layout.Grid>
   );

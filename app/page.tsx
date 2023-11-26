@@ -39,7 +39,7 @@ const Home = () => {
             <h1 className="display">Start your zero-waste journey with us!</h1>
             <p>The hardest part is knowing where to begin, but we can help.</p>
             <div className="mt-2 flex items-center justify-start gap-x-6">
-              <Button.GetStarted />
+              <Button.Link label="Get Started" href="/signup" />
               <Button.LearnMore href="/" />
             </div>
           </div>
