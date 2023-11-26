@@ -1,26 +1,30 @@
 "use client";
 import React from "react";
-import { account } from "../../src/utils/appwrite";
-import { useRouter } from "next/navigation";
-import { login } from "../../src/utils/auth";
-import { useForm, SubmitHandler } from "react-hook-form";
+
 import { AppwriteException } from "appwrite";
 import Link from "next/link";
-import AuthBackground from "@/src/components/image/authBackground";
+import { useRouter } from "next/navigation";
+import { AtSign, Eye } from "react-feather";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { account } from "@/src/utils/appwrite";
+import { googleAuth, login } from "@/src/utils/auth";
+import { Button } from "~/Button";
+import { Error } from "~/Form/Error";
+import { Input } from "~/Form/Input";
 
 type Inputs = {
   email: string;
   password: string;
-  credentialError: string;
 };
 
 const LogIn = () => {
   const router = useRouter();
+  const [loginError, setLoginError] = React.useState("");
 
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm<Inputs>();
 
@@ -29,62 +33,75 @@ const LogIn = () => {
       await login(data.email, data.password);
       await account.get();
       router.push("/profile");
-    } catch (error) {
-      if (error instanceof AppwriteException) {
-        setError("credentialError", {
-          type: "appwrite server error",
-          message: "Invalid credentials. Please check the email and password.",
-        });
+    } catch (e) {
+      if (e instanceof AppwriteException) {
+        console.error(e);
+        setLoginError("Invalid credentials");
       } else {
-        console.log("Other error", error);
+        console.log("Other error", e);
       }
     }
   };
 
+  const signWithGoogle = () => {
+    googleAuth();
+  };
+
   return (
-    <div className="authContainer">
-      <div className="relative z-10 flex justify-center py-20">
-        <AuthBackground />
-        <form className="formBox z-10" onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="p-4">Welcome to ZeroIn</h2>
-          <input
+    <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-lg">
+        <h1 className="text-center text-2xl font-bold text-primary-600 sm:text-3xl">
+          Welcome Back!
+        </h1>
+        <form
+          className="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <p className="text-center text-lg font-medium">
+            Sign in to your account
+          </p>
+          <Input
+            label="Email"
             type="email"
-            className="authInputBox"
-            placeholder="Email address"
+            placeholder="Email"
+            errors={errors}
+            autoComplete="username email"
+            icon={<AtSign size={15} />}
             {...register("email", { required: "Email is required" })}
           />
-          {errors.email && (
-            <p className="text-red-500">This field is required</p>
-          )}
-          <br />
-          <input
+          <Input
+            label="Password"
             type="password"
-            className="authInputBox"
-            placeholder="password"
+            placeholder="Password"
+            errors={errors}
+            autoComplete="current-password"
+            icon={<Eye size={15} />}
             {...register("password", { required: "Password is required" })}
           />
-          {errors.password && (
-            <p className="text-red-500">This field is required</p>
-          )}
-          {errors.credentialError && (
-            <p className="text-red-500 ml-4">
-              {errors.credentialError.message}
-            </p>
-          )}
-          <br />
-          <button className="btnDark"> Login </button>
-          <br />
-          <div>
-            <Link href="/password" className=" text-gray hover:font-bold">
+          <Button.Simple type="submit" label="Sign in" />
+          <Error message={loginError} />
+          <div
+            className="border-t border-t-gray-300 pt-4 before:content-['or'] 
+            relative before:absolute before:top-0 before:bg-white before:px-2 text-gray-500 
+            before:left-1/2 before:translate-x-[-50%] before:translate-y-[-50%] before:text-sm"
+          >
+            <Button.Simple
+              variant="google"
+              label="Sign in with Google"
+              onClick={signWithGoogle}
+            />
+          </div>
+          <p className="text-center text-sm text-gray-500">
+            No account?{" "}
+            <Link className="underline" href="/signup">
+              Sign up
+            </Link>
+          </p>
+          <p className="text-center text-sm text-gray-500">
+            <Link href="/password" className="underline">
               Forgot Password?
             </Link>
-          </div>
-          <div>
-            Does not have an account?
-            <Link href="/signup" className="text-green hover:font-bold">
-              SignUp
-            </Link>
-          </div>
+          </p>
         </form>
       </div>
     </div>

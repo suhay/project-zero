@@ -1,8 +1,7 @@
 import Image from "next/image";
 
 import { Layout } from "@/src/components/lib/Layout";
-import { GetStarted } from "@/src/components/lib/Button/GetStarted";
-import { Variant } from "@/src/components/lib/types";
+import { Link } from "@/src/components/lib/Button/Link";
 
 export function FosterCommunity() {
   return (
@@ -19,7 +18,7 @@ export function FosterCommunity() {
         <p>
           We are nurturing a platform where our local communities can thrive.
         </p>
-        <GetStarted variant={Variant.primary} />
+        <Link variant="primary" href="/signup" label="Get Started" />
       </div>
       <div className="flex justify-center">
         <Image
