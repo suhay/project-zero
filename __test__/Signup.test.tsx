@@ -13,7 +13,7 @@ describe("SignUp", () => {
   it("should have Sign Up text", () => {
     render(<SignUp />);
 
-    const myElem = screen.getByText("Welcome to ZeroIn");
+    const myElem = screen.getByText("Welcome to ZeroIn!");
     expect(myElem).toBeInTheDocument();
   });
 
@@ -23,7 +23,7 @@ describe("SignUp", () => {
     expect(screen.getByTestId("username")).toBeInTheDocument();
     expect(screen.getByTestId("email")).toBeInTheDocument();
     expect(screen.getByTestId("password")).toBeInTheDocument();
-    expect(screen.getByText("Verify Email")).toBeInTheDocument();
+    expect(screen.getByText("Sign up")).toBeInTheDocument();
   });
 
   it("should handle form submission", async () => {
@@ -48,7 +48,7 @@ describe("SignUp", () => {
 
     // eslint-disable-next-line testing-library/no-unnecessary-act
     await act(async () => {
-      fireEvent.click(screen.getByText("Verify Email"));
+      fireEvent.click(screen.getByText("Sign up"));
     });
 
     expect(userSignUpMock).toHaveBeenCalledWith(
@@ -66,7 +66,7 @@ describe("SignUp", () => {
       </MemoryRouter>,
     );
 
-    const verifyEmailButton = screen.getByText("Verify Email");
+    const verifyEmailButton = screen.getByText("Sign up");
     fireEvent.click(verifyEmailButton);
 
     await waitFor(() => {

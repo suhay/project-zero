@@ -1,8 +1,7 @@
 import Image from "next/image";
 
 import { Layout } from "@/src/components/lib/Layout";
-import { GetStarted } from "../lib/Button/GetStarted";
-import { Variant } from "../lib/types";
+import { Link } from "../lib/Button/Link";
 
 export function ReduceWaste() {
   return (
@@ -24,7 +23,7 @@ export function ReduceWaste() {
           not the product works. From there, we leave the decision-making to
           you, knowing that you’re making the right one for your family.
         </p>
-        <GetStarted variant={Variant.primary} />
+        <Link variant="primary" href="/signup" label="Get Started" />
       </div>
       <div className="flex justify-center">
         <Image

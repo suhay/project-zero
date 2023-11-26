@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 
 import Navigation from "@/src/components/navigation";
-import Context from "../src/context/context";
+import Context from "@/src/context/context";
 import ThemeRegistry from "@/src/components/ThemeRegistry/ThemeRegistry";
 import {
   baseFont,
@@ -28,7 +28,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <ThemeRegistry>
           <Context>
             <Navigation />
-            {children}
+            <main className="min-h-[calc(100vh-398px-24px)]">{children}</main>
             <Footer />
           </Context>
         </ThemeRegistry>
