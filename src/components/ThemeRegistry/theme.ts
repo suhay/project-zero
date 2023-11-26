@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+
 import { baseFont } from "./fonts";
 
 const theme = createTheme({
