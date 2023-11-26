@@ -10,6 +10,7 @@ import {
   headerFont,
   subheaderFont,
 } from "@/src/components/ThemeRegistry/fonts";
+import { Footer } from "@/src/components/Footer";
 
 export const metadata: Metadata = {
   title: "ZeroIn",
@@ -28,6 +29,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <Context>
             <Navigation />
             {children}
+            <Footer />
           </Context>
         </ThemeRegistry>
       </body>
