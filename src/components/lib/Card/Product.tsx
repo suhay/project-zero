@@ -1,5 +1,6 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Image from "next/image";
+import { Card } from ".";
 
 const Product = ({
   tag,
@@ -9,30 +10,32 @@ const Product = ({
   environment,
   quality,
 }: {
-  tag: string | undefined;
+  tag: ReactNode;
   img: {
     src: string;
     alt: string;
   };
   provider: string | undefined;
   title: string | undefined;
-  environment: string | undefined;
-  quality: string | undefined;
+  environment?: string | number;
+  quality?: string | number;
 }) => {
   return (
-    <div className="">
-      <p>{tag}</p>
-      <Image
-        src={img.src}
-        alt={img.alt}
-        width={400}
-        height={400}
-        className="border-red-600"
-      />
-      <p>{provider}</p>
-      <p>{title}</p>
-      <p>{environment}</p>
-      <p>{quality}</p>
+    <div className="border rounded-md relative my-4">
+      <p className="absolute right-0 top-1">{tag}</p>
+      <Image src={img.src} alt={img.alt} width={400} height={600} />
+      <div className="m-6">
+        <p>{provider}</p>
+        <p>{title}</p>
+      </div>
+      <div className="m-6">
+        <div>
+          <Card.Bar description="Environment" stat={environment || "N/A"} />
+        </div>
+        <div className="my-2">
+          <Card.Bar description="Quality" stat={quality || "N/A"} />
+        </div>
+      </div>
     </div>
   );
 };

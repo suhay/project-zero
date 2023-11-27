@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { Card } from "~/Card";
 import { useEffect, useState } from "react";
 import JourneyStatus from "@/src/components/Journey/JourneyStatus";
+import { Plus } from "react-feather";
+import { Button } from "@/src/components/lib/Button";
 
 const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categorySlug } = params;
@@ -33,15 +35,20 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     (good) => good.key.toLowerCase() === categorySlug,
   ).map((good) =>
     good.value.map((item, index) => (
-      <button
-        onClick={() => {
-          productDetails(item);
-        }}
-        className="CategoryAndGoodList"
-        key={index}
-      >
-        {item.key}
-      </button>
+      <>
+        <button
+          onClick={() => {
+            productDetails(item);
+          }}
+          className="border-green-800 rounded-[25px] py-3 px-10 border-2 flex gap-2"
+          key={index}
+        >
+          <span>
+            <Plus />
+          </span>
+          {item.key}
+        </button>
+      </>
     )),
   );
 
@@ -53,23 +60,23 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     <div className="profile">
       <JourneyStatus category={categorySlug} />
       <section className="profile my-12">
-        Improve Products
-        <hr />
-        <div>{updateGoods}</div>
+        <h3>Improve Products</h3>
+        <hr className="my-2" />
+        <div className="border flex gap-2">{updateGoods}</div>
       </section>
       <section className="profile">
-        Your ZeroIn Pantry
-        <hr />
+        <h3>Your ZeroIn Pantry</h3>
+        <hr className="my-2" />
         <div className="flex">
           {updateGoods?.map((good, idx) => (
-            <ul className="flex" key={idx}>
+            <ul className="flex border-green-800" key={idx}>
               {good.map((p, i) => (
                 <span className="mr-10" key={i}>
                   {p}
                   {displayProducts?.map((product, i) => (
                     <Card.Product
                       key={idx}
-                      tag={product[i].tag}
+                      tag={<Button.Tag tag={product[i].tag} />}
                       img={{
                         src: "/assets/laundryDetergent.jpg",
                         alt: "",

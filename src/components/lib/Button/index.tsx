@@ -2,6 +2,8 @@ import { Link } from "./Link";
 import { LearnMore } from "./LearnMore";
 import { Variant } from "../types";
 import { Simple } from "./Simple";
+import { Tag } from "./Tag";
+import { Back } from "./Back";
 
 export const buttonClass =
   "rounded-lg px-4 py-3 text-sm shadow-sm font-medium shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
@@ -17,5 +19,7 @@ export const variantClass: Record<Variant, string> = {
 export const Button = {
   Link,
   LearnMore,
+  Back,
   Simple,
+  Tag,
 };

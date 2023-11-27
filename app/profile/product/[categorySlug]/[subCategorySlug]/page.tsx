@@ -1,6 +1,7 @@
+"use client";
 import { GOODS } from "@/constants";
+import { Button } from "@/src/components/lib/Button";
 import { Card } from "~/Card";
-// import { Layout } from "@/src/components/lib/Layout";
 
 const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const { subCategorySlug } = params;
@@ -20,25 +21,31 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   }
 
   return (
-    <div className="profile">
-      <h2>{decodeURL}</h2>
-      {matchingSubCategory?.product.map((product, idx) => (
-        <div className="border" key={product.title}>
-          <Card.Product
-            key={idx}
-            tag={product.tag}
-            img={{
-              src: "/assets/laundryDetergent.jpg",
-              alt: "",
-            }}
-            provider={product.provider}
-            title={product.title}
-            environment={product.environment}
-            quality={product.quality}
-          />
-        </div>
-      ))}
-    </div>
+    <section className="profile my-20">
+      <div className="flex m-auto items-center profile">
+        <Button.Back />
+        <h2 className="ml-6 my-auto">{decodeURL}</h2>
+      </div>
+      <hr className="profile" />
+      <div className="border-red-400 flex gap-10 my-10 profile">
+        {matchingSubCategory?.product.map((product, idx) => (
+          <div className="flex " key={product.title}>
+            <Card.Product
+              key={idx}
+              tag={<Button.Tag tag={product.tag} />}
+              img={{
+                src: "/assets/laundryDetergent.jpg",
+                alt: "",
+              }}
+              provider={product.provider}
+              title={product.title}
+              environment={product.environment}
+              quality={product.quality}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
   );
 };
 

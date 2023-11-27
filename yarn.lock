@@ -2015,6 +2015,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ramonak/react-progress-bar@npm:^5.1.1":
+  version: 5.1.1
+  resolution: "@ramonak/react-progress-bar@npm:5.1.1"
+  peerDependencies:
+    react: ^16.0.0 || ^17 || ^18
+    react-dom: ^16.0.0 || ^17 || ^18
+  checksum: 498055b69c9bbba04fc2fcfa3d18588961a3493b2bb9613838969f12fa76b4eb519a32aa1cb7e9f2702cabc5754ca635278622aefe9a8f564eafe76f4c9d6c12
+  languageName: node
+  linkType: hard
+
 "@remix-run/router@npm:1.10.0":
   version: 1.10.0
   resolution: "@remix-run/router@npm:1.10.0"
@@ -9110,6 +9120,7 @@ __metadata:
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
     "@mui/material": ^5.14.18
+    "@ramonak/react-progress-bar": ^5.1.1
     "@testing-library/jest-dom": ^6.1.4
     "@testing-library/react": ^14.0.0
     "@types/jest": ^29.5.5
