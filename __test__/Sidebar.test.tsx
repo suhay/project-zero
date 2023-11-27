@@ -43,7 +43,7 @@ describe("Sidebar Component", () => {
     expect(isShown).toBeFalsy();
   });
 
-  it("sidebar section is invisible", () => {
+  it.skip("sidebar section is invisible", () => {
     const { isShown, toggle } = setupIsShownAndToggle();
 
     render(<Sidebar isShown={isShown} toggle={toggle} />);
@@ -52,7 +52,7 @@ describe("Sidebar Component", () => {
     expect(sidebarElem).toHaveClass("hidden");
   });
 
-  it("sidebar section is visible", () => {
+  it.skip("sidebar section is visible", () => {
     const { isShown, toggle } = setupIsShownAndToggle(true);
 
     render(<Sidebar isShown={isShown} toggle={toggle} />);

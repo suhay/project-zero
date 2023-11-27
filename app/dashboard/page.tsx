@@ -2,20 +2,11 @@
 import Link from "next/link";
 import { profileData } from "../../src/context/context";
 import { useContext } from "react";
-import Journey from "@/src/components/Journey";
-
-// export const getStaticProps = async ({ params } : { params: { category: string } }) => {
-//   const data = await fetch(params.category);
-//   return {
-//     props: { data },
-//   }
-// }
 
 // const Dashboard = ({ params }: { params: { category: string } }) => {
 const Dashboard = () => {
   const { profileStatus } = useContext(profileData);
   console.log("in Dashboard page profileStatus", profileStatus);
-  // console.log("in Dashboard page params", params.category);
 
   return (
     <div className="authContainer">
@@ -34,7 +25,6 @@ const Dashboard = () => {
         <div>
           <div>profileStatus {profileStatus}</div>
           {/* <div>params.category {params.category}</div> */}
-          <Journey />
         </div>
       )}
       <div className="my-52">
