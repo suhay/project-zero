@@ -3,11 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 import { profileData } from "../../src/context/context";
-
 import { CATEGORIES, CATEGORY_STATUS } from "@/constants";
-// import { Layout } from "@/src/components/lib/Layout";
-// import Category from "@/src/components/Category";
-// import Pantry from "@/src/components/Pantry";
 
 const Profile = () => {
   const router = useRouter();
@@ -37,16 +33,6 @@ const Profile = () => {
     };
     fetchData();
   }, [router, setProfileStatus]);
-
-  // const updateGoods = GOODS.filter(
-  //   (g: { key: string }) => g.key === selectedCategory,
-  // ).map((good: { value: string[] }) =>
-  //   good.value.map((item, index) => (
-  //     <button className="CategoryAndGoodList" key={index}>
-  //       {item}
-  //     </button>
-  //   )),
-  // );
 
   const chooseCategory = (category: string) => {
     setSelectedCategory(category);
@@ -83,15 +69,6 @@ const Profile = () => {
               {c.label}
             </button>
           ))}
-          {/* <Category
-            selectedCategory={selectedCategory}
-            journeyStatus={journeyStatus}
-          />
-          <div>
-            <Pantry
-              selectedCategory={selectedCategory}
-            />
-          </div> */}
         </div>
       )}
     </div>

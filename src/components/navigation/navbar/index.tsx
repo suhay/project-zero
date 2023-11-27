@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { NAV_LINKS } from "@/constants";
-import AccountMenu from "../../Account/account";
+import AccountMenu from "../../Account/Account";
 interface NavbarProps {
   hideNavbar: boolean;
   profileStatus: string;

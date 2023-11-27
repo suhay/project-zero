@@ -28,17 +28,6 @@ export interface Good {
   value: { key: string; product: ProductDetails[] }[];
 }
 
-export const PRODUCT = [
-  {
-    tag: "",
-    image: "",
-    company: "",
-    product_name: "",
-    environment: "",
-    quality: "",
-  },
-];
-
 export const GOODS: Good[] = [
   {
     key: "Laundry",
@@ -205,10 +194,6 @@ export const GOODS: Good[] = [
   },
 ];
 
-export const PRODUCT_LIST = [];
-
-export const STATUS = ["No Started", "In Progress", "Hit all the basics"];
-
 export enum JSTATUS {
   NOT_STARTED = "Not Started",
   IN_PROGRESS = "In Progress",
@@ -216,9 +201,9 @@ export enum JSTATUS {
 }
 
 export const CATEGORY_STATUS = [
-  { Laundry: "" },
-  { "Personal Hygiene": "" },
-  { Kitchen: "" },
-  { "Living Room": "" },
-  { Bathroom: "" },
+  { key: "Laundry", status: "" },
+  { key: "Personal Hygiene", status: "" },
+  { key: "Kitchen", status: "" },
+  { key: "Living Room", status: "" },
+  { key: "Bathroom", status: "" },
 ];
