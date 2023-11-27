@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 import { profileData } from "../../src/context/context";
-import { CATEGORIES, CATEGORY_STATUS } from "@/constants";
+import { CATEGORIES } from "@/constants";
 
 const Profile = () => {
   const router = useRouter();
@@ -11,7 +11,6 @@ const Profile = () => {
   //state for syncing navbar with logged in user name
   const { setProfileStatus } = useContext(profileData);
   const [, setSelectedCategory] = useState("");
-  const [, setJourneyStatus] = useState("In Progress");
 
   const handleLogout = async () => {
     await account.deleteSession("current");
@@ -36,19 +35,11 @@ const Profile = () => {
 
   const chooseCategory = (category: string) => {
     setSelectedCategory(category);
-    // router.push(`/dashboard/${category}`);
     router.push(`/profile/product/${category.toLowerCase()}`);
-
-    const updatedStatus = CATEGORY_STATUS.map((item) => {
-      const key = Object.keys(item)[0] as keyof typeof item;
-      setJourneyStatus("In Progress");
-      return { [key]: key === category ? "In Progress" : item[key] };
-    });
-    console.log("updatedStatus", updatedStatus);
   };
 
   return (
-    <div className="authContainer relative">
+    <div className="profile relative">
       {userProfile && (
         <div className="mx-auto py-6">
           <h2>{userProfile ? `Welcome, ${userProfile}!` : "Loading..."}</h2>
@@ -58,17 +49,19 @@ const Profile = () => {
           >
             Logout
           </button>
-          {CATEGORIES.map((c) => (
-            <button
-              className="CategoryAndGoodList"
-              onClick={() => {
-                chooseCategory(c.label);
-              }}
-              key={c.key}
-            >
-              {c.label}
-            </button>
-          ))}
+          <div className="flex my-20 py-10 gap-6">
+            {CATEGORIES.map((c) => (
+              <button
+                className="profile border-8 border-green-500/50 w-36 h-36 rounded-full hover:scale-105"
+                onClick={() => {
+                  chooseCategory(c.label);
+                }}
+                key={c.key}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

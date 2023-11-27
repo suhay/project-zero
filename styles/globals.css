@@ -60,43 +60,7 @@ h5 {
 }
 
 @layer utilities {
-  .maxContainer {
-    @apply mx-auto max-w-[1440px];
-  }
-
-  .flexBetween {
-    @apply flex items-center justify-between;
-  }
-
-  .flexEnd {
-    @apply flex justify-end;
-  }
-
-  .btnGreen {
-    @apply bg-green border-none rounded-lg p-2 text-white hover:bg-dark;
-  }
-
-  .btnDark {
-    @apply bg-dark border-none w-2/4 rounded-lg py-2 my-2 text-white hover:bg-dark;
-  }
-
-  .authContainer {
-    @apply border-medium mx-auto my-12 text-center;
-  }
-
-  .authInputBox {
-    @apply border border-medium rounded-sm px-8 py-2 my-2 text-left;
-  }
-
-  .formBox {
-    @apply border rounded-sm w-1/3 mx-auto bg-white;
-  }
-
-  .userNameNav {
-    @apply bg-dark text-white rounded-full;
-  }
-
-  .CategoryAndGoodList {
-    @apply border p-3 m-4 rounded-full;
+  .profile {
+    @apply text-green-800 ml-10;
   }
 }

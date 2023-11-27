@@ -20,7 +20,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   }
 
   return (
-    <div>
+    <div className="profile">
       <h2>{decodeURL}</h2>
       {matchingSubCategory?.product.map((product, idx) => (
         <div className="border" key={product.title}>

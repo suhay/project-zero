@@ -2,13 +2,13 @@
 import { CATEGORY_STATUS, GOODS, ProductDetails } from "@/constants";
 import { useRouter } from "next/navigation";
 import { Card } from "~/Card";
-import { ShoppingBag } from "react-feather";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import JourneyStatus from "@/src/components/Journey/JourneyStatus";
 
 const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categorySlug } = params;
   const router = useRouter();
-  const [journeyStatus, setJourneyStatus] = useState("In Progress");
+  const [, setJourneyStatus] = useState("In Progress");
 
   const productDetails = (item: { key: string; product: ProductDetails[] }) => {
     router.push(
@@ -18,13 +18,16 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     );
   };
 
-  CATEGORY_STATUS.forEach((item) => {
-    if (item.key === categorySlug) {
-      item.status = "In Progress";
-      setJourneyStatus("In Progress");
-    }
-  });
-  console.log("CATEGORY_STATUS", CATEGORY_STATUS);
+  useEffect(() => {
+    CATEGORY_STATUS.forEach((item) => {
+      const normalize =
+        categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1);
+      if (item.key === normalize) {
+        item.status = "In Progress";
+        setJourneyStatus("In Progress");
+      }
+    });
+  }, [categorySlug]);
 
   const updateGoods = GOODS.filter(
     (good) => good.key.toLowerCase() === categorySlug,
@@ -46,26 +49,15 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     (good) => good.key.toLowerCase() === categorySlug,
   ).map((good) => good.value.map((v) => v.product[0]));
 
-  // console.log("updateGoods", updateGoods);
-  // console.log("displayProducts", displayProducts);
-
   return (
-    <>
-      <div className="text-left flex m-10 gap-4">
-        <p className="icon h-24 w-24 rounded-full bg-secondary-500 text-primary flex items-center">
-          <ShoppingBag className="mx-auto h-8 w-8" />
-        </p>
-        <div className="flex-col">
-          <p className="">Status: {journeyStatus}</p>
-          <h1>{categorySlug}</h1>
-        </div>
-      </div>
-      <div className="ml-4 my-12 text-left">
+    <div className="profile">
+      <JourneyStatus category={categorySlug} />
+      <section className="profile my-12">
         Improve Products
         <hr />
         <div>{updateGoods}</div>
-      </div>
-      <div className="ml-4 text-left">
+      </section>
+      <section className="profile">
         Your ZeroIn Pantry
         <hr />
         <div className="flex">
@@ -93,8 +85,8 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
             </ul>
           ))}
         </div>
-      </div>
-    </>
+      </section>
+    </div>
   );
 };
 
