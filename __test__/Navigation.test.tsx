@@ -1,16 +1,16 @@
-// import { fireEvent, render, screen } from "@testing-library/react";
-// import Navigation from "@/src/components/Navigation";
+import { render, screen } from "@testing-library/react";
+import Navigation from "@/src/components/Navigation";
 // import Sidebar from "@/src/components/Navigation/sidebar";
 // import Navbar from "@/src/components/Navigation/navbar";
 
-// describe("Navigation", () => {
-//   it("should have two Sign Up texts in navbar and sidebar", () => {
-//     render(<Navigation />);
+describe("Navigation", () => {
+  it("should have two Sign Up texts in navbar and sidebar", () => {
+    render(<Navigation />);
 
-//     const navElem = screen.getAllByText("Sign Up");
-//     expect(navElem).toHaveLength(2);
-//   });
-
+    const navElem = screen.getAllByText("Sign Up");
+    expect(navElem).toHaveLength(2);
+  });
+});
 //   it("should have Sign In text in navbar and sidebar", () => {
 //     render(<Navigation />);
 
