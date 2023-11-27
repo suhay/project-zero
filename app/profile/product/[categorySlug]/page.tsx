@@ -4,6 +4,7 @@ import { GOODS, ProductDetails } from "@/constants";
 // import Journey from "@/src/components/Journey";
 // import Pantry from "@/src/components/Pantry";
 import { useRouter } from "next/navigation";
+import { Card } from "~/Card";
 
 const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categorySlug } = params;
@@ -35,6 +36,14 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     )),
   );
 
+  // console.log("updateGoods product", updateGoods);
+  const displayProducts = GOODS.filter(
+    (good) => good.key.toLowerCase() === categorySlug,
+  ).map((good) => good.value.map((v) => v.product[0]));
+
+  console.log("updateGoods", updateGoods);
+  console.log("displayProducts", displayProducts);
+
   return (
     <>
       <div className="text-left flex m-10 gap-4">
@@ -52,7 +61,31 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
       <div className="ml-4 text-left">
         Your ZeroIn Pantry
         <hr />
-        <div>{updateGoods}</div>
+        <div className="flex">
+          {updateGoods?.map((good, idx) => (
+            <ul className="flex" key={idx}>
+              {good.map((p, i) => (
+                <span className="mr-10" key={i}>
+                  {p}
+                  {displayProducts?.map((product, i) => (
+                    <Card.Product
+                      key={idx}
+                      tag={product[i].tag}
+                      img={{
+                        src: "/assets/laundryDetergent.jpg",
+                        alt: "",
+                      }}
+                      provider={product[i].provider}
+                      title={product[i].title}
+                      environment={product[i].environment}
+                      quality={product[i].quality}
+                    />
+                  ))}
+                </span>
+              ))}
+            </ul>
+          ))}
+        </div>
       </div>
     </>
   );

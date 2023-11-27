@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 
-import Navigation from "@/src/components/navigation";
+import Navigation from "@/src/components/Navigation";
 import Context from "@/src/context/context";
 import ThemeRegistry from "@/src/components/ThemeRegistry/ThemeRegistry";
 import {

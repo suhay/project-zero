@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { profileData } from "../../src/context/context";
 
 import { CATEGORIES, CATEGORY_STATUS } from "@/constants";
-import { Layout } from "@/src/components/lib/Layout";
+// import { Layout } from "@/src/components/lib/Layout";
 // import Category from "@/src/components/Category";
 // import Pantry from "@/src/components/Pantry";
 
@@ -72,19 +72,17 @@ const Profile = () => {
           >
             Logout
           </button>
-          <Layout.Grid className="">
-            {CATEGORIES.map((c) => (
-              <button
-                className="CategoryAndGoodList"
-                onClick={() => {
-                  chooseCategory(c.label);
-                }}
-                key={c.key}
-              >
-                {c.label}
-              </button>
-            ))}
-          </Layout.Grid>
+          {CATEGORIES.map((c) => (
+            <button
+              className="CategoryAndGoodList"
+              onClick={() => {
+                chooseCategory(c.label);
+              }}
+              key={c.key}
+            >
+              {c.label}
+            </button>
+          ))}
           {/* <Category
             selectedCategory={selectedCategory}
             journeyStatus={journeyStatus}

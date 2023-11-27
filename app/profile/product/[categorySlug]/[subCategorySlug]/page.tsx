@@ -1,6 +1,6 @@
 import { GOODS } from "@/constants";
-import { Layout } from "@/src/components/lib/Layout";
-import Image from "next/image";
+import { Card } from "~/Card";
+// import { Layout } from "@/src/components/lib/Layout";
 
 const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const { subCategorySlug } = params;
@@ -19,28 +19,25 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
     }
   }
 
-  console.log("updateSubGoods", matchingSubCategory);
-
   return (
     <div>
       <h2>{decodeURL}</h2>
-      <Layout.Grid className="ml-4">
-        {matchingSubCategory?.product.map((product) => (
-          <div key={product.title}>
-            <p>{product.tag}</p>
-            <Image
-              src="/assets/laundryDetergent.jpg"
-              alt="sss"
-              width={400}
-              height={400}
-            />
-            <p>{product.provider}</p>
-            <p>{product.title}</p>
-            <p>{product.environment}</p>
-            <p>{product.quality}</p>
-          </div>
-        ))}
-      </Layout.Grid>
+      {matchingSubCategory?.product.map((product, idx) => (
+        <div className="border" key={product.title}>
+          <Card.Product
+            key={idx}
+            tag={product.tag}
+            img={{
+              src: "/assets/laundryDetergent.jpg",
+              alt: "",
+            }}
+            provider={product.provider}
+            title={product.title}
+            environment={product.environment}
+            quality={product.quality}
+          />
+        </div>
+      ))}
     </div>
   );
 };

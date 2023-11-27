@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useContext } from "react";
 import Logo from "./navbar/Logo";
-import Sidebar from "./sidebar/sidebar";
+import Sidebar from "./sidebar";
 import Navbar from "./navbar/index";
 import { useResize } from "@/src/utils/resize";
 import { profileData } from "../../context/context";

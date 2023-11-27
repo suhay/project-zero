@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Navigation from "@/src/components/navigation";
-import Sidebar from "@/src/components/navigation/sidebar/sidebar";
+import Navigation from "@/src/components/Navigation";
+import Sidebar from "@/src/components/Navigation/sidebar";
 import Navbar from "@/src/components/navigation/navbar";
 
 describe("Navigation", () => {
