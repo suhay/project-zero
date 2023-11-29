@@ -2,7 +2,9 @@ import { account } from "./appwrite";
 
 export const verifyEmail = async () => {
   try {
-    await account.createVerification("http://localhost:3000/verify");
+    await account.createVerification(
+      process.env.NEXT_PUBLIC_APPWRITE_VERIFY ?? "",
+    );
   } catch (error) {
     console.log("Error: ", error);
   }
@@ -45,8 +47,8 @@ export const googleAuth = () => {
   try {
     const data = account.createOAuth2Session(
       "google",
-      "http://localhost:3000",
-      "http://localhost:3000/signup",
+      process.env.NEXT_PUBLIC_OAUTH_SUCCESS,
+      process.env.NEXT_PUBLIC_OAUTH_FAILURE,
     );
     return data;
   } catch (error) {
