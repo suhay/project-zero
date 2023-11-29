@@ -2,9 +2,9 @@ import { ButtonHTMLAttributes } from "react";
 import { buttonClass, variantClass } from ".";
 import { Variant } from "../types";
 
-export function Tag({
+export function Action({
   tag,
-  variant = "no action",
+  variant = "action",
   type = "button",
   onClick,
 }: {
@@ -16,7 +16,7 @@ export function Tag({
   return (
     <button
       type={type}
-      className={`${buttonClass} ${variantClass[variant]} block w-auto`}
+      className={`${buttonClass} ${variantClass[variant]} w-auto ml-auto mr-4`}
       onClick={onClick}
     >
       {tag}

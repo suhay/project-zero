@@ -1,9 +1,11 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { GOODS } from "@/constants";
 import { Button } from "@/src/components/lib/Button";
 import { Card } from "~/Card";
 
 const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
+  const router = useRouter();
   const { subCategorySlug } = params;
   const decodeURL = decodeURIComponent(subCategorySlug);
 
@@ -20,11 +22,26 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
     }
   }
 
+  const handleRemoveSubItem = () => {
+    console.log("do not need this product, subcategory", decodeURL);
+    router.back();
+    // {GOODS.map((product, idx) => ({
+
+    // }
+
+    // ))
+  };
+
   return (
     <section className="profile my-20">
       <div className="flex m-auto items-center profile">
         <Button.Back />
         <h2 className="ml-6 my-auto">{decodeURL}</h2>
+
+        <Button.Action
+          tag="I don't need this product"
+          onClick={handleRemoveSubItem}
+        />
       </div>
       <hr className="profile" />
       <div className="border-red-400 flex gap-10 my-10 profile">
