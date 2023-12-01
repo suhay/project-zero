@@ -2,7 +2,6 @@ import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 
-import Navigation from "@/src/components/Navigation";
 import { LoginProvider, CategoryStatusProvider } from "@/src/context/context";
 import ThemeRegistry from "@/src/components/ThemeRegistry/ThemeRegistry";
 import {
@@ -11,6 +10,7 @@ import {
   subheaderFont,
 } from "@/src/components/ThemeRegistry/fonts";
 import { Footer } from "@/src/components/Footer";
+import Navigation from "@/src/components/Navigation/index";
 
 export const metadata: Metadata = {
   title: "ZeroIn",
