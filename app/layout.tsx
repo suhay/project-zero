@@ -10,7 +10,7 @@ import {
   subheaderFont,
 } from "@/src/components/ThemeRegistry/fonts";
 import { Footer } from "@/src/components/Footer";
-import Navigation from "@/src/components/Navigation/index";
+import Navigation from "@/src/components/Navigation";
 
 export const metadata: Metadata = {
   title: "ZeroIn",
