@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import { profileData } from "../../src/context/context";
+import { LoginContext } from "../../src/context/context";
 import { useContext } from "react";
 
 // const Dashboard = ({ params }: { params: { category: string } }) => {
 const Dashboard = () => {
-  const { profileStatus } = useContext(profileData);
+  const { profileStatus } = useContext(LoginContext);
   console.log("in Dashboard page profileStatus", profileStatus);
 
   return (

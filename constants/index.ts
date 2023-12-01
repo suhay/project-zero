@@ -19,13 +19,15 @@ export interface ProductDetails {
   tag?: string;
   provider?: string;
   title?: string;
-  environment?: string;
-  quality?: string;
+  environment?: number | string;
+  quality?: number | string;
+  status?: string;
 }
 
 export interface Good {
   key: string;
-  value: { key: string; product: ProductDetails[] }[];
+  value: { key: string; product: ProductDetails[]; status?: string }[];
+  status?: string;
 }
 
 export const GOODS: Good[] = [
@@ -42,6 +44,7 @@ export const GOODS: Good[] = [
             title: "EcoClean Laundry Pods",
             environment: "60%",
             quality: "85%",
+            status: "",
           },
           {
             image: "laundry_detergent_2.jpg",
@@ -50,8 +53,10 @@ export const GOODS: Good[] = [
             title: "PureWash Liquid Detergent",
             environment: "50%",
             quality: "88%",
+            status: "",
           },
         ],
+        status: "",
       },
       {
         key: "Laundry Stain Remover",
@@ -63,10 +68,86 @@ export const GOODS: Good[] = [
             title: "StainAway Stain Remover",
             environment: "45%",
             quality: "90%",
+            status: "",
           },
         ],
+        status: "",
+      },
+      {
+        key: "Dryer Sheets",
+        product: [
+          {
+            image: "dryer_sheets_1.jpg",
+            tag: "xxx",
+            provider: "StainAway",
+            title: "Dryer Sheets xx",
+            environment: "25%",
+            quality: "90%",
+            status: "",
+          },
+          {
+            image: "dryer_sheets_2.jpg",
+            tag: "xxx",
+            provider: "StainAway",
+            title: "Dryer Sheets xx",
+            environment: "25%",
+            quality: "90%",
+            status: "",
+          },
+        ],
+        status: "",
+      },
+
+      {
+        key: "Dryer Balls",
+        product: [
+          {
+            image: "dryer_balls_1.jpg",
+            tag: "xxx",
+            provider: "StainAway",
+            title: "Dryer balls xx",
+            environment: "25%",
+            quality: "90%",
+            status: "",
+          },
+          {
+            image: "dryer_balls_2.jpg",
+            tag: "xxx",
+            provider: "StainAway",
+            title: "Dryer balls xxxx",
+            environment: "25%",
+            quality: "90%",
+            status: "",
+          },
+        ],
+        status: "",
+      },
+      {
+        key: "Scent Booster",
+        product: [
+          {
+            image: "scent_booster_1.jpg",
+            tag: "xxx",
+            provider: "StainAway",
+            title: "Scent Booster xx",
+            environment: "25%",
+            quality: "90%",
+            status: "",
+          },
+          {
+            image: "scent_booster_2.jpg",
+            tag: "xxx",
+            provider: "StainAway",
+            title: "Scent Booster xxxx",
+            environment: "25%",
+            quality: "90%",
+            status: "",
+          },
+        ],
+        status: "",
       },
     ],
+    status: "",
   },
   {
     key: "Personal Hygiene",
@@ -193,12 +274,6 @@ export const GOODS: Good[] = [
     ],
   },
 ];
-
-export enum JSTATUS {
-  NOT_STARTED = "Not Started",
-  IN_PROGRESS = "In Progress",
-  HIT_ALL_BASICS = "Hit all the basics",
-}
 
 export const CATEGORY_STATUS = [
   { key: "Laundry", status: "" },

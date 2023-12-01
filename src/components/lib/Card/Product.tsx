@@ -9,6 +9,7 @@ const Product = ({
   title,
   environment,
   quality,
+  modal,
 }: {
   tag: ReactNode;
   img: {
@@ -16,9 +17,10 @@ const Product = ({
     alt: string;
   };
   provider: string | undefined;
-  title: string | undefined;
+  title?: string | undefined;
   environment?: string | number;
   quality?: string | number;
+  modal?: ReactNode;
 }) => {
   return (
     <div className="border rounded-md relative my-4">
@@ -35,6 +37,7 @@ const Product = ({
         <div className="my-2">
           <Card.Bar description="Quality" stat={quality || "N/A"} />
         </div>
+        {modal}
       </div>
     </div>
   );

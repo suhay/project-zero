@@ -4,7 +4,7 @@ import Logo from "./navbar/Logo";
 import Sidebar from "./sidebar";
 import Navbar from "./navbar/index";
 import { useResize } from "@/src/utils/resize";
-import { profileData } from "../../context/context";
+import { LoginContext } from "../../context/context";
 
 const Navigation = () => {
   const [isShown, setIsShown] = useState(false);
@@ -12,7 +12,7 @@ const Navigation = () => {
   const toggle = () => {
     setIsShown(!isShown);
   };
-  const { profileStatus } = useContext(profileData);
+  const { profileStatus } = useContext(LoginContext);
 
   return (
     <nav className="flex z-10">

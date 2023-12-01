@@ -3,13 +3,21 @@ import { useRouter } from "next/navigation";
 import { GOODS } from "@/constants";
 import { Button } from "@/src/components/lib/Button";
 import { Card } from "~/Card";
+import PageModal from "@/src/components/Journey/PageModal";
+import { Key, useContext } from "react";
+import { CategoryStatusContext } from "@/src/context/context";
 
 const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const router = useRouter();
   const { subCategorySlug } = params;
   const decodeURL = decodeURIComponent(subCategorySlug);
+  // const subcategoryName = decodeURL.split(' ').map(word =>
+  //   word.charAt(0).toUpperCase() + word.slice(1) + ' ')
 
-  let matchingSubCategory;
+  const { categoryStatus } = useContext(CategoryStatusContext);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let matchingSubCategory: any;
   for (const good of GOODS) {
     for (const subCategory of good.value) {
       if (subCategory.key.toLowerCase() === decodeURL) {
@@ -22,14 +30,10 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
     }
   }
 
+  //when click I don't need this product, just go back to prev page
+  //currently, category's status will only be affected by adding individual product
   const handleRemoveSubItem = () => {
-    console.log("do not need this product, subcategory", decodeURL);
     router.back();
-    // {GOODS.map((product, idx) => ({
-
-    // }
-
-    // ))
   };
 
   return (
@@ -37,7 +41,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
       <div className="flex m-auto items-center profile">
         <Button.Back />
         <h2 className="ml-6 my-auto">{decodeURL}</h2>
-
+        <h3 className="ml-6 my-auto">status: {categoryStatus.status}</h3>
         <Button.Action
           tag="I don't need this product"
           onClick={handleRemoveSubItem}
@@ -45,23 +49,41 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
       </div>
       <hr className="profile" />
       <div className="border-red-400 flex gap-10 my-10 profile">
-        {matchingSubCategory?.product.map((product, idx) => (
-          <div className="flex " key={product.title}>
-            <Card.Product
-              key={idx}
-              tag={<Button.Tag tag={product.tag} />}
-              img={{
-                src: "/assets/laundryDetergent.jpg",
-                alt: "",
-              }}
-              provider={product.provider}
-              title={product.title}
-              environment={product.environment}
-              quality={product.quality}
-            />
-          </div>
-        ))}
+        {matchingSubCategory?.product.map(
+          (
+            product: {
+              title: string | undefined;
+              tag: string | undefined;
+              provider: string | undefined;
+              environment: string | number | undefined;
+              quality: string | number | undefined;
+            },
+            idx: Key | null | undefined,
+          ) => (
+            <div className="flex " key={product.title}>
+              <Card.Product
+                key={idx}
+                tag={<Button.Tag tag={product.tag} />}
+                img={{
+                  src: "/assets/laundryDetergent.jpg",
+                  alt: "",
+                }}
+                provider={product.provider}
+                title={product.title}
+                environment={product.environment}
+                quality={product.quality}
+                modal={
+                  <PageModal
+                    product={product}
+                    subCategory={matchingSubCategory}
+                  />
+                }
+              />
+            </div>
+          ),
+        )}
       </div>
+      <div></div>
     </section>
   );
 };

@@ -1,21 +1,38 @@
 "use client";
 import { createContext, useState } from "react";
 
-export const profileData = createContext({
+export const LoginContext = createContext({
   profileStatus: "",
   setProfileStatus: (status) => {
     console.log("in context status", status);
   },
 });
 
-const Context = ({ children }) => {
+export const LoginProvider = ({ children }) => {
   const [profileStatus, setProfileStatus] = useState("");
 
   return (
-    <profileData.Provider value={{ profileStatus, setProfileStatus }}>
+    <LoginContext.Provider value={{ profileStatus, setProfileStatus }}>
       {children}
-    </profileData.Provider>
+    </LoginContext.Provider>
   );
 };
 
-export default Context;
+export const CategoryStatusContext = createContext({
+  categoryStatus: { category: "", status: "" },
+  setCategoryStatus: (status) => {
+    console.log("in context status", status);
+  },
+});
+
+export const CategoryStatusProvider = ({ children }) => {
+  const [categoryStatus, setCategoryStatus] = useState({});
+
+  return (
+    <CategoryStatusContext.Provider
+      value={{ categoryStatus, setCategoryStatus }}
+    >
+      {children}
+    </CategoryStatusContext.Provider>
+  );
+};

@@ -2,14 +2,14 @@
 import { useEffect, useState, useContext } from "react";
 import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
-import { profileData } from "../../src/context/context";
+import { LoginContext } from "../../src/context/context";
 import { CATEGORIES } from "@/constants";
 
 const Profile = () => {
   const router = useRouter();
   const [userProfile, setUserProfile] = useState("");
   //state for syncing navbar with logged in user name
-  const { setProfileStatus } = useContext(profileData);
+  const { setProfileStatus } = useContext(LoginContext);
   const [, setSelectedCategory] = useState("");
 
   const handleLogout = async () => {
@@ -49,7 +49,7 @@ const Profile = () => {
           >
             Logout
           </button>
-          <div className="flex my-20 py-10 gap-6">
+          <div className="flex my-20 py-auto gap-6">
             {CATEGORIES.map((c) => (
               <button
                 className="profile border-8 border-green-500/50 w-36 h-36 rounded-full hover:scale-105"
@@ -62,6 +62,7 @@ const Profile = () => {
               </button>
             ))}
           </div>
+          <div className="">Your Pantry</div>
         </div>
       )}
     </div>
