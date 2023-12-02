@@ -29,7 +29,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <LoginProvider>
             <CategoryStatusProvider>
               <Navigation />
-
               <main className="min-h-[calc(100vh-398px-24px)]">{children}</main>
               <Footer />
             </CategoryStatusProvider>
