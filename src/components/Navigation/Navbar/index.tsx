@@ -11,7 +11,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
   return (
     <div
-      className={`${hideNavbar ? "hidden sm:block" : "navbar"} ml-auto right-0`}
+      className={`${hideNavbar ? "hidden sm:block" : "navbar"}`}
       data-testid="navbar"
     >
       {NAV_LINKS.map((link) =>
