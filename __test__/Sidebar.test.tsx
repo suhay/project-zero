@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Sidebar from "@/src/components/Navigation/sidebar";
+import Sidebar from "@/src/components/Navigation/Sidebar";
 
 // const setupIsShownAndToggle = (initialState = false) => {
 //   let isShown = initialState;

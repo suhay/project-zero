@@ -3,9 +3,9 @@ import React, { useState, useContext } from "react";
 
 import { useResize } from "@/src/utils/resize";
 import { LoginContext } from "../../context/context";
-import Logo from "./navbar/Logo";
-import Navbar from "./navbar";
-import Sidebar from "./sidebar";
+import Logo from "./Navbar/Logo";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 const Navigation = () => {
   const [isShown, setIsShown] = useState(false);
