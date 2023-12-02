@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { account } from "../../src/utils/appwrite";
 import { useRouter } from "next/navigation";
 import { LoginContext } from "../../src/context/context";
-import { CATEGORIES, GOODS } from "@/constants";
+import { CATEGORIES } from "@/constants";
 
 const Profile = () => {
   const router = useRouter();
@@ -11,7 +11,7 @@ const Profile = () => {
   //state for syncing navbar with logged in user name
   const { setProfileStatus } = useContext(LoginContext);
   const [, setSelectedCategory] = useState("");
-  console.log(GOODS);
+  // console.log(GOODS);
   //update and display current user's profile name
   useEffect(() => {
     const fetchData = async () => {
