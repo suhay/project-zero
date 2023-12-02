@@ -3,9 +3,9 @@ import React, { useState, useContext } from "react";
 
 import { useResize } from "@/src/utils/resize";
 import { LoginContext } from "../../context/context";
+import Logo from "./Navbar/Logo";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import Link from "next/link";
 
 const Navigation = () => {
   const [isShown, setIsShown] = useState(false);
@@ -16,12 +16,15 @@ const Navigation = () => {
   const { profileStatus } = useContext(LoginContext);
 
   return (
-    <nav className="flex z-1000 text-white bg-cover py-6 my-auto bg-primary-800">
-      <Link className="ml-6 hover:font-bold" href="/">
-        ZeroIn
-      </Link>
-      <Navbar hideNavbar={hideNavbar} profileStatus={profileStatus} />
-      <Sidebar isShown={isShown} toggle={toggle} />
+    <nav className="flex z-10 p-4 text-primary-300">
+      <Logo />
+      <ul className="ml-auto">
+        <Navbar hideNavbar={hideNavbar} profileStatus={profileStatus} />
+      </ul>
+
+      <div className="mr-10">
+        <Sidebar isShown={isShown} toggle={toggle} />
+      </div>
     </nav>
   );
 };
