@@ -12,11 +12,6 @@ const Profile = () => {
   const { setProfileStatus } = useContext(LoginContext);
   const [, setSelectedCategory] = useState("");
 
-  const handleLogout = async () => {
-    await account.deleteSession("current");
-    router.push("/");
-  };
-
   //update and display current user's profile name
   useEffect(() => {
     const fetchData = async () => {
@@ -43,12 +38,6 @@ const Profile = () => {
       {userProfile && (
         <div className="mx-auto py-6">
           <h2>{userProfile ? `Welcome, ${userProfile}!` : "Loading..."}</h2>
-          <button
-            className="bg-dark text-white rounded-sm py-3 px-6 absolute top-0 right-1"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
           <div className="flex my-20 py-auto gap-6">
             {CATEGORIES.map((c) => (
               <button

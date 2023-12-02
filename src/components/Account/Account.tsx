@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -5,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import { account } from "@/src/utils/appwrite";
 // import Logout from '@mui/icons-material/Logout';
 
 interface AccountMenuProps {
@@ -12,13 +14,15 @@ interface AccountMenuProps {
 }
 
 const AccountMenu: React.FC<AccountMenuProps> = ({ userName }) => {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleClose = async () => {
+    await account.deleteSession("current");
+    router.push("/");
   };
   return (
     <React.Fragment>
@@ -31,7 +35,14 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ userName }) => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <Avatar sx={{ width: 32, height: 32, backgroundColor: "#192F2C" }}>
+          <Avatar
+            sx={{
+              width: 32,
+              height: 32,
+              backgroundColor: "#8c9983",
+              marginRight: 3,
+            }}
+          >
             {userName[0]}
           </Avatar>
         </IconButton>
@@ -78,12 +89,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ userName }) => {
           <Avatar /> My account
         </MenuItem>
         <Divider />
-        {/* <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem> */}
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
     </React.Fragment>
   );
