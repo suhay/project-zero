@@ -59,7 +59,7 @@ export const GOODS: Good[] = [
         status: "",
       },
       {
-        key: "Laundry Stain Remover",
+        key: "Stain Remover",
         product: [
           {
             image: "stain_remover_1.jpg",

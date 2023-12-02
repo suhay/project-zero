@@ -59,8 +59,16 @@ h5 {
   font-weight: 200;
 }
 
+.modalStyle {
+  border: 1px solid gray;
+}
+
 @layer utilities {
   .profile {
     @apply text-green-800 ml-10;
+  }
+
+  .modalStyle {
+    @apply border-x-gray-100 rounded-md bg-opacity-75 bg-gray-200 text-white mt-5 mx-auto;
   }
 }

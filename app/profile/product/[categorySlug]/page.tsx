@@ -3,10 +3,12 @@ import { CATEGORY_STATUS, GOODS, ProductDetails } from "@/constants";
 import { useRouter } from "next/navigation";
 import { Card } from "~/Card";
 import { useContext, useEffect, useState } from "react";
-// import JourneyStatus from "@/src/components/Journey/JourneyStatus";
-import { Plus, ShoppingBag } from "react-feather";
+import { Plus, ShoppingBag, Zap } from "react-feather";
 import { Button } from "@/src/components/lib/Button";
-import { CategoryStatusContext } from "@/src/context/context";
+import {
+  ActionButtonContext,
+  CategoryStatusContext,
+} from "@/src/context/context";
 
 const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categorySlug } = params;
@@ -15,13 +17,13 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categoryStatus, setCategoryStatus } = useContext(
     CategoryStatusContext,
   );
+  const { subCategoryStatus } = useContext(ActionButtonContext);
 
   const productDetails = (item: {
     key: string;
     product: ProductDetails[];
     status?: string;
   }) => {
-    // console.log("item", item);
     // const checkCompleteStatus = () => {
     //   return item.status === "In Progress";
     // };
@@ -51,7 +53,6 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     //     status: `Actively improving ${item.key} `,
     //   });
     // }
-    console.log("in Category", item);
     setCategoryStatus({ category: item.key, status: "In progress" });
     router.push(
       `/profile/product/${categorySlug}/${encodeURIComponent(
@@ -59,7 +60,6 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
       )}`,
     );
   };
-  // console.log(categoryStatus);
 
   useEffect(() => {
     CATEGORY_STATUS.forEach((item) => {
@@ -82,13 +82,17 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
           onClick={() => {
             productDetails(item);
           }}
-          className="border-green-800 rounded-[25px] py-3 px-10 border-2 flex gap-2"
+          className="border-green-600 rounded-[25px] py-3 px-8 border flex gap-1"
           key={index}
         >
-          <span>
-            <Plus />
+          <span className="my-auto">
+            {item.key.toLowerCase() === subCategoryStatus ? (
+              <Zap className="w-4 h-4" />
+            ) : (
+              <Plus className="w-4 h-4" />
+            )}
           </span>
-          {item.key}
+          <span className="text-sm">{item.key}</span>
         </button>
       </>
     )),
@@ -104,7 +108,7 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
 
   return (
     <div className="profile">
-      <section className="border flex m-10 gap-4 text-green-800">
+      <section className="flex m-10 gap-4 text-green-800">
         <p className="h-32 w-32 rounded-full bg-secondary-600 text-green-700 flex items-center my-auto">
           <ShoppingBag className="mx-auto h-8 w-8" />
         </p>
@@ -115,12 +119,12 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
       </section>
       <section className="profile my-12">
         <h3>Improve Products</h3>
-        <hr className="my-2" />
-        <div className="border flex gap-2">{updateGoods}</div>
+        <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
+        <div className="flex gap-2">{updateGoods}</div>
       </section>
       <section className="profile">
         <h3>Your Interest Selections</h3>
-        <hr className="my-2" />
+        <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
         <div className="flex">
           {updateGoods?.map((good, idx) => (
             <ul className="flex border-green-800" key={idx}>
@@ -132,8 +136,8 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
                       key={idx}
                       tag={<Button.Tag tag={product[i].tag} />}
                       img={{
-                        src: "/assets/laundryDetergent.jpg",
-                        alt: "",
+                        src: "/assets/product-demo.png",
+                        alt: `${product[i].title}`,
                       }}
                       provider={product[i].provider}
                       title={product[i].title}

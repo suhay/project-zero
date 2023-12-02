@@ -5,7 +5,10 @@ import { Button } from "@/src/components/lib/Button";
 import { Card } from "~/Card";
 import PageModal from "@/src/components/Journey/PageModal";
 import { Key, useContext } from "react";
-import { CategoryStatusContext } from "@/src/context/context";
+import {
+  ActionButtonContext,
+  CategoryStatusContext,
+} from "@/src/context/context";
 
 const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const router = useRouter();
@@ -15,6 +18,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   //   word.charAt(0).toUpperCase() + word.slice(1) + ' ')
 
   const { categoryStatus } = useContext(CategoryStatusContext);
+  const { setSubCategoryStatus } = useContext(ActionButtonContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let matchingSubCategory: any;
@@ -33,6 +37,9 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   //when click I don't need this product, just go back to prev page
   //currently, category's status will only be affected by adding individual product
   const handleRemoveSubItem = () => {
+    console.log("decodeURL", decodeURL);
+    //change improve product icon
+    setSubCategoryStatus(decodeURL);
     router.back();
   };
 
@@ -65,8 +72,8 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
                 key={idx}
                 tag={<Button.Tag tag={product.tag} />}
                 img={{
-                  src: "/assets/laundryDetergent.jpg",
-                  alt: "",
+                  src: "/assets/product-demo.png",
+                  alt: `product.title`,
                 }}
                 provider={product.provider}
                 title={product.title}

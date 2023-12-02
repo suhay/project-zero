@@ -8,9 +8,9 @@ export function Bar({
   stat: string | number;
 }) {
   return (
-    <div className="">
-      <p className="">{description}</p>
-      <ProgressBar completed={stat} maxCompleted={100} />
+    <div>
+      <p className="my-2">{description}</p>
+      <ProgressBar className="w-5/6 mx-3" completed={stat} maxCompleted={100} />
     </div>
   );
 }

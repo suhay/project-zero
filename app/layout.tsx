@@ -2,7 +2,11 @@ import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 
-import { LoginProvider, CategoryStatusProvider } from "@/src/context/context";
+import {
+  LoginProvider,
+  CategoryStatusProvider,
+  SubCategoryStatusProvider,
+} from "@/src/context/context";
 import ThemeRegistry from "@/src/components/ThemeRegistry/ThemeRegistry";
 import {
   baseFont,
@@ -28,9 +32,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <ThemeRegistry>
           <LoginProvider>
             <CategoryStatusProvider>
-              <Navigation />
-              <main className="min-h-[calc(100vh-398px-24px)]">{children}</main>
-              <Footer />
+              <SubCategoryStatusProvider>
+                <Navigation />
+                <main className="min-h-[calc(100vh-398px-24px)]">
+                  {children}
+                </main>
+                <Footer />
+              </SubCategoryStatusProvider>
             </CategoryStatusProvider>
           </LoginProvider>
         </ThemeRegistry>

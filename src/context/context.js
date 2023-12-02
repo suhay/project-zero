@@ -36,3 +36,22 @@ export const CategoryStatusProvider = ({ children }) => {
     </CategoryStatusContext.Provider>
   );
 };
+
+export const ActionButtonContext = createContext({
+  subCategoryStatus: "",
+  setSubCategoryStatus: (status) => {
+    console.log("in context status", status);
+  },
+});
+
+export const SubCategoryStatusProvider = ({ children }) => {
+  const [subCategoryStatus, setSubCategoryStatus] = useState("");
+
+  return (
+    <ActionButtonContext.Provider
+      value={{ subCategoryStatus, setSubCategoryStatus }}
+    >
+      {children}
+    </ActionButtonContext.Provider>
+  );
+};

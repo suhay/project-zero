@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import { ProductDetails } from "@/constants";
 import { CategoryStatusContext } from "@/src/context/context";
 import { useContext } from "react";
+import { Plus } from "react-feather";
 
 const style = {
   position: "absolute" as const,
@@ -68,7 +69,22 @@ export default function PageModal({
   };
   return (
     <div>
-      <Button onClick={handleOpen}>quick view</Button>
+      <Button
+        sx={{
+          backgroundColor: "#475956",
+          width: "360px",
+          "&:hover": {
+            backgroundColor: "#172a28",
+          },
+          color: "white",
+          fontStyle: "bold",
+          margin: "auto",
+          display: "block",
+        }}
+        onClick={handleOpen}
+      >
+        quick view
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -77,14 +93,34 @@ export default function PageModal({
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Product Name
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            product.
+          <Typography
+            id="modal-modal-description"
+            sx={{ mt: 2, marginBottom: 3 }}
+          >
+            $price
           </Typography>
-          <Button variant="outlined" onClick={addToJourney}>
-            {" "}
-            + add to your journey
+          <Button
+            variant="outlined"
+            onClick={addToJourney}
+            sx={{
+              backgroundColor: "#475956",
+              width: "330px",
+              "&:hover": {
+                backgroundColor: "#172a28",
+              },
+              color: "white",
+              fontStyle: "bold",
+              margin: "auto",
+              display: "flex",
+              gap: 2,
+            }}
+          >
+            <span className="my-auto">
+              <Plus className="w-4 h-4" />
+            </span>
+            <span>add to your journey</span>
           </Button>
         </Box>
       </Modal>

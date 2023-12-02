@@ -23,21 +23,17 @@ const Product = ({
   modal?: ReactNode;
 }) => {
   return (
-    <div className="border rounded-md relative my-4">
+    <div className="rounded-md relative my-4">
       <p className="absolute right-0 top-1">{tag}</p>
-      <Image src={img.src} alt={img.alt} width={400} height={600} />
-      <div className="m-6">
-        <p>{provider}</p>
-        <p>{title}</p>
-      </div>
-      <div className="m-6">
-        <div>
+      <Image src={img.src} alt={img.alt} width={400} height={300} />
+      <div className="border py-2">
+        <div className="ml-3 mr-3">
+          <p>{provider}</p>
+          <p>{title}</p>
           <Card.Bar description="Environment" stat={environment || "N/A"} />
-        </div>
-        <div className="my-2">
           <Card.Bar description="Quality" stat={quality || "N/A"} />
         </div>
-        {modal}
+        <div className="my-3">{modal}</div>
       </div>
     </div>
   );
