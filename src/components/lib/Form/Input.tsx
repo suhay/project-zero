@@ -6,7 +6,7 @@ import { Error } from "./Error";
 export type InputProps = {
   name: string;
   label: string;
-  type?: "text" | "email" | "password";
+  type?: "text" | "email";
   errors?: FieldErrors;
   icon?: React.ReactElement;
 } & Omit<

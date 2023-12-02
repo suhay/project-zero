@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { AppwriteException, ID } from "appwrite";
 import Link from "next/link";
-import { AtSign, Eye, User } from "react-feather";
+import { AtSign, User } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { account } from "@/src/utils/appwrite";
@@ -11,11 +11,14 @@ import { googleAuth, login, verifyEmail } from "@/src/utils/auth";
 import { Button } from "~/Button";
 import { Input } from "~/Form/Input";
 import { Error } from "~/Form/Error";
+import { Password } from "@/src/components/lib/Form/Password";
+import { Google } from "@/src/components/image/google";
 
 type Inputs = {
   email: string;
   username: string;
   password: string;
+  confirmPassword: string;
 };
 
 const SignUp = () => {
@@ -23,6 +26,7 @@ const SignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<Inputs>();
 
   const [error, setError] = useState("");
@@ -88,21 +92,23 @@ const SignUp = () => {
               icon={<AtSign size={15} />}
               data-testid="email"
               {...register("email", {
-                required: "Email is required",
+                required: "An email is required",
               })}
             />
-            <Input
-              type="password"
+            <Password<Inputs>
+              name="password"
               label="New password"
-              placeholder="Password"
-              data-testid="password"
               errors={errors}
               autoComplete="new-password"
-              icon={<Eye size={15} />}
-              {...register("password", {
-                required: "Password is required",
-                minLength: 8,
-              })}
+              confirm={{
+                name: "confirmPassword",
+                label: "Confirm password",
+                placeholder: "Confirm password",
+              }}
+              placeholder="Password"
+              register={register}
+              watch={watch}
+              includeCheckList
             />
             <Button.Simple type="submit" label="Sign up" />
             <Error message={error} />
@@ -113,6 +119,7 @@ const SignUp = () => {
             >
               <Button.Simple
                 variant="google"
+                icon={<Google />}
                 label="Sign up with Google"
                 onClick={signWithGoogle}
               />
