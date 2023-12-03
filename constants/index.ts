@@ -30,6 +30,12 @@ export interface Good {
   status?: string;
 }
 
+export enum STATUS {
+  NONE = "",
+  ACTIVE = "Active Improvements!",
+  COMPLETED = "Completed Improvements!",
+}
+
 export const GOODS: Good[] = [
   {
     key: "Laundry",
@@ -276,9 +282,9 @@ export const GOODS: Good[] = [
 ];
 
 export const CATEGORY_STATUS = [
-  { key: "Laundry", status: "" },
-  { key: "Personal Hygiene", status: "" },
-  { key: "Kitchen", status: "" },
-  { key: "Living Room", status: "" },
-  { key: "Bathroom", status: "" },
+  { key: "Laundry", status: STATUS.NONE },
+  { key: "Personal Hygiene", status: STATUS.NONE },
+  { key: "Kitchen", status: STATUS.NONE },
+  { key: "Living Room", status: STATUS.NONE },
+  { key: "Bathroom", status: STATUS.NONE },
 ];

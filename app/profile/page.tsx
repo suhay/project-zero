@@ -11,7 +11,7 @@ const Profile = () => {
   //state for syncing navbar with logged in user name
   const { setProfileStatus } = useContext(LoginContext);
   const [, setSelectedCategory] = useState("");
-  // console.log(GOODS);
+
   //update and display current user's profile name
   useEffect(() => {
     const fetchData = async () => {

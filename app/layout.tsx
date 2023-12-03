@@ -6,6 +6,7 @@ import {
   LoginProvider,
   CategoryStatusProvider,
   SubCategoryStatusProvider,
+  PantryProductProvider,
 } from "@/src/context/context";
 import ThemeRegistry from "@/src/components/ThemeRegistry/ThemeRegistry";
 import {
@@ -33,11 +34,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <LoginProvider>
             <CategoryStatusProvider>
               <SubCategoryStatusProvider>
-                <Navigation />
-                <main className="min-h-[calc(100vh-398px-24px)]">
-                  {children}
-                </main>
-                <Footer />
+                <PantryProductProvider>
+                  <Navigation />
+                  <main className="min-h-[calc(100vh-398px-24px)]">
+                    {children}
+                  </main>
+                  <Footer />
+                </PantryProductProvider>
               </SubCategoryStatusProvider>
             </CategoryStatusProvider>
           </LoginProvider>

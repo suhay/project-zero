@@ -39,7 +39,10 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const handleRemoveSubItem = () => {
     console.log("decodeURL", decodeURL);
     //change improve product icon
-    setSubCategoryStatus(decodeURL);
+    setSubCategoryStatus({
+      name: decodeURL,
+      status: matchingSubCategory.status,
+    });
     router.back();
   };
 
@@ -48,7 +51,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
       <div className="flex m-auto items-center profile">
         <Button.Back />
         <h2 className="ml-6 my-auto">{decodeURL}</h2>
-        <h3 className="ml-6 my-auto">status: {categoryStatus.status}</h3>
+        <h3 className="ml-6 my-auto">Status: {categoryStatus.status}</h3>
         <Button.Action
           tag="I don't need this product"
           onClick={handleRemoveSubItem}

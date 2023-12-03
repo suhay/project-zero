@@ -1,59 +1,28 @@
 "use client";
-import { CATEGORY_STATUS, GOODS, ProductDetails } from "@/constants";
+import { CATEGORY_STATUS, GOODS, ProductDetails, STATUS } from "@/constants";
 import { useRouter } from "next/navigation";
 import { Card } from "~/Card";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Plus, ShoppingBag, Zap } from "react-feather";
 import { Button } from "@/src/components/lib/Button";
 import {
   ActionButtonContext,
   CategoryStatusContext,
+  PantryContext,
 } from "@/src/context/context";
 
 const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categorySlug } = params;
   const router = useRouter();
-  const [, setJourneyStatus] = useState("In Progress");
-  const { categoryStatus, setCategoryStatus } = useContext(
-    CategoryStatusContext,
-  );
+  const { categoryStatus } = useContext(CategoryStatusContext);
   const { subCategoryStatus } = useContext(ActionButtonContext);
+  const { pantryProducts } = useContext(PantryContext);
 
-  const productDetails = (item: {
+  const onProductDetails = (item: {
     key: string;
     product: ProductDetails[];
     status?: string;
   }) => {
-    // const checkCompleteStatus = () => {
-    //   return item.status === "In Progress";
-    // };
-    // const checkActiveStatus = () => {
-    //   return item.status === "In Progress";
-    // };
-    // const isComplete = item.product.every(checkCompleteStatus);
-    // const isActive = item.product.some(checkActiveStatus);
-
-    // if (isComplete) {
-    //   item.status = "Hit all the basics";
-    //   setCategoryStatus({
-    //     category: item.key,
-    //     status: `Completed all ${item.key}`,
-    //   });
-    // } else {
-    //   item.status = "Not Started";
-    //   setCategoryStatus({
-    //     category: item.key,
-    //     status: `${item.key} not started`,
-    //   });
-    // }
-    // if (isActive) {
-    //   item.status = "Making progress";
-    //   setCategoryStatus({
-    //     category: item.key,
-    //     status: `Actively improving ${item.key} `,
-    //   });
-    // }
-    setCategoryStatus({ category: item.key, status: "In progress" });
     router.push(
       `/profile/product/${categorySlug}/${encodeURIComponent(
         item.key.toLowerCase(),
@@ -66,13 +35,13 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
       const normalize =
         categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1);
       if (item.key === normalize) {
-        item.status = "In Progress";
-        setJourneyStatus("In Progress");
+        item.status = STATUS.ACTIVE;
         //TODO: change profile/category css to change based on status change
       }
     });
   }, [categorySlug]);
 
+  console.log("in category", subCategoryStatus.status);
   const updateGoods = GOODS.filter(
     (good) => good.key.toLowerCase() === categorySlug,
   ).map((good) =>
@@ -80,14 +49,16 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
       <>
         <button
           onClick={() => {
-            productDetails(item);
+            onProductDetails(item);
           }}
           className="border-green-600 rounded-[25px] py-3 px-8 border flex gap-1"
           key={index}
         >
           <span className="my-auto">
-            {item.key.toLowerCase() === subCategoryStatus ? (
+            {item.key.toLowerCase() === subCategoryStatus.name ? (
               <Zap className="w-4 h-4" />
+            ) : subCategoryStatus.status === STATUS.COMPLETED ? (
+              good.value.splice(index, 1) && null
             ) : (
               <Plus className="w-4 h-4" />
             )}
@@ -98,6 +69,10 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     )),
   );
 
+  // console.log("update goods", updateGoods);
+
+  //display first goods in Selection section temp
+  //TODO: seems like we need to display all as product carousel?
   const displayProducts = GOODS.filter(
     (good) => good.key.toLowerCase() === decodeURIComponent(categorySlug),
   ).map((good) => good.value.map((v) => v.product[0]));
@@ -119,11 +94,13 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
       </section>
       <section className="profile my-12">
         <h3>Improve Products</h3>
+        {/* add/remove from this section based on status updates */}
         <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
         <div className="flex gap-2">{updateGoods}</div>
       </section>
       <section className="profile">
         <h3>Your Interest Selections</h3>
+        {/* TODO: Clarify, added(interested) products are updated here and in pantry*/}
         <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
         <div className="flex">
           {updateGoods?.map((good, idx) => (
@@ -150,6 +127,43 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
             </ul>
           ))}
         </div>
+      </section>
+      <section className="profile">
+        <h3>Pantry</h3>
+        {pantryProducts.map((product, i) => (
+          <div className="flex border-green-800" key={i}>
+            <li className="list-none w-[300px] border">
+              <button
+                onClick={() => {
+                  onProductDetails(product.key);
+                }}
+                className="border-green-600 rounded-[25px] py-3 px-8 border flex gap-1"
+                key={i}
+              >
+                <span className="my-auto">
+                  {product.key.key.toLowerCase() === subCategoryStatus.name ? (
+                    <Zap className="w-4 h-4" />
+                  ) : (
+                    <Plus className="w-4 h-4" />
+                  )}
+                </span>
+                <span className="text-sm">{product.key.key}</span>
+              </button>
+              <Card.Product
+                key={product.value}
+                tag={<Button.Tag tag={product.value.tag} />}
+                img={{
+                  src: "/assets/product-demo.png",
+                  alt: `${product.value.title}`,
+                }}
+                provider={product.value.provider}
+                title={product.value.title}
+                environment={product.value.environment}
+                quality={product.value.quality}
+              />
+            </li>
+          </div>
+        ))}
       </section>
     </div>
   );

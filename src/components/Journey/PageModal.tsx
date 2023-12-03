@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { ProductDetails } from "@/constants";
-import { CategoryStatusContext } from "@/src/context/context";
+import { ProductDetails, STATUS } from "@/constants";
+import { CategoryStatusContext, PantryContext } from "@/src/context/context";
 import { useContext } from "react";
 import { Plus } from "react-feather";
 
@@ -27,45 +27,57 @@ export default function PageModal({
   product: ProductDetails;
   subCategory: { key: string; product: ProductDetails[]; status: string };
 }) {
+  console.log("subcategory", subCategory);
+  const { setPantryProducts } = useContext(PantryContext);
   const { setCategoryStatus } = useContext(CategoryStatusContext);
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const addToJourney = () => {
-    //update current product's status to in progress
-    product.status = "In Progress";
-    //depends on subCategory's product length and each status
-    const checkCompleteStatus = () => {
-      return product.status === "In Progress";
-    };
-    const checkActiveStatus = () => {
-      return product.status === "In Progress";
-    };
-    const isComplete = subCategory.product.every(checkCompleteStatus);
-    const isActive = subCategory.product.some(checkActiveStatus);
+    //update current product's status to active
+    product.status = STATUS.ACTIVE;
 
-    if (isComplete) {
-      subCategory.status = "Hit all the basics";
+    setPantryProducts([
+      {
+        key: subCategory,
+        value: product,
+      },
+    ]);
+
+    const checkCompleteStatus = () => {
+      return subCategory.product.every(
+        (product) => product.status === STATUS.ACTIVE,
+      );
+    };
+
+    const checkActiveStatus = () => {
+      return subCategory.product.some(
+        (product) => product.status === STATUS.ACTIVE,
+      );
+    };
+
+    //update category's status depends on current subCategory's product list length and each status
+    if (checkCompleteStatus()) {
+      subCategory.status = STATUS.COMPLETED;
+      console.log("Modal", subCategory, subCategory.status);
       setCategoryStatus({
         category: subCategory.key,
-        status: `Completed all ${subCategory.key}`,
+        status: `${STATUS.COMPLETED}(${subCategory.key})`,
+      });
+    } else if (checkActiveStatus()) {
+      subCategory.status = STATUS.ACTIVE;
+      setCategoryStatus({
+        category: subCategory.key,
+        status: `${STATUS.ACTIVE} (${subCategory.key})`,
       });
     } else {
-      subCategory.status = "Not Started";
+      subCategory.status = STATUS.NONE;
       setCategoryStatus({
         category: subCategory.key,
         status: `${subCategory.key} not started`,
       });
     }
-    if (isActive) {
-      subCategory.status = "Making progress";
-      setCategoryStatus({
-        category: subCategory.key,
-        status: `Active improving ${subCategory.key} `,
-      });
-    }
-    console.log("after update", subCategory);
+    console.log("Modal after update", subCategory);
   };
   return (
     <div>

@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useState } from "react";
+import { ProductDetails } from "@/constants";
 
 export const LoginContext = createContext({
   profileStatus: "",
@@ -38,7 +39,7 @@ export const CategoryStatusProvider = ({ children }) => {
 };
 
 export const ActionButtonContext = createContext({
-  subCategoryStatus: "",
+  subCategoryStatus: { name: "", status: "" },
   setSubCategoryStatus: (status) => {
     console.log("in context status", status);
   },
@@ -53,5 +54,22 @@ export const SubCategoryStatusProvider = ({ children }) => {
     >
       {children}
     </ActionButtonContext.Provider>
+  );
+};
+
+export const PantryContext = createContext({
+  pantryProducts: [{ key: { key: "", product: [] }, value: ProductDetails }],
+  setPantryProducts: (product) => {
+    console.log("in context status", product);
+  },
+});
+
+export const PantryProductProvider = ({ children }) => {
+  const [pantryProducts, setPantryProducts] = useState([]);
+
+  return (
+    <PantryContext.Provider value={{ pantryProducts, setPantryProducts }}>
+      {children}
+    </PantryContext.Provider>
   );
 };
