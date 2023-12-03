@@ -1,21 +1,23 @@
-import Link from "next/link";
+"use client";
+import { useRouter } from "next/navigation";
+import { LoginContext } from "../../src/context/context";
+import { useContext, useEffect } from "react";
+import DefaultDashboard from "@/src/components/Journey/DefaultDashboard";
 
+// const Dashboard = ({ params }: { params: { category: string } }) => {
 const Dashboard = () => {
-  return (
-    <div className="authContainer">
-      <h2>Welcome, ZeroIn Enthusiast!</h2>
-      <section className="py-10">
-        <div>Category</div>
-        <div>Status</div>
-        <div>Pantry</div>
-      </section>
+  const { profileStatus } = useContext(LoginContext);
+  const router = useRouter();
 
-      <div>
-        Already have an account?
-        <Link href="/signup" className="text-green hover:font-bold">
-          SignUp
-        </Link>
-      </div>
+  useEffect(() => {
+    if (profileStatus) {
+      router.push("/profile/");
+    }
+  }, [profileStatus, router]);
+
+  return (
+    <div className="bg-secondary-300">
+      {!profileStatus ? <DefaultDashboard /> : null}
     </div>
   );
 };

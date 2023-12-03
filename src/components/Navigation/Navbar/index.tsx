@@ -1,7 +1,8 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 import { NAV_LINKS } from "@/constants";
-import AccountMenu from "../../account/account";
+import AccountMenu from "../../Account/Account";
 interface NavbarProps {
   hideNavbar: boolean;
   profileStatus: string;
@@ -10,7 +11,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
   return (
     <div
-      className={`${hideNavbar ? "hidden sm:block" : "navbar justify-end"}`}
+      className={`${hideNavbar ? "hidden sm:block" : "navbar"} ml-auto right-0`}
       data-testid="navbar"
     >
       {NAV_LINKS.map((link) =>
@@ -20,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
           <Link
             href={link.href}
             key={link.key}
-            className="cursor-pointer hover:font-bold"
+            className="cursor-pointer hover:font-bold mr-4"
           >
             {link.label}
           </Link>
