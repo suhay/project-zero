@@ -18,18 +18,6 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { subCategoryStatus } = useContext(ActionButtonContext);
   const { pantryProducts } = useContext(PantryContext);
 
-  const onProductDetails = (item: {
-    key: string;
-    product: ProductDetails[];
-    status?: string;
-  }) => {
-    router.push(
-      `/profile/product/${categorySlug}/${encodeURIComponent(
-        item.key.toLowerCase(),
-      )}`,
-    );
-  };
-
   useEffect(() => {
     CATEGORY_STATUS.forEach((item) => {
       const normalize =
@@ -41,35 +29,54 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     });
   }, [categorySlug]);
 
-  console.log("in category", subCategoryStatus.status);
+  console.log("in category", subCategoryStatus.name);
   const updateGoods = GOODS.filter(
     (good) => good.key.toLowerCase() === categorySlug,
   ).map((good) =>
-    good.value.map((item, index) => (
-      <>
-        <button
-          onClick={() => {
-            onProductDetails(item);
-          }}
-          className="border-green-600 rounded-[25px] py-3 px-8 border flex gap-1"
-          key={index}
-        >
-          <span className="my-auto">
-            {item.key.toLowerCase() === subCategoryStatus.name ? (
-              <Zap className="w-4 h-4" />
-            ) : subCategoryStatus.status === STATUS.COMPLETED ? (
-              good.value.splice(index, 1) && null
-            ) : (
-              <Plus className="w-4 h-4" />
-            )}
-          </span>
-          <span className="text-sm">{item.key}</span>
-        </button>
-      </>
-    )),
+    good.value.map((item, index) => {
+      console.log(item.key, item.status, subCategoryStatus.name);
+      return (
+        <>
+          <button
+            onClick={() => {
+              onProductDetails(item);
+            }}
+            className="border-green-600 rounded-[25px] py-3 px-8 border flex gap-1"
+            key={index}
+          >
+            <span className="my-auto">
+              {item.key.toLowerCase() === subCategoryStatus.name ? (
+                <Zap className="w-4 h-4" />
+              ) : //delete from the section when current good's status is completed
+              //TODO: Need to sync updated goods in pages
+              item.key === subCategoryStatus.name &&
+                item.status === STATUS.COMPLETED ? (
+                good.value.splice(index, 1) && null
+              ) : (
+                <Plus className="w-4 h-4" />
+              )}
+            </span>
+            <span className="text-sm">{item.key}</span>
+          </button>
+        </>
+      );
+    }),
   );
 
-  // console.log("update goods", updateGoods);
+  //TODO: tried to pass data to SubCategory page as part of params for syncing data
+  //not sure if it's ideal
+  const onProductDetails = (item: {
+    key: string;
+    product: ProductDetails[];
+    status?: string;
+  }) => {
+    router.push(
+      `/profile/product/${categorySlug}/${encodeURIComponent(
+        item.key.toLowerCase(),
+        //?data=${encodeURIComponent(JSON.stringify(updateGoods)}
+      )}`,
+    );
+  };
 
   //display first goods in Selection section temp
   //TODO: seems like we need to display all as product carousel?

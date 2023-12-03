@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { GOODS } from "@/constants";
+import { GOODS, STATUS } from "@/constants";
 import { Button } from "@/src/components/lib/Button";
 import { Card } from "~/Card";
 import PageModal from "@/src/components/Journey/PageModal";
@@ -34,14 +34,13 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
     }
   }
 
-  //when click I don't need this product, just go back to prev page
-  //currently, category's status will only be affected by adding individual product
   const handleRemoveSubItem = () => {
     console.log("decodeURL", decodeURL);
-    //change improve product icon
+    //change good's icon and status
+    //TODO: sync/update categorySlug page status
     setSubCategoryStatus({
       name: decodeURL,
-      status: matchingSubCategory.status,
+      status: STATUS.NONE,
     });
     router.back();
   };
@@ -97,5 +96,4 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
     </section>
   );
 };
-
 export default SubCategory;

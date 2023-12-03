@@ -39,7 +39,7 @@ export const CategoryStatusProvider = ({ children }) => {
 };
 
 export const ActionButtonContext = createContext({
-  subCategoryStatus: { name: "", status: "" },
+  subCategoryStatus: { name: "" },
   setSubCategoryStatus: (status) => {
     console.log("in context status", status);
   },

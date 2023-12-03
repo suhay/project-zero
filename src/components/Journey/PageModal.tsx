@@ -27,7 +27,6 @@ export default function PageModal({
   product: ProductDetails;
   subCategory: { key: string; product: ProductDetails[]; status: string };
 }) {
-  console.log("subcategory", subCategory);
   const { setPantryProducts } = useContext(PantryContext);
   const { setCategoryStatus } = useContext(CategoryStatusContext);
   const [open, setOpen] = React.useState(false);
@@ -59,7 +58,6 @@ export default function PageModal({
     //update category's status depends on current subCategory's product list length and each status
     if (checkCompleteStatus()) {
       subCategory.status = STATUS.COMPLETED;
-      console.log("Modal", subCategory, subCategory.status);
       setCategoryStatus({
         category: subCategory.key,
         status: `${STATUS.COMPLETED}(${subCategory.key})`,
@@ -77,7 +75,7 @@ export default function PageModal({
         status: `${subCategory.key} not started`,
       });
     }
-    console.log("Modal after update", subCategory);
+    // console.log("Modal after update", subCategory);
   };
   return (
     <div>
