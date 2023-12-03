@@ -36,7 +36,10 @@ describe("SignUp", () => {
       target: { value: "test@test.com" },
     });
     fireEvent.change(screen.getByTestId("password"), {
-      target: { value: "test_password" },
+      target: { value: "test_password1" },
+    });
+    fireEvent.change(screen.getByTestId("confirmPassword"), {
+      target: { value: "test_password1" },
     });
 
     const userSignUpMock = jest.fn();
@@ -54,7 +57,7 @@ describe("SignUp", () => {
     expect(userSignUpMock).toHaveBeenCalledWith(
       expect.any(String),
       "test@test.com",
-      "test_password",
+      "test_password1",
       "test_username",
     );
   });

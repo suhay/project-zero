@@ -23,7 +23,10 @@ const Password = () => {
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
     try {
-      await account.createRecovery(data.email, "http://localhost:3000/resetpw");
+      await account.createRecovery(
+        data.email,
+        process.env.NEXT_PUBLIC_APPWRITE_RECOVERY ?? "",
+      );
       localStorage.setItem("email", data.email.toString());
       setMessage("Help is on the way!");
     } catch (e) {

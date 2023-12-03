@@ -3,14 +3,13 @@ import { useEffect, useState } from "react";
 
 import { AppwriteException } from "appwrite";
 import { useRouter } from "next/navigation";
-import { Eye, Lock } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { account } from "@/src/utils/appwrite";
 import { getWindowUserIdSecret, login } from "@/src/utils/auth";
 import { Button } from "~/Button";
-import { Input } from "~/Form/Input";
 import { Error } from "~/Form/Error";
+import { Password } from "@/src/components/lib/Form/Password";
 
 export type Inputs = {
   email: string;
@@ -36,6 +35,7 @@ const ResetPassword = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -92,31 +92,20 @@ const ResetPassword = () => {
           <p className="text-center text-lg font-medium">
             Let’s get you back in there.
           </p>
-          <Input
-            type="password"
+          <Password<Inputs>
+            name="password"
             label="New password"
+            errors={errors}
+            autoComplete="new-password"
+            confirm={{
+              name: "confirmPassword",
+              label: "Confirm password",
+              placeholder: "Confirm password",
+            }}
             placeholder="Password"
-            data-testid="password"
-            errors={errors}
-            autoComplete="new-password"
-            icon={<Eye size={15} />}
-            {...register("password", {
-              required: "Password is required",
-              minLength: 8,
-            })}
-          />
-          <Input
-            type="password"
-            label="Confirm New password"
-            placeholder="Confirm Password"
-            data-testid="confirmPassword"
-            errors={errors}
-            autoComplete="new-password"
-            icon={<Lock size={15} />}
-            {...register("confirmPassword", {
-              required: "You must confirm the password",
-              minLength: 8,
-            })}
+            register={register}
+            watch={watch}
+            includeCheckList
           />
           <Button.Simple type="submit" label="Submit" />
           <Error message={error} />

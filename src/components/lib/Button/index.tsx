@@ -14,7 +14,7 @@ export const variantClass: Record<Variant, string> = {
     "bg-primary-500 hover:bg-primary-300 focus-visible:outline-primary-300 text-white",
   secondary:
     "bg-secondary-500 hover:bg-secondary-600 focus-visible:outline-secondary-600 text-black",
-  google: "bg-google text-white",
+  google: "border border-google text-black",
   action:
     "bg-secondary-600 focus-visible:outline-secondary-600 hover:bg-secondary-700 text-black rounded-[50px]",
   "no action":

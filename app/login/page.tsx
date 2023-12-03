@@ -4,7 +4,7 @@ import React from "react";
 import { AppwriteException } from "appwrite";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { AtSign, Eye } from "react-feather";
+import { AtSign } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { account } from "@/src/utils/appwrite";
@@ -12,6 +12,8 @@ import { googleAuth, login } from "@/src/utils/auth";
 import { Button } from "~/Button";
 import { Error } from "~/Form/Error";
 import { Input } from "~/Form/Input";
+import { Google } from "@/src/components/image/google";
+import { Password } from "@/src/components/lib/Form/Password";
 
 type Inputs = {
   email: string;
@@ -26,6 +28,7 @@ const LogIn = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
@@ -69,14 +72,14 @@ const LogIn = () => {
             icon={<AtSign size={15} />}
             {...register("email", { required: "Email is required" })}
           />
-          <Input
-            label="Password"
-            type="password"
-            placeholder="Password"
+          <Password<Inputs>
+            label="New password"
+            name="password"
             errors={errors}
             autoComplete="current-password"
-            icon={<Eye size={15} />}
-            {...register("password", { required: "Password is required" })}
+            placeholder="Password"
+            register={register}
+            watch={watch}
           />
           <Button.Simple type="submit" label="Sign in" />
           <Error message={loginError} />
@@ -87,6 +90,7 @@ const LogIn = () => {
           >
             <Button.Simple
               variant="google"
+              icon={<Google />}
               label="Sign in with Google"
               onClick={signWithGoogle}
             />
