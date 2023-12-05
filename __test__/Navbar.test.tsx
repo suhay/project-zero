@@ -9,7 +9,9 @@ import React from "react";
 
 describe("Navbar", () => {
   it.skip("should render navbar class name", () => {
-    render(<Navbar hideNavbar={false} profileStatus={"username"} />);
+    render(
+      <Navbar hideNavbar={false} profileStatus={{ name: "username" } as any} />,
+    );
 
     const navbarElem = screen.getByTestId("navbar");
     expect(navbarElem).toHaveClass("navbar");
