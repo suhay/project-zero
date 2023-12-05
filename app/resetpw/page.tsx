@@ -23,6 +23,7 @@ const ResetPassword = () => {
   const [userId, setUserId] = useState("");
   const [error, setError] = useState("");
   const [lost, setLost] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const { secret, userId } = getWindowUserIdSecret();
@@ -40,6 +41,7 @@ const ResetPassword = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
+      setIsLoading(true);
       await account.updateRecovery(
         userId,
         secret,
@@ -60,6 +62,8 @@ const ResetPassword = () => {
       } else {
         console.log("Other Error: ", error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -107,7 +111,7 @@ const ResetPassword = () => {
             watch={watch}
             includeCheckList
           />
-          <Button.Simple type="submit" label="Submit" />
+          <Button.Simple type="submit" label="Submit" isLoading={isLoading} />
           <Error message={error} />
         </form>
       </div>

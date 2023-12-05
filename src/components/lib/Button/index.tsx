@@ -11,7 +11,8 @@ export const buttonClass =
 
 export const variantClass: Record<Variant, string> = {
   primary:
-    "bg-primary-500 hover:bg-primary-300 focus-visible:outline-primary-300 text-white",
+    "bg-primary-500 hover:bg-primary-300 focus-visible:outline-primary-300 text-white " +
+    "disabled:bg-primary-200",
   secondary:
     "bg-secondary-500 hover:bg-secondary-600 focus-visible:outline-secondary-600 text-black",
   google: "border border-google text-black",
