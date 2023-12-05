@@ -16,5 +16,6 @@ module.exports = {
         patterns: ["@mui/*/*/*"],
       },
     ],
+    "@typescript-eslint/no-explicit-any": "off",
   },
 };

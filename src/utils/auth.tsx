@@ -43,14 +43,13 @@ export const login = async (email: string, password: string) => {
   }
 };
 
-export const googleAuth = () => {
+export const googleAuth = async () => {
   try {
-    const data = account.createOAuth2Session(
+    account.createOAuth2Session(
       "google",
       process.env.NEXT_PUBLIC_OAUTH_SUCCESS,
       process.env.NEXT_PUBLIC_OAUTH_FAILURE,
     );
-    return data;
   } catch (error) {
     console.log("Error: ", error);
   }
