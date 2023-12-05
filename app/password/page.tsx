@@ -20,9 +20,11 @@ const Password = () => {
     formState: { errors },
   } = useForm<Input>();
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
     try {
+      setIsLoading(true);
       await account.createRecovery(
         data.email,
         process.env.NEXT_PUBLIC_APPWRITE_RECOVERY ?? "",
@@ -31,6 +33,8 @@ const Password = () => {
       setMessage("Help is on the way!");
     } catch (e) {
       console.log("Reset Password Error: ", e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -57,7 +61,11 @@ const Password = () => {
             icon={<AtSign size={15} />}
             {...register("email", { required: "Email is required" })}
           />
-          <Button.Simple type="submit" label="Send help" />
+          <Button.Simple
+            type="submit"
+            label="Send help"
+            isLoading={isLoading}
+          />
           {message != null && (
             <div className="text-green-500 text-sm text-center">{message}</div>
           )}

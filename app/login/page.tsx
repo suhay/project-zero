@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 import { AtSign } from "react-feather";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import { Google } from "@/src/components/image/google";
+import { Password } from "@/src/components/lib/Form/Password";
 import { account } from "@/src/utils/appwrite";
 import { googleAuth, login } from "@/src/utils/auth";
 import { Button } from "~/Button";
 import { Error } from "~/Form/Error";
 import { Input } from "~/Form/Input";
-import { Google } from "@/src/components/image/google";
-import { Password } from "@/src/components/lib/Form/Password";
 
 type Inputs = {
   email: string;
@@ -23,6 +23,7 @@ type Inputs = {
 const LogIn = () => {
   const router = useRouter();
   const [loginError, setLoginError] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const {
     register,
@@ -33,6 +34,7 @@ const LogIn = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     try {
+      setIsLoading(true);
       await login(data.email, data.password);
       await account.get();
       router.push("/profile");
@@ -43,6 +45,8 @@ const LogIn = () => {
       } else {
         console.log("Other error", e);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -81,7 +85,7 @@ const LogIn = () => {
             register={register}
             watch={watch}
           />
-          <Button.Simple type="submit" label="Sign in" />
+          <Button.Simple type="submit" label="Sign in" isLoading={isLoading} />
           <Error message={loginError} />
           <div
             className="border-t border-t-gray-300 pt-4 before:content-['or'] 

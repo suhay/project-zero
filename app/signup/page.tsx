@@ -31,9 +31,11 @@ const SignUp = () => {
 
   const [error, setError] = useState("");
   const [isVerified, setIsVerified] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
+      setIsLoading(true);
       await account.create(
         ID.unique(),
         data.email,
@@ -50,6 +52,8 @@ const SignUp = () => {
       } else {
         console.log("Sign up Error: ", e);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -110,7 +114,11 @@ const SignUp = () => {
               watch={watch}
               includeCheckList
             />
-            <Button.Simple type="submit" label="Sign up" />
+            <Button.Simple
+              type="submit"
+              label="Sign up"
+              isLoading={isLoading}
+            />
             <Error message={error} />
             <div
               className="border-t border-t-gray-300 pt-4 before:content-['or'] 
