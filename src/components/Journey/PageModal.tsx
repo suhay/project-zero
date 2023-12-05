@@ -1,4 +1,5 @@
 import * as React from "react";
+import { signal } from "@preact/signals-react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -20,6 +21,9 @@ const style = {
   p: 4,
 };
 
+//to pass to category page for checking status
+export const sub = signal("default");
+
 export default function PageModal({
   product,
   subCategory,
@@ -27,6 +31,7 @@ export default function PageModal({
   product: ProductDetails;
   subCategory: { key: string; product: ProductDetails[]; status: string };
 }) {
+  // console.log("in PageModal", subCategory.key);
   const { setPantryProducts } = useContext(PantryContext);
   const { setCategoryStatus } = useContext(CategoryStatusContext);
   const [open, setOpen] = React.useState(false);
@@ -35,7 +40,6 @@ export default function PageModal({
   const addToJourney = () => {
     //update current product's status to active
     product.status = STATUS.ACTIVE;
-
     setPantryProducts([
       {
         key: subCategory,
@@ -58,6 +62,7 @@ export default function PageModal({
     //update category's status depends on current subCategory's product list length and each status
     if (checkCompleteStatus()) {
       subCategory.status = STATUS.COMPLETED;
+      sub.value = subCategory.key; //to delete from improve products section
       setCategoryStatus({
         category: subCategory.key,
         status: `${STATUS.COMPLETED}(${subCategory.key})`,

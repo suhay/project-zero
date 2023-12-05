@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 
 import { useRouter } from "next/navigation";
 import { Plus, ShoppingBag, Zap } from "react-feather";
+import { sub } from "@/src/components/Journey/PageModal";
 
 import { CATEGORY_STATUS, GOODS, ProductDetails, STATUS } from "@/constants";
 import { Button } from "@/src/components/lib/Button";
@@ -31,12 +32,12 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     });
   }, [categorySlug]);
 
-  console.log("in category", subCategoryStatus?.name);
+  // console.log("in category", sub.value);
   const updateGoods = GOODS.filter(
     (good) => good.key.toLowerCase() === categorySlug,
   ).map((good) =>
     good.value.map((item, index) => {
-      console.log(item.key, item.status, subCategoryStatus?.name);
+      // console.log(item.key, item.status, sub.value);
       return (
         <>
           <button
@@ -50,9 +51,7 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
               {item.key.toLowerCase() === subCategoryStatus?.name ? (
                 <Zap className="w-4 h-4" />
               ) : //delete from the section when current good's status is completed
-              //TODO: Need to sync updated goods in pages
-              item.key === subCategoryStatus?.name &&
-                item.status === STATUS.COMPLETED ? (
+              item.key === sub.value && item.status === STATUS.COMPLETED ? (
                 good.value.splice(index, 1) && null
               ) : (
                 <Plus className="w-4 h-4" />
