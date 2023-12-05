@@ -1,15 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { useRouter } from "next/navigation";
 
 import { CATEGORIES } from "@/constants";
 import { useUserData } from "@/src/hooks/useUserData";
+import { PantryContext } from "@/src/context/context";
+import { Card } from "@/src/components/lib/Card";
+import { Button } from "@/src/components/lib/Button";
 
 const Profile = () => {
   const router = useRouter();
   const [, setSelectedCategory] = useState("");
   const { userProfile, loading } = useUserData({});
+  const { pantryProducts } = useContext(PantryContext);
 
   const chooseCategory = (category: string) => {
     setSelectedCategory(category);
@@ -44,8 +48,42 @@ const Profile = () => {
               </button>
             ))}
           </div>
-          {/* //TODO when in progress or active improving, show pantry */}
+          {/* when added product, pantry displays synced good - TODO persist after router render */}
           Your Pantry
+          <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
+          {pantryProducts ? (
+            <section className="profile">
+              <div className="flex">
+                {pantryProducts.map((product, i) => (
+                  <ul className="flex border-green-800" key={i}>
+                    <span className="text-sm">
+                      <button
+                        onClick={() => {
+                          // onProductDetails(product.key);
+                        }}
+                        className="border-green-600 rounded-[25px] py-3 px-8 border flex gap-1"
+                        key={i}
+                      >
+                        {product.key.key}
+                      </button>
+                      <Card.Product
+                        key={product.value.title}
+                        tag={<Button.Tag tag={product.value.tag} />}
+                        img={{
+                          src: "/assets/product-demo.png",
+                          alt: `${product.value.title}`,
+                        }}
+                        provider={product.value.provider}
+                        title={product.value.title}
+                        environment={product.value.environment}
+                        quality={product.value.quality}
+                      />
+                    </span>
+                  </ul>
+                ))}
+              </div>
+            </section>
+          ) : null}
         </div>
       )}
     </div>

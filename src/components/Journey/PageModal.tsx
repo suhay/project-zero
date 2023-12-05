@@ -37,27 +37,29 @@ export default function PageModal({
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const checkCompleteStatus = () => {
+    return subCategory.product.every(
+      (product) => product.status === STATUS.ACTIVE,
+    );
+  };
+
+  const checkActiveStatus = () => {
+    return subCategory.product.some(
+      (product) => product.status === STATUS.ACTIVE,
+    );
+  };
+
   const addToJourney = () => {
     //update current product's status to active
     product.status = STATUS.ACTIVE;
-    setPantryProducts([
+    setPantryProducts((previousPantry) => [
+      ...previousPantry,
       {
         key: subCategory,
         value: product,
       },
     ]);
-
-    const checkCompleteStatus = () => {
-      return subCategory.product.every(
-        (product) => product.status === STATUS.ACTIVE,
-      );
-    };
-
-    const checkActiveStatus = () => {
-      return subCategory.product.some(
-        (product) => product.status === STATUS.ACTIVE,
-      );
-    };
 
     //update category's status depends on current subCategory's product list length and each status
     if (checkCompleteStatus()) {

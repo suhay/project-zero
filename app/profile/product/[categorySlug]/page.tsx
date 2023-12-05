@@ -10,7 +10,6 @@ import { Button } from "@/src/components/lib/Button";
 import {
   ActionButtonContext,
   CategoryStatusContext,
-  PantryContext,
 } from "@/src/context/context";
 import { Card } from "~/Card";
 
@@ -19,7 +18,6 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
   const router = useRouter();
   const { categoryStatus } = useContext(CategoryStatusContext);
   const { subCategoryStatus } = useContext(ActionButtonContext);
-  const { pantryProducts } = useContext(PantryContext);
 
   useEffect(() => {
     CATEGORY_STATUS.forEach((item) => {
@@ -108,7 +106,7 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
       </section>
       <section className="profile">
         <h3>Your Interest Selections</h3>
-        {/* TODO: Clarify, added(interested) products are updated here and in pantry*/}
+        {/* TODO: products are added from the left additionally on top of current sub selections*/}
         <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
         <div className="flex">
           {updateGoods?.map((good, idx) => (
@@ -135,43 +133,6 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
             </ul>
           ))}
         </div>
-      </section>
-      <section className="profile">
-        <h3>Pantry</h3>
-        {pantryProducts.map((product, i) => (
-          <div className="flex border-green-800" key={i}>
-            <li className="list-none w-[300px] border">
-              <button
-                onClick={() => {
-                  onProductDetails(product.key);
-                }}
-                className="border-green-600 rounded-[25px] py-3 px-8 border flex gap-1"
-                key={i}
-              >
-                <span className="my-auto">
-                  {product.key.key.toLowerCase() === subCategoryStatus?.name ? (
-                    <Zap className="w-4 h-4" />
-                  ) : (
-                    <Plus className="w-4 h-4" />
-                  )}
-                </span>
-                <span className="text-sm">{product.key.key}</span>
-              </button>
-              <Card.Product
-                key={product.value.title}
-                tag={<Button.Tag tag={product.value.tag} />}
-                img={{
-                  src: "/assets/product-demo.png",
-                  alt: `${product.value.title}`,
-                }}
-                provider={product.value.provider}
-                title={product.value.title}
-                environment={product.value.environment}
-                quality={product.value.quality}
-              />
-            </li>
-          </div>
-        ))}
       </section>
     </div>
   );
