@@ -1,43 +1,36 @@
 "use client";
-import { useEffect, useState, useContext } from "react";
-import { account } from "../../src/utils/appwrite";
+import { useState } from "react";
+
 import { useRouter } from "next/navigation";
-import { LoginContext } from "../../src/context/context";
+
 import { CATEGORIES } from "@/constants";
+import { useUserData } from "@/src/hooks/useUserData";
 
 const Profile = () => {
   const router = useRouter();
-  const [userProfile, setUserProfile] = useState("");
-  //state for syncing navbar with logged in user name
-  const { setProfileStatus } = useContext(LoginContext);
   const [, setSelectedCategory] = useState("");
-
-  //update and display current user's profile name
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userData = await account.get();
-        // console.log("User data:", userData);
-        setUserProfile(userData.name);
-        setProfileStatus(userData.name);
-        router.push("/profile");
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-    fetchData();
-  }, [router, setProfileStatus]);
+  const { userProfile, loading } = useUserData({});
 
   const chooseCategory = (category: string) => {
     setSelectedCategory(category);
     router.push(`/profile/product/${category.toLowerCase()}`);
   };
 
+  if (loading) {
+    return (
+      <div className="mx-auto py-6">
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="profile relative">
       {userProfile && (
         <div className="mx-auto py-6">
-          <h2>{userProfile ? `Welcome, ${userProfile}!` : "Loading..."}</h2>
+          <h2>
+            {userProfile ? `Welcome, ${userProfile.name}!` : "Loading..."}
+          </h2>
           <div className="flex my-20 py-auto gap-6">
             {CATEGORIES.map((c) => (
               <button

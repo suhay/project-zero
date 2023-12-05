@@ -5,6 +5,7 @@ author:
 date: 2023-11-13
 tags: LocalPlaces
 excerpt: If you’re traveling south along the Pacific Coast Highway, through the coastal cities of North County San Diego, you’ll be able to visit a little gem that is nestled in the shopping center of the Lumberyard. There, you’ll find Local Scoop
+coverImage: "/assets/posts/local-scoop/cover.jpg"
 ---
 
 If you’re traveling south along the Pacific Coast Highway, through the coastal cities of North County San Diego, you’ll be able to visit a little gem that is nestled in the shopping center of the Lumberyard. There, you’ll find Local Scoop, founded by Katie Fletcher, a zero-waste food store that offers customers a selection of certified organic essential food items in bulk, and in packaging that is simply tasteful to the eyes but not wasteful for the earth.

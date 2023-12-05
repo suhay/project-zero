@@ -1,10 +1,9 @@
 import { account } from "./appwrite";
+import { paths } from "./env";
 
 export const verifyEmail = async () => {
   try {
-    await account.createVerification(
-      process.env.NEXT_PUBLIC_APPWRITE_VERIFY ?? "",
-    );
+    await account.createVerification(paths.VERIFY_EMAIL);
   } catch (error) {
     console.log("Error: ", error);
   }
@@ -43,14 +42,13 @@ export const login = async (email: string, password: string) => {
   }
 };
 
-export const googleAuth = () => {
+export const googleAuth = async () => {
   try {
-    const data = account.createOAuth2Session(
+    account.createOAuth2Session(
       "google",
-      process.env.NEXT_PUBLIC_OAUTH_SUCCESS,
-      process.env.NEXT_PUBLIC_OAUTH_FAILURE,
+      paths.OAUTH_SUCCESS,
+      paths.OAUTH_FAILURE,
     );
-    return data;
   } catch (error) {
     console.log("Error: ", error);
   }

@@ -1,14 +1,16 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { GOODS, STATUS } from "@/constants";
-import { Button } from "@/src/components/lib/Button";
-import { Card } from "~/Card";
-import PageModal from "@/src/components/Journey/PageModal";
 import { Key, useContext } from "react";
+
+import { useRouter } from "next/navigation";
+
+import { GOODS, STATUS } from "@/constants";
+import PageModal from "@/src/components/Journey/PageModal";
+import { Button } from "@/src/components/lib/Button";
 import {
   ActionButtonContext,
   CategoryStatusContext,
 } from "@/src/context/context";
+import { Card } from "~/Card";
 
 const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const router = useRouter();
@@ -50,7 +52,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
       <div className="flex m-auto items-center profile">
         <Button.Back />
         <h2 className="ml-6 my-auto">{decodeURL}</h2>
-        <h3 className="ml-6 my-auto">Status: {categoryStatus.status}</h3>
+        <h3 className="ml-6 my-auto">Status: {categoryStatus?.status}</h3>
         <Button.Action
           tag="I don't need this product"
           onClick={handleRemoveSubItem}

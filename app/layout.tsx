@@ -2,20 +2,19 @@ import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 
-import {
-  LoginProvider,
-  CategoryStatusProvider,
-  SubCategoryStatusProvider,
-  PantryProductProvider,
-} from "@/src/context/context";
+import { Footer } from "@/src/components/Footer";
+import Navigation from "@/src/components/Navigation";
 import ThemeRegistry from "@/src/components/ThemeRegistry/ThemeRegistry";
 import {
   baseFont,
   headerFont,
   subheaderFont,
 } from "@/src/components/ThemeRegistry/fonts";
-import { Footer } from "@/src/components/Footer";
-import Navigation from "@/src/components/Navigation";
+import {
+  CategoryStatusProvider,
+  PantryProductProvider,
+  SubCategoryStatusProvider,
+} from "@/src/context/context";
 
 export const metadata: Metadata = {
   title: "ZeroIn",
@@ -31,19 +30,17 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     >
       <body>
         <ThemeRegistry>
-          <LoginProvider>
-            <CategoryStatusProvider>
-              <SubCategoryStatusProvider>
-                <PantryProductProvider>
-                  <Navigation />
-                  <main className="min-h-[calc(100vh-398px-24px)]">
-                    {children}
-                  </main>
-                  <Footer />
-                </PantryProductProvider>
-              </SubCategoryStatusProvider>
-            </CategoryStatusProvider>
-          </LoginProvider>
+          <CategoryStatusProvider>
+            <SubCategoryStatusProvider>
+              <PantryProductProvider>
+                <Navigation />
+                <main className="min-h-[calc(100vh-398px-24px)]">
+                  {children}
+                </main>
+                <Footer />
+              </PantryProductProvider>
+            </SubCategoryStatusProvider>
+          </CategoryStatusProvider>
         </ThemeRegistry>
       </body>
     </html>

@@ -1,11 +1,15 @@
 "use client";
 import React from "react";
+
+import { Models } from "appwrite";
 import Link from "next/link";
+
 import { NAV_LINKS } from "@/constants";
-import AccountMenu from "../../Account/Account";
+import AccountMenu from "@/src/components/Account/Account";
+
 interface NavbarProps {
   hideNavbar: boolean;
-  profileStatus: string;
+  profileStatus: Models.User<Models.Preferences> | null;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
@@ -16,7 +20,7 @@ const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
     >
       {NAV_LINKS.map((link) =>
         profileStatus && (link.key === "signin" || link.key === "sigup") ? (
-          <AccountMenu key={link.key} userName={profileStatus} />
+          <AccountMenu key={link.key} userName={profileStatus.name} />
         ) : profileStatus && link.key === "signup" ? null : (
           <Link
             href={link.href}

@@ -1,15 +1,17 @@
 "use client";
-import { CATEGORY_STATUS, GOODS, ProductDetails, STATUS } from "@/constants";
-import { useRouter } from "next/navigation";
-import { Card } from "~/Card";
 import { useContext, useEffect } from "react";
+
+import { useRouter } from "next/navigation";
 import { Plus, ShoppingBag, Zap } from "react-feather";
+
+import { CATEGORY_STATUS, GOODS, ProductDetails, STATUS } from "@/constants";
 import { Button } from "@/src/components/lib/Button";
 import {
   ActionButtonContext,
   CategoryStatusContext,
   PantryContext,
 } from "@/src/context/context";
+import { Card } from "~/Card";
 
 const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categorySlug } = params;
@@ -29,12 +31,12 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     });
   }, [categorySlug]);
 
-  console.log("in category", subCategoryStatus.name);
+  console.log("in category", subCategoryStatus?.name);
   const updateGoods = GOODS.filter(
     (good) => good.key.toLowerCase() === categorySlug,
   ).map((good) =>
     good.value.map((item, index) => {
-      console.log(item.key, item.status, subCategoryStatus.name);
+      console.log(item.key, item.status, subCategoryStatus?.name);
       return (
         <>
           <button
@@ -45,11 +47,11 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
             key={index}
           >
             <span className="my-auto">
-              {item.key.toLowerCase() === subCategoryStatus.name ? (
+              {item.key.toLowerCase() === subCategoryStatus?.name ? (
                 <Zap className="w-4 h-4" />
               ) : //delete from the section when current good's status is completed
               //TODO: Need to sync updated goods in pages
-              item.key === subCategoryStatus.name &&
+              item.key === subCategoryStatus?.name &&
                 item.status === STATUS.COMPLETED ? (
                 good.value.splice(index, 1) && null
               ) : (
@@ -95,7 +97,7 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
           <ShoppingBag className="mx-auto h-8 w-8" />
         </p>
         <div className="flex-col ml-6">
-          <p className="mt-10 ">Status: {categoryStatus.status}</p>
+          <p className="mt-10 ">Status: {categoryStatus?.status}</p>
           <h2>{categoryName}</h2>
         </div>
       </section>
@@ -148,7 +150,7 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
                 key={i}
               >
                 <span className="my-auto">
-                  {product.key.key.toLowerCase() === subCategoryStatus.name ? (
+                  {product.key.key.toLowerCase() === subCategoryStatus?.name ? (
                     <Zap className="w-4 h-4" />
                   ) : (
                     <Plus className="w-4 h-4" />
@@ -157,7 +159,7 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
                 <span className="text-sm">{product.key.key}</span>
               </button>
               <Card.Product
-                key={product.value}
+                key={product.value.title}
                 tag={<Button.Tag tag={product.value.tag} />}
                 img={{
                   src: "/assets/product-demo.png",
