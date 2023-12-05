@@ -28,7 +28,9 @@ const Profile = () => {
     <div className="profile relative">
       {userProfile && (
         <div className="mx-auto py-6">
-          <h2>{userProfile ? `Welcome, ${userProfile}!` : "Loading..."}</h2>
+          <h2>
+            {userProfile ? `Welcome, ${userProfile.name}!` : "Loading..."}
+          </h2>
           <div className="flex my-20 py-auto gap-6">
             {CATEGORIES.map((c) => (
               <button
