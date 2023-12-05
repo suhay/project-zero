@@ -1,6 +1,8 @@
 "use client";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 
+import { STATUS } from "@/constants";
+
 type CategoryStatus = {
   category: string;
   status: string;
@@ -38,6 +40,7 @@ export const CategoryStatusProvider = ({
 
 type SubCategoryStatus = {
   name: string;
+  status: STATUS;
 };
 
 type SubCategoryContextType = {
@@ -46,7 +49,7 @@ type SubCategoryContextType = {
 };
 
 export const ActionButtonContext = createContext<SubCategoryContextType>({
-  subCategoryStatus: { name: "" },
+  subCategoryStatus: { name: "", status: STATUS.NONE },
   setSubCategoryStatus: (status) => {
     console.log("in context status", status);
   },
