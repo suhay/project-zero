@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { account } from "@/src/utils/appwrite";
 import { Button } from "~/Button";
 import { Input } from "~/Form/Input";
+import { paths } from "@/src/utils/env";
 
 type Input = {
   email: string;
@@ -23,10 +24,7 @@ const Password = () => {
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
     try {
-      await account.createRecovery(
-        data.email,
-        process.env.NEXT_PUBLIC_APPWRITE_RECOVERY ?? "",
-      );
+      await account.createRecovery(data.email, paths.RESET_PASSWORD);
       localStorage.setItem("email", data.email.toString());
       setMessage("Help is on the way!");
     } catch (e) {
