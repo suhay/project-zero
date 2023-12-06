@@ -16,9 +16,6 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const router = useRouter();
   const { subCategorySlug } = params;
   const decodeURL = decodeURIComponent(subCategorySlug);
-  // const subcategoryName = decodeURL.split(' ').map(word =>
-  //   word.charAt(0).toUpperCase() + word.slice(1) + ' ')
-
   const { categoryStatus } = useContext(CategoryStatusContext);
   const { setSubCategoryStatus } = useContext(ActionButtonContext);
 

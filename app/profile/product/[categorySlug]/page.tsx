@@ -4,6 +4,7 @@ import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, ShoppingBag, Zap } from "react-feather";
 import { sub } from "@/src/components/Journey/PageModal";
+// import { PantryContext } from "@/src/context/context";
 
 import { CATEGORY_STATUS, GOODS, ProductDetails, STATUS } from "@/constants";
 import { Button } from "@/src/components/lib/Button";
@@ -19,6 +20,13 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categoryStatus } = useContext(CategoryStatusContext);
   const { subCategoryStatus } = useContext(ActionButtonContext);
 
+  const categoryName = decodeURIComponent(categorySlug).includes(" ")
+    ? decodeURIComponent(categorySlug)
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+    : decodeURIComponent(categorySlug);
+
   useEffect(() => {
     CATEGORY_STATUS.forEach((item) => {
       const normalize =
@@ -30,12 +38,10 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
     });
   }, [categorySlug]);
 
-  // console.log("in category", sub.value);
   const updateGoods = GOODS.filter(
-    (good) => good.key.toLowerCase() === categorySlug,
+    (good) => good.key.toLowerCase() === categoryName.toLowerCase(),
   ).map((good) =>
     good.value.map((item, index) => {
-      // console.log(item.key, item.status, sub.value);
       return (
         <>
           <button
@@ -46,7 +52,8 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
             key={index}
           >
             <span className="my-auto">
-              {item.key.toLowerCase() === subCategoryStatus?.name ? (
+              {item.key.toLowerCase() ===
+              subCategoryStatus?.name.toLocaleLowerCase() ? (
                 <Zap className="w-4 h-4" />
               ) : //delete from the section when current good's status is completed
               item.key === sub.value && item.status === STATUS.COMPLETED ? (
@@ -80,12 +87,8 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
   //display first goods in Selection section temp
   //TODO: seems like we need to display all as product carousel?
   const displayProducts = GOODS.filter(
-    (good) => good.key.toLowerCase() === decodeURIComponent(categorySlug),
+    (good) => good.key.toLowerCase() === categoryName.toLowerCase(),
   ).map((good) => good.value.map((v) => v.product[0]));
-
-  const categoryName =
-    decodeURIComponent(categorySlug).charAt(0).toUpperCase() +
-    decodeURIComponent(categorySlug).slice(1);
 
   return (
     <div className="profile">
