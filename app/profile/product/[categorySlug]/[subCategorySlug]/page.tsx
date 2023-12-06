@@ -59,7 +59,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
         />
       </div>
       <hr className="profile" />
-      <div className="border-red-400 flex gap-10 my-10 profile">
+      <div className="flex flex-wrap gap-10 my-10 profile">
         {matchingSubCategory?.product.map(
           (
             product: {
@@ -71,7 +71,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
             },
             idx: Key | null | undefined,
           ) => (
-            <div className="flex" key={product.title}>
+            <div className="border flex" key={product.title}>
               <Card.Product
                 key={idx}
                 tag={<Button.Tag tag={product.tag} />}

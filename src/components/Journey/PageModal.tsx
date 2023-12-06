@@ -89,7 +89,7 @@ export default function PageModal({
       <Button
         sx={{
           backgroundColor: "#475956",
-          width: "360px",
+          width: "280px",
           "&:hover": {
             backgroundColor: "#172a28",
           },

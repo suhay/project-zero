@@ -42,7 +42,7 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
             onClick={() => {
               onProductDetails(item);
             }}
-            className="border-green-600 rounded-[25px] py-3 px-8 border flex gap-1"
+            className="border-green-600 rounded-[25px] py-3 px-8 border flex"
             key={index}
           >
             <span className="my-auto">
@@ -102,17 +102,17 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
         <h3>Improve Products</h3>
         {/* add/remove from this section based on status updates */}
         <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
-        <div className="flex gap-2">{updateGoods}</div>
+        <div className="flex flex-wrap gap-2">{updateGoods}</div>
       </section>
       <section className="profile">
         <h3>Your Interest Selections</h3>
         {/* TODO: products are added from the left additionally on top of current sub selections*/}
         <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
-        <div className="flex">
+        <div className="flex w-11/12">
           {updateGoods?.map((good, idx) => (
-            <ul className="flex border-green-800" key={idx}>
+            <ul className="flex flex-wrap border-green-800 gap-2" key={idx}>
               {good.map((p, i) => (
-                <span className="mr-10" key={i}>
+                <span key={i}>
                   {p}
                   {displayProducts?.map((product, i) => (
                     <Card.Product
