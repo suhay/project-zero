@@ -23,16 +23,16 @@ const Product = ({
   modal?: ReactNode;
 }) => {
   return (
-    <div className="rounded-md relative my-4">
+    <div className="border rounded-lg relative my-4">
       <p className="absolute right-0 top-1">{tag}</p>
       <Image
         src={img.src}
         alt={img.alt}
         width={300}
         height={300}
-        className="rounded-lg px-1"
+        className="rounded-lg"
       />
-      <div className="border py-2 w-[300px]">
+      <div className="py-2 w-[300px]">
         <div className="ml-3 mr-3">
           <p>{provider}</p>
           <p>{title}</p>

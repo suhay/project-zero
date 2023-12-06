@@ -71,7 +71,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
             },
             idx: Key | null | undefined,
           ) => (
-            <div className="border flex" key={product.title}>
+            <div className="flex" key={product.title}>
               <Card.Product
                 key={idx}
                 tag={<Button.Tag tag={product.tag} />}
