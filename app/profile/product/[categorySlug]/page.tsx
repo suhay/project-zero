@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { Plus, ShoppingBag, Zap } from "react-feather";
 import { sub } from "@/src/components/Journey/PageModal";
 // import { PantryContext } from "@/src/context/context";
-
 import { CATEGORY_STATUS, GOODS, ProductDetails, STATUS } from "@/constants";
 import { Button } from "@/src/components/lib/Button";
 import {
@@ -13,10 +12,14 @@ import {
   CategoryStatusContext,
 } from "@/src/context/context";
 import { Card } from "~/Card";
+import ProductData from "@/src/database/productData";
 
 const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categorySlug } = params;
   const router = useRouter();
+  const dataFromDB = ProductData();
+  console.log("ProducdataFromDBtData", dataFromDB);
+
   const { categoryStatus } = useContext(CategoryStatusContext);
   const { subCategoryStatus } = useContext(ActionButtonContext);
 
