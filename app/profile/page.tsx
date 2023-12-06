@@ -23,7 +23,7 @@ const Profile = () => {
   if (loading) {
     return (
       <div className="mx-auto py-6">
-        <h2>Loading...</h2>
+        <h2 className="profile">Loading...</h2>
       </div>
     );
   }
@@ -35,7 +35,7 @@ const Profile = () => {
           <h2>
             {userProfile ? `Welcome, ${userProfile.name}!` : "Loading..."}
           </h2>
-          <div className="flex flex-wrap my-20 py-auto gap-6 md:gap-3 sm:w-full ">
+          <div className="flex flex-wrap justify-center my-20 py-auto gap-6 md:gap-3 sm:w-full ">
             {CATEGORIES.map((c) => (
               <button
                 className="profile border-8 border-green-500/50 w-36 h-36 rounded-full hover:scale-105"

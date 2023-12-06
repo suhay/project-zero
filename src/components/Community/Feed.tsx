@@ -10,8 +10,10 @@ export function Feed() {
 
   return (
     <section className="py-8 container mx-auto w-screen">
-      <h1 className="mb-8 text-left text-2xl font-black">From the community</h1>
-      <div className="flex gap-x-5">
+      <h1 className="mb-8 text-left text-2xl font-black ml-4">
+        From the community
+      </h1>
+      <div className="flex flex-wrap justify-around gap-5 my-3">
         {posts.map((post, idx) => (
           <Card.Simple
             key={idx}
