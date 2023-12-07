@@ -1,24 +1,15 @@
-// import { render, screen } from "@testing-library/react";
-// import Home from "@/app/page";
+import Home from "@/app/page";
+import { render, screen } from "@testing-library/react";
 
-// describe("Home", () => {
-//   it.skip("should have ZeroIn text", () => {
-//     render(<Home />);
-
-//     const myElem = screen.getByText("ZeroIn");
-
-//     expect(myElem).toBeInTheDocument();
-//   });
-
-//   it.skip("should not contain the text info", () => {
-//     render(<Home />);
-
-//     const myElem = screen.getByText(/zeroin/i);
-
-//     expect(myElem).toBeInTheDocument();
-//   });
-// });
+jest.mock("../src/components/Community/Feed", () => ({
+  Feed: () => <></>,
+}));
 
 describe("Home", () => {
-  it.skip("for now", () => {});
+  it("should render the Home page", () => {
+    render(<Home />);
+
+    const homePage = screen.getByTestId("home-page");
+    expect(homePage).toBeInTheDocument();
+  });
 });

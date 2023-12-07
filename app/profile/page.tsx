@@ -31,7 +31,7 @@ const Profile = () => {
           <h2>
             {userProfile ? `Welcome, ${userProfile.name}!` : "Loading..."}
           </h2>
-          <div className="flex my-20 py-auto gap-6">
+          <div className="flex my-20 py-auto gap-6 flex-wrap">
             {CATEGORIES.map((c) => (
               <button
                 className="profile border-8 border-green-500/50 w-36 h-36 rounded-full hover:scale-105"

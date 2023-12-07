@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { LearnMore } from "~/Button/LearnMore";
+import { Img } from "../types";
 
 export function Simple({
   img,
@@ -9,23 +10,22 @@ export function Simple({
   title,
   description,
 }: {
-  img: {
-    src: string;
-    alt: string;
-  };
+  img?: Img;
   href: string;
   title: string;
   description?: string;
 }) {
   return (
     <article className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm max-w-lg">
-      <Image
-        src={img.src}
-        alt={img.alt}
-        width={100}
-        height={100}
-        className="h-56 w-full object-cover"
-      />
+      {!!img && (
+        <Image
+          src={img.src}
+          alt={img.alt}
+          width={100}
+          height={100}
+          className="h-56 w-full object-cover"
+        />
+      )}
       <div className="p-4 sm:p-6">
         <Link href={href}>
           <h3 className="text-lg font-medium text-gray-900">{title}</h3>
