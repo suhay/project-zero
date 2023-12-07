@@ -1,19 +1,19 @@
 "use client";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 
 import { CATEGORIES } from "@/constants";
 import { useUserData } from "@/src/hooks/useUserData";
-import { PantryContext } from "@/src/context/context";
-import { Card } from "@/src/components/lib/Card";
-import { Button } from "@/src/components/lib/Button";
+// import { PantryContext } from "@/src/context/context";
+// import { Card } from "@/src/components/lib/Card";
+// import { Button } from "@/src/components/lib/Button";
 
 const Profile = () => {
   const router = useRouter();
   const [, setSelectedCategory] = useState("");
   const { userProfile, loading } = useUserData({});
-  const { pantryProducts } = useContext(PantryContext);
+  // const { pantryProducts } = useContext(PantryContext);
 
   const chooseCategory = (category: string) => {
     setSelectedCategory(category);
@@ -51,10 +51,10 @@ const Profile = () => {
           {/* when added product, pantry displays synced good - TODO persist after router render */}
           Your Pantry
           <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
-          {pantryProducts ? (
+          {/* {pantryProducts ? (
             <section className="profile">
               <div className="flex flex-wrap justify-center">
-                {pantryProducts.map((product, i) => (
+                {pantryProducts.value.map((product, i) => (
                   <ul className="flex border-green-800" key={i}>
                     <span className="text-sm w-full">
                       <button
@@ -83,7 +83,7 @@ const Profile = () => {
                 ))}
               </div>
             </section>
-          ) : null}
+          ) : null} */}
         </div>
       )}
     </div>

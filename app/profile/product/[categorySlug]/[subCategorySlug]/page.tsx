@@ -1,9 +1,8 @@
 "use client";
-import { Key, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
-
-import { GOODS, STATUS } from "@/constants";
+import { PantryProductDocument, STATUS } from "@/constants";
 import PageModal from "@/src/components/Journey/PageModal";
 import { Button } from "@/src/components/lib/Button";
 import {
@@ -11,27 +10,43 @@ import {
   CategoryStatusContext,
 } from "@/src/context/context";
 import { Card } from "~/Card";
+import { Models } from "appwrite";
+import { dbData } from "@/src/database/productData";
 
 const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const router = useRouter();
   const { subCategorySlug } = params;
   const decodeURL = decodeURIComponent(subCategorySlug);
+  const [documents, setDocuments] = useState<Models.Document[] | undefined>();
   const { categoryStatus } = useContext(CategoryStatusContext);
   const { setSubCategoryStatus } = useContext(ActionButtonContext);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let matchingSubCategory: any;
-  for (const good of GOODS) {
-    for (const subCategory of good.value) {
-      if (subCategory.key.toLowerCase() === decodeURL) {
-        matchingSubCategory = subCategory;
-        break;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dbData();
+        setDocuments(data);
+      } catch (error) {
+        console.log("DB Fetch Error", error);
       }
-    }
-    if (matchingSubCategory) {
-      break;
-    }
+    };
+    fetchData();
+  }, [router]);
+
+  let matchingSubCategory: PantryProductDocument | undefined;
+  const updateData = documents?.filter(
+    (good) => good.Type.toLowerCase() === decodeURL.toLowerCase(),
+  );
+
+  if (updateData && updateData.length > 0) {
+    matchingSubCategory = {
+      key: updateData[0].Type,
+      value: updateData,
+      status: "",
+    };
   }
+
+  console.log("in subpage updateData", updateData);
 
   const handleRemoveSubItem = () => {
     console.log("decodeURL", decodeURL);
@@ -57,39 +72,28 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
       </div>
       <hr className="profile" />
       <div className="flex flex-wrap gap-10 my-10 profile">
-        {matchingSubCategory?.product.map(
-          (
-            product: {
-              title: string | undefined;
-              tag: string | undefined;
-              provider: string | undefined;
-              environment: string | number | undefined;
-              quality: string | number | undefined;
-            },
-            idx: Key | null | undefined,
-          ) => (
-            <div className="flex" key={product.title}>
-              <Card.Product
-                key={idx}
-                tag={<Button.Tag tag={product.tag} />}
-                img={{
-                  src: "/assets/product-demo.png",
-                  alt: `product.title`,
-                }}
-                provider={product.provider}
-                title={product.title}
-                environment={product.environment}
-                quality={product.quality}
-                modal={
-                  <PageModal
-                    product={product}
-                    subCategory={matchingSubCategory}
-                  />
-                }
-              />
-            </div>
-          ),
-        )}
+        {updateData?.map((product: Models.Document, i) => (
+          <div className="flex" key={i}>
+            <Card.Product
+              key={i}
+              tag={<Button.Tag tag={product.Tag} />}
+              img={{
+                src: "/assets/product-demo.png",
+                alt: `${product.Name}`,
+              }}
+              provider={product.Company}
+              title={product.Name}
+              environment={product.Impact}
+              quality={product.Quality}
+              modal={
+                <PageModal
+                  product={product}
+                  subCategory={matchingSubCategory}
+                />
+              }
+            />
+          </div>
+        ))}
       </div>
       <div></div>
     </section>
