@@ -52,7 +52,7 @@ const Profile = () => {
               <Card.Stat description="Ranking" stat="Top 3%" />
             </div>
           </section>
-          <div className="flex my-20 py-auto gap-6">
+          <div className="flex my-20 py-auto gap-6 flex-wrap">
             {CATEGORIES.map((c) => (
               <button
                 className="profile border-8 border-green-500/50 w-36 h-36 rounded-full hover:scale-105"

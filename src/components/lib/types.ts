@@ -4,3 +4,8 @@ export type Variant =
   | "google"
   | "action"
   | "no action";
+
+export type Img = {
+  src: string;
+  alt: string;
+};

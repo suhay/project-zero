@@ -25,7 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({ hideNavbar, profileStatus }) => {
           <Link
             href={link.href}
             key={link.key}
-            className="cursor-pointer hover:font-bold mr-4"
+            className="cursor-pointer hover:text-secondary-500 hover:underline mr-4"
           >
             {link.label}
           </Link>
