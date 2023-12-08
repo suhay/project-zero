@@ -18,6 +18,14 @@ const Products = ({
   category: string;
 }) => {
   const router = useRouter();
+
+  // const categoryName = category.includes(" ")
+  //   ? category
+  //       .split(" ")
+  //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  //       .join(" ")
+  //   : category;
+
   const [documents, setDocuments] = useState<Models.Document[] | undefined>();
   const { subCategoryStatus } = useContext(ActionButtonContext);
 
@@ -53,7 +61,7 @@ const Products = ({
   const productDetails = updateData?.map((product, i) => (
     <div className="w-4/5" key={i}>
       <Card.Product
-        key={i}
+        key={product.Name}
         tag={<Button.Tag tag={product.Tag} />}
         img={{
           src: "/assets/product-demo.png",
@@ -88,7 +96,7 @@ const Products = ({
               <button
                 onClick={() => onProductDetails(product.Type)}
                 className="border-green-600 rounded-[25px] py-3 px-8 border flex mr-3 mb-3 mt-3"
-                key={i}
+                key={product.$id}
               >
                 <span className="my-auto">
                   {productName === subCategoryStatus?.name.toLowerCase() ? (
@@ -117,7 +125,7 @@ const Products = ({
   return (
     <div className="flex flex-wrap w-full">
       {updateData?.map((product, index) => (
-        <div key={product.$updatedAt}>
+        <div key={index}>
           {productButtons[index]}
           {displayProductCard && productDetails && productDetails[index]}
         </div>

@@ -11,42 +11,49 @@ import {
 } from "@/src/context/context";
 import { Card } from "~/Card";
 import { Models } from "appwrite";
-import { dbData } from "@/src/database/productData";
+import { indexProductType } from "@/src/database/productData";
 
 const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const router = useRouter();
   const { subCategorySlug } = params;
-  const decodeURL = decodeURIComponent(subCategorySlug);
-  const [documents, setDocuments] = useState<Models.Document[] | undefined>();
+
+  const [productType, setProductType] = useState<
+    Models.Document[] | undefined
+  >();
   const { categoryStatus } = useContext(CategoryStatusContext);
   const { setSubCategoryStatus } = useContext(ActionButtonContext);
 
+  const decodeURL = decodeURIComponent(subCategorySlug).includes(" ")
+    ? decodeURIComponent(subCategorySlug)
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+    : decodeURIComponent(subCategorySlug);
+
+  //retrieve indexed product_type query data ("shampoo", toothpaste")
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await dbData();
-        setDocuments(data);
+        const result = await indexProductType(decodeURL);
+        setProductType(result);
+        result;
       } catch (error) {
-        console.log("DB Fetch Error", error);
+        console.error("Error occurred:", error);
       }
     };
+
     fetchData();
-  }, [router]);
+  }, [decodeURL]);
 
   let matchingSubCategory: PantryProductDocument | undefined;
-  const updateData = documents?.filter(
-    (good) => good.Type.toLowerCase() === decodeURL.toLowerCase(),
-  );
 
-  if (updateData && updateData.length > 0) {
+  if (productType && productType.length > 0) {
     matchingSubCategory = {
-      key: updateData[0].Type,
-      value: updateData,
+      key: productType[0].Type,
+      value: productType,
       status: "",
     };
   }
-
-  console.log("in subpage updateData", updateData);
 
   const handleRemoveSubItem = () => {
     console.log("decodeURL", decodeURL);
@@ -72,7 +79,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
       </div>
       <hr className="profile" />
       <div className="flex flex-wrap gap-10 my-10 profile">
-        {updateData?.map((product: Models.Document, i) => (
+        {productType?.map((product: Models.Document, i) => (
           <div className="flex" key={i}>
             <Card.Product
               key={i}

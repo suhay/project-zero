@@ -48,6 +48,14 @@ export enum STATUS {
   COMPLETED = "Completed Improvements!",
 }
 
+export enum CATEGORY {
+  Laundry = "Laundry",
+  "Personal Hygiene" = "Personal Hygiene",
+  Kitchen = "Kitchen",
+  "Living Room" = "Living Room",
+  Bathroom = "Bathroom",
+}
+
 // export const GOODS: Good[] = [
 //   {
 //     key: "Laundry",

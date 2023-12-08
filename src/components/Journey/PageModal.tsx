@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { PantryProductDocument, STATUS } from "@/constants";
 import { CategoryStatusContext, PantryContext } from "@/src/context/context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Plus } from "react-feather";
 import { Models } from "appwrite";
 
@@ -29,6 +29,16 @@ type SignalValue = {
 //to pass to category page for checking status
 export const sub = signal<SignalValue>({ name: "", status: "" });
 
+// export type PantryProductDocument = {
+//   key: {
+//     key: string;
+//     product: Models.Document;
+//     status?: string;
+//   };
+//   value: Models.Document | Models.Document[];
+//   status?: string;
+// };
+
 export default function PageModal({
   product,
   subCategory,
@@ -36,13 +46,16 @@ export default function PageModal({
   product: Models.Document;
   subCategory: PantryProductDocument | undefined;
 }) {
+  const [, setPantryData] = useState<string[]>([]);
+
   const { pantryProducts, setPantryProducts } = useContext(PantryContext);
   const { setCategoryStatus } = useContext(CategoryStatusContext);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // console.log('product', product)
-  // console.log('subCategory', subCategory)
+  console.log("product", product);
+  console.log("subCategory", subCategory);
   const checkCompleteStatus = () => {
     return subCategory?.value.every(
       (product: Models.Document) => product.Status === STATUS.ACTIVE,
@@ -59,11 +72,12 @@ export default function PageModal({
     //update current product's status to active
     if (subCategory) {
       product.Status = STATUS.ACTIVE;
+      setPantryData((prevItem) => [...prevItem, product.DocumentID]);
 
       //update category's status depends on current subCategory's product list length and each status
       if (checkCompleteStatus()) {
         subCategory.status = STATUS.COMPLETED;
-        sub.value = { name: subCategory.key, status: STATUS.COMPLETED };
+        sub.value = { name: subCategory.key.key, status: STATUS.COMPLETED };
         // sub.value = subCategory.status; //to delete from improve products section
         setCategoryStatus({
           category: subCategory.key,
@@ -87,6 +101,18 @@ export default function PageModal({
         ...previousPantry,
         subCategory: subCategory,
       }));
+
+      // const fetchData = async () => {
+      //   try {
+      //     const response = await savePantryToDB(pantryData);
+      //     console.log(response);
+      //   } catch (error) {
+      //     console.log("Save Pantry Error", error);
+      //   }
+      // };
+
+      // fetchData();
+
       console.log("Modal after update", pantryProducts);
     }
   };

@@ -36,7 +36,8 @@ const LogIn = () => {
     try {
       setIsLoading(true);
       await login(data.email, data.password);
-      await account.get();
+      await account.get(); //print out
+      //await saveUserToDB(data)
       router.push("/profile");
     } catch (e) {
       if (e instanceof AppwriteException) {

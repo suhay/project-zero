@@ -6,6 +6,7 @@ import { CATEGORY_STATUS, STATUS } from "@/constants";
 import { CategoryStatusContext } from "@/src/context/context";
 import Products from "@/src/components/Journey/Products";
 import { Button } from "@/src/components/lib/Button";
+import { indexCategory } from "@/src/database/productData";
 
 const Category = ({ params }: { params: { categorySlug: string } }) => {
   const { categorySlug } = params;
@@ -18,6 +19,22 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ")
     : decodeURIComponent(categorySlug);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("categoryName", categoryName);
+        const result = await indexCategory(["Laundry"]);
+        // setProductType(result);
+        console.log("result", result);
+        result;
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+
+    fetchData();
+  }, [categoryName]);
 
   useEffect(() => {
     CATEGORY_STATUS.forEach((item) => {
