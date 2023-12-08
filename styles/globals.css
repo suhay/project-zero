@@ -65,7 +65,7 @@ h5 {
 
 @layer utilities {
   .profile {
-    @apply text-green-800 ml-10;
+    @apply text-green-800 mx-10;
   }
 
   .modalStyle {

@@ -1,12 +1,18 @@
 export function Stat({
   description,
   stat,
+  border = false,
 }: {
   description: string;
   stat: string;
+  border?: boolean;
 }) {
   return (
-    <div className="mx-auto flex max-w-xs flex-col gap-y-4 p-5">
+    <div
+      className={`mx-auto flex max-w-xs flex-col gap-y-4 p-5 ${
+        border ? "border rounded-lg" : ""
+      }`}
+    >
       <dt className="text-center text-base leading-7 text-gray-600">
         {description}
       </dt>
