@@ -36,6 +36,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
       try {
         const result = await indexProductType(decodeURL);
         setProductType(result);
+        //  console.log("result", result);
         result;
       } catch (error) {
         console.error("Error occurred:", error);
@@ -56,9 +57,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   }
 
   const handleRemoveSubItem = () => {
-    console.log("decodeURL", decodeURL);
     //change good's icon and status
-    //TODO: sync/update categorySlug page status
     setSubCategoryStatus({
       name: decodeURL,
       status: STATUS.NONE,
@@ -68,7 +67,7 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
 
   return (
     <section className="profile my-20">
-      <div className="flex m-auto items-center profile">
+      <div className="flex flex-wrap m-auto items-center profile sm:mb-3">
         <Button.Back />
         <h2 className="ml-6 my-auto">{decodeURL}</h2>
         <h3 className="ml-6 my-auto">Status: {categoryStatus?.status}</h3>

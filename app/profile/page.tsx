@@ -1,24 +1,46 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 
 import { CATEGORIES } from "@/constants";
 import { useUserData } from "@/src/hooks/useUserData";
-// import { PantryContext } from "@/src/context/context";
-// import { Card } from "@/src/components/lib/Card";
-// import { Button } from "@/src/components/lib/Button";
+import { getUserPantryDB } from "@/src/database/productData";
+import { pantrySignal } from "@/src/components/Journey/PageModal";
+import { Card } from "@/src/components/lib/Card";
+import { Button } from "@/src/components/lib/Button";
 
 const Profile = () => {
   const router = useRouter();
   const [, setSelectedCategory] = useState("");
+  const [, setPantry] = useState<string[]>([]); //use updateDocument works
   const { userProfile, loading } = useUserData({});
-  // const { pantryProducts } = useContext(PantryContext);
 
   const chooseCategory = (category: string) => {
     setSelectedCategory(category);
     router.push(`/profile/product/${category.toLowerCase()}`);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getUserPantryDB(userProfile?.$id || ""); //ID error
+        if (result) {
+          const pantryIds = result.map((doc) => doc.id);
+          setPantry(pantryIds);
+          // console.log("getUserPantryDB", result);
+        } else {
+          console.error("getUserPantryDB returned undefined");
+        }
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+
+    fetchData();
+  }, [userProfile?.$id]);
+
+  // console.log("pantrySignal.value.document", pantrySignal.value.document);
 
   if (loading) {
     return (
@@ -51,39 +73,25 @@ const Profile = () => {
           {/* when added product, pantry displays synced good - TODO persist after router render */}
           Your Pantry
           <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
-          {/* {pantryProducts ? (
-            <section className="profile">
-              <div className="flex flex-wrap justify-center">
-                {pantryProducts.value.map((product, i) => (
-                  <ul className="flex border-green-800" key={i}>
-                    <span className="text-sm w-full">
-                      <button
-                        onClick={() => {
-                          // onProductDetails(product.key);
-                        }}
-                        className="border-green-600 rounded-[25px] py-3 px-8 border flex gap-1"
-                        key={i}
-                      >
-                        {product.key.key}
-                      </button>
-                      <Card.Product
-                        key={product.value.title}
-                        tag={<Button.Tag tag={product.value.tag} />}
-                        img={{
-                          src: "/assets/product-demo.png",
-                          alt: `${product.value.title}`,
-                        }}
-                        provider={product.value.provider}
-                        title={product.value.title}
-                        environment={product.value.environment}
-                        quality={product.value.quality}
-                      />
-                    </span>
-                  </ul>
-                ))}
-              </div>
-            </section>
-          ) : null} */}
+          <div className="flex">
+            {pantrySignal &&
+              pantrySignal.value.document?.map((product, i) => (
+                <span className="" key={i}>
+                  <Card.Product
+                    key={product.Name}
+                    tag={<Button.Tag tag={product.Tag} />}
+                    img={{
+                      src: "/assets/product-demo.png",
+                      alt: `${product.Name}`,
+                    }}
+                    provider={product.Company}
+                    title={product.Name}
+                    environment={product.Impact}
+                    quality={product.Quality}
+                  />
+                </span>
+              ))}
+          </div>
         </div>
       )}
     </div>

@@ -34,8 +34,7 @@
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.48.1",
     "remark": "^15.0.1",
-    "remark-html": "^16.0.1",
-    "uuid": "^9.0.1"
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",

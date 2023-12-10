@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { AppwriteException } from "appwrite";
 import Link from "next/link";
@@ -14,6 +14,7 @@ import { googleAuth, login } from "@/src/utils/auth";
 import { Button } from "~/Button";
 import { Error } from "~/Form/Error";
 import { Input } from "~/Form/Input";
+import { saveUserToDB } from "@/src/database/productData";
 
 type Inputs = {
   email: string;
@@ -24,6 +25,7 @@ const LogIn = () => {
   const router = useRouter();
   const [loginError, setLoginError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [userDoc, setUserDoc] = React.useState("");
 
   const {
     register,
@@ -36,8 +38,8 @@ const LogIn = () => {
     try {
       setIsLoading(true);
       await login(data.email, data.password);
-      await account.get(); //print out
-      //await saveUserToDB(data)
+      const currentUser = await account.get(); //print out
+      setUserDoc(currentUser.$id);
       router.push("/profile");
     } catch (e) {
       if (e instanceof AppwriteException) {
@@ -50,6 +52,19 @@ const LogIn = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await saveUserToDB(userDoc);
+        // console.log("userDoc", result);
+        result;
+      } catch (error) {
+        console.error("Error occurred:", error);
+      }
+    };
+    fetchData();
+  }, [userDoc]);
 
   const signWithGoogle = () => {
     googleAuth();

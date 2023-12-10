@@ -27,11 +27,12 @@ export interface ProductDetails {
 }
 
 export type PantryProductDocument = {
-  key: {
-    key: string;
-    product: Models.Document;
-    status?: string;
-  };
+  key: string;
+  // {
+  //   key: string;
+  //   product: Models.Document;
+  //   status?: string;
+  // };
   value: Models.Document | Models.Document[];
   status?: string;
 };

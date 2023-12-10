@@ -7,7 +7,7 @@ import { Button } from "@/src/components/lib/Button";
 import { Plus, Zap } from "react-feather";
 import { ActionButtonContext } from "@/src/context/context";
 import { Models } from "appwrite";
-import { dbData } from "@/src/database/productData";
+import { indexCategory } from "@/src/database/productData";
 import { STATUS } from "@/constants";
 
 const Products = ({
@@ -19,46 +19,31 @@ const Products = ({
 }) => {
   const router = useRouter();
 
-  // const categoryName = category.includes(" ")
-  //   ? category
-  //       .split(" ")
-  //       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-  //       .join(" ")
-  //   : category;
-
   const [documents, setDocuments] = useState<Models.Document[] | undefined>();
   const { subCategoryStatus } = useContext(ActionButtonContext);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await dbData();
-        setDocuments(data);
+        const result = await indexCategory(category);
+        setDocuments(result);
+        result;
       } catch (error) {
-        console.log("DB Fetch Error", error);
+        console.error("Error occurred:", error);
       }
     };
-
     fetchData();
-  }, []);
-
-  const updateData = documents?.filter(
-    (good) =>
-      Array.isArray(good.Category) &&
-      good.Category.some(
-        (ctg: string) => ctg.toLowerCase() === category.toLowerCase(),
-      ),
-  );
+  }, [category]);
 
   const onProductDetails = (productType: string) => {
     router.push(
-      `/profile/product/${category}/${encodeURIComponent(
+      `/profile/product/${category.toLowerCase()}/${encodeURIComponent(
         productType?.toLowerCase(),
       )}`,
     );
   };
 
-  const productDetails = updateData?.map((product, i) => (
+  const productDetails = documents?.map((product, i) => (
     <div className="w-4/5" key={i}>
       <Card.Product
         key={product.Name}
@@ -75,16 +60,23 @@ const Products = ({
     </div>
   ));
 
+  const filteredDocuments = documents?.filter(
+    (product) =>
+      !(
+        product.Type.toLowerCase() === sub.value.name.toLowerCase() &&
+        sub.value.status === STATUS.COMPLETED
+      ),
+  );
+
   const productButtons =
     (
-      updateData?.reduce(
+      filteredDocuments?.reduce(
         (
           buttonComponents: {
             buttons: JSX.Element[];
             uniqueProductNames: Set<string>;
           },
           product,
-          i,
         ) => {
           const productName = product.Type.toLowerCase();
 
@@ -101,9 +93,6 @@ const Products = ({
                 <span className="my-auto">
                   {productName === subCategoryStatus?.name.toLowerCase() ? (
                     <Zap className="w-4 h-4" />
-                  ) : productName === sub.value.name.toLowerCase() &&
-                    sub.value.status === STATUS.COMPLETED ? (
-                    updateData.splice(i, 1) && null
                   ) : (
                     <Plus className="w-4 h-4" />
                   )}
@@ -124,9 +113,9 @@ const Products = ({
 
   return (
     <div className="flex flex-wrap w-full">
-      {updateData?.map((product, index) => (
+      {filteredDocuments?.map((product, index) => (
         <div key={index}>
-          {productButtons[index]}
+          {!displayProductCard && productButtons[index]}
           {displayProductCard && productDetails && productDetails[index]}
         </div>
       ))}

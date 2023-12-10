@@ -5,10 +5,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { PantryProductDocument, STATUS } from "@/constants";
-import { CategoryStatusContext, PantryContext } from "@/src/context/context";
-import { useContext, useState } from "react";
+import { CategoryStatusContext } from "@/src/context/context";
+import { useContext, useEffect, useState } from "react";
 import { Plus } from "react-feather";
 import { Models } from "appwrite";
+import { account } from "@/src/utils/appwrite";
+// import { savePantry } from "@/src/database/productData";
 
 const style = {
   position: "absolute" as const,
@@ -26,18 +28,14 @@ type SignalValue = {
   name: string;
   status: string;
 };
+
+type PantrySignalValue = {
+  document: Models.Document[] | undefined;
+};
+
 //to pass to category page for checking status
 export const sub = signal<SignalValue>({ name: "", status: "" });
-
-// export type PantryProductDocument = {
-//   key: {
-//     key: string;
-//     product: Models.Document;
-//     status?: string;
-//   };
-//   value: Models.Document | Models.Document[];
-//   status?: string;
-// };
+export const pantrySignal = signal<PantrySignalValue>({ document: [] });
 
 export default function PageModal({
   product,
@@ -46,16 +44,17 @@ export default function PageModal({
   product: Models.Document;
   subCategory: PantryProductDocument | undefined;
 }) {
-  const [, setPantryData] = useState<string[]>([]);
+  //to save into db
+  // const [pantryData, setPantryData] = useState<string[]>([]);
+  const [pantryData, setPantryData] = useState<Models.Document[]>([]);
+  const [, setUserDoc] = React.useState("");
 
-  const { pantryProducts, setPantryProducts } = useContext(PantryContext);
   const { setCategoryStatus } = useContext(CategoryStatusContext);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log("product", product);
-  console.log("subCategory", subCategory);
+
   const checkCompleteStatus = () => {
     return subCategory?.value.every(
       (product: Models.Document) => product.Status === STATUS.ACTIVE,
@@ -72,16 +71,17 @@ export default function PageModal({
     //update current product's status to active
     if (subCategory) {
       product.Status = STATUS.ACTIVE;
-      setPantryData((prevItem) => [...prevItem, product.DocumentID]);
+      // setPantryData((prevItem) => [...prevItem, product.$id]);
+      setPantryData((prevItem) => [...prevItem, product]);
 
       //update category's status depends on current subCategory's product list length and each status
       if (checkCompleteStatus()) {
         subCategory.status = STATUS.COMPLETED;
-        sub.value = { name: subCategory.key.key, status: STATUS.COMPLETED };
+        sub.value = { name: subCategory.key, status: STATUS.COMPLETED };
         // sub.value = subCategory.status; //to delete from improve products section
         setCategoryStatus({
           category: subCategory.key,
-          status: `${STATUS.COMPLETED}(${subCategory.key})`,
+          status: `${STATUS.COMPLETED} (${subCategory.key})`,
         });
       } else if (checkActiveStatus()) {
         subCategory.status = STATUS.ACTIVE;
@@ -97,25 +97,42 @@ export default function PageModal({
         });
       }
 
-      setPantryProducts((previousPantry) => ({
-        ...previousPantry,
-        subCategory: subCategory,
-      }));
+      //get current user and update user's pantry data
+      const fetchData = async () => {
+        try {
+          const currentUser = await account.get();
+          // console.log("page modal get curr user", currentUser);
+          setUserDoc(currentUser.$id);
+        } catch (error) {
+          console.log("Get User Error", error);
+        }
+      };
 
-      // const fetchData = async () => {
-      //   try {
-      //     const response = await savePantryToDB(pantryData);
-      //     console.log(response);
-      //   } catch (error) {
-      //     console.log("Save Pantry Error", error);
-      //   }
-      // };
-
-      // fetchData();
-
-      console.log("Modal after update", pantryProducts);
+      fetchData();
     }
   };
+
+  useEffect(() => {
+    //if updateDocument doesn't work, need to persist pantryData during router change
+    pantrySignal.value = {
+      document: pantryData,
+    };
+    console.log(pantrySignal.value.document);
+  }, [pantryData]);
+
+  //appwrite Patch error occurs
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await savePantry(userDoc, pantryData);
+  //       console.log("savePantry", response);
+  //       response;
+  //     } catch (error) {
+  //       console.error("Error occurred:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [userDoc, pantryData]);
 
   return (
     <div>

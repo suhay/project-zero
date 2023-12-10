@@ -2603,13 +2603,13 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:*, @types/react@npm:^18":
-  version: 18.2.42
-  resolution: "@types/react@npm:18.2.42"
+  version: 18.2.43
+  resolution: "@types/react@npm:18.2.43"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: d2019afdf48303a3a598a97cc9dd2284e3c04b369e791f6ba3c33232b7f8645daff97b093a19f8b3ce75ac8a261b47552cb4513226ab16d843eb9443b0f91844
+  checksum: e7e4da18c7b14e4b8b1ea630d1d8224835698f2bb2485766455bfb9dea93b8ee6cc549a9fe1cb10c984e62685db44fcfb61e8fac913b008cd30a92087f25b9df
   languageName: node
   linkType: hard
 
@@ -4674,9 +4674,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.601":
-  version: 1.4.608
-  resolution: "electron-to-chromium@npm:1.4.608"
-  checksum: 1c937468d7c637131100e24888768333cee690c6a5b54d2044a2ff3363a7c6aeeed581923e57242a0fc812c3bd6df896834fe9817bbee4ca2eb97e17334bbf4a
+  version: 1.4.609
+  resolution: "electron-to-chromium@npm:1.4.609"
+  checksum: 4ef3c32b11adc01ed8227d7bdbe0978b436b817e6b3bd09f19b42afbf9affdb6ddf99f4d20a3b28a494772a2985df12ec95abca849a38cccb217c4ee338561bb
   languageName: node
   linkType: hard
 
@@ -9930,9 +9930,9 @@ __metadata:
   linkType: hard
 
 "oo-ascii-tree@npm:^1.84.0":
-  version: 1.92.0
-  resolution: "oo-ascii-tree@npm:1.92.0"
-  checksum: 928fbd1a26213b40d369b7d0407945f29dc4c9f739374a2730fb16ac76cd1ff369a70145b1afa96a352a2db9abeac6ae838030afa035ea736f795fa6c754d75b
+  version: 1.93.0
+  resolution: "oo-ascii-tree@npm:1.93.0"
+  checksum: 07be89a2d696628480a10041d7f9b962a99c1ddd50bb01682eab689f0ea6180d8b0721dbb7acc630db61b3d92e15db3128fa7d920854e9cbc3433d110c3d71a6
   languageName: node
   linkType: hard
 
@@ -10441,7 +10441,6 @@ __metadata:
     tailwindcss: ^3.3.3
     ts-jest: ^29.1.1
     typescript: ^5.2.2
-    uuid: ^9.0.1
     vercel: ^32.5.6
   languageName: unknown
   linkType: soft
@@ -10592,11 +10591,11 @@ __metadata:
   linkType: hard
 
 "react-hook-form@npm:^7.48.1":
-  version: 7.48.2
-  resolution: "react-hook-form@npm:7.48.2"
+  version: 7.49.0
+  resolution: "react-hook-form@npm:7.49.0"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: 39652d08f78f16e5234049ceeb794d8bcd4d146772aca99c6db8c5aea8926cd4a230d02098886a441074deefbc24ffcb5ed57bc7cb0009d950115f5b3e627f12
+  checksum: 9bfd27cb868f05df8e6e98fda15813ea31220ca643b56d37ea89940e865ed0183087df49b70d4e8e80729ef541ec56e23a0c782c52760a3053751aa506abc150
   languageName: node
   linkType: hard
 
@@ -12482,15 +12481,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^9.0.1":
-  version: 9.0.1
-  resolution: "uuid@npm:9.0.1"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 39931f6da74e307f51c0fb463dc2462807531dc80760a9bff1e35af4316131b4fc3203d16da60ae33f07fdca5b56f3f1dd662da0c99fea9aaeab2004780cc5f4
-  languageName: node
-  linkType: hard
-
 "uvu@npm:^0.5.0":
   version: 0.5.6
   resolution: "uvu@npm:0.5.6"
@@ -12848,8 +12838,8 @@ __metadata:
   linkType: hard
 
 "ws@npm:^8.11.0":
-  version: 8.14.2
-  resolution: "ws@npm:8.14.2"
+  version: 8.15.0
+  resolution: "ws@npm:8.15.0"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -12858,7 +12848,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 3ca0dad26e8cc6515ff392b622a1467430814c463b3368b0258e33696b1d4bed7510bc7030f7b72838b9fdeb8dbd8839cbf808367d6aae2e1d668ce741d4308b
+  checksum: ca15c590aa49bc0197223b8ab7d15e7362ae6c4011d91ed0e5cd5867cdd5497fd71470ea36314833b4b078929fe64dc4ba7748b1e58e50a0f8e41f147db2b464
   languageName: node
   linkType: hard
 
