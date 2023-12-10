@@ -77,6 +77,6 @@
   "packageManager": "yarn@3.6.4",
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --cache --fix",
-    "*.{js,css,md,ts,tsx}": "prettier --write"
+    "*.{js,css,md,ts,tsx}": "yarn format"
   }
 }
