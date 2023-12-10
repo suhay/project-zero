@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
-
 import { CATEGORIES } from "@/constants";
 import { useUserData } from "@/src/hooks/useUserData";
 import { getUserPantryDB } from "@/src/database/productData";
