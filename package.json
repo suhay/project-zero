@@ -11,7 +11,8 @@
     "test:watch": "jest --watchAll",
     "coverage": "jest --coverage",
     "postinstall": "husky install",
-    "precommit": "yarn lint && yarn test"
+    "precommit": "yarn lint && yarn test",
+    "format": "prettier --write '*/**/*.{js,css,md,ts,tsx}'"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -76,6 +77,6 @@
   "packageManager": "yarn@3.6.4",
   "lint-staged": {
     "*.{js,ts,tsx}": "eslint --cache --fix",
-    "*.{js,css,md,ts,tsx}": "prettier --write"
+    "*.{js,css,md,ts,tsx}": "yarn format"
   }
 }
