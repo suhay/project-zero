@@ -9,6 +9,20 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        typing: {
+          from: { width: "0" },
+          to: { width: "100%" },
+        },
+        blinking: {
+          "0%": { borderRightColor: "transparent" },
+          "50%": { borderRightColor: "black" },
+          "100%": { borderRightColor: "transparent" },
+        },
+      },
+      animation: {
+        typing: "typing 2s steps(30, end) forwards, blinking 1s 3s",
+      },
       width: {
         "128": "32rem",
         "168": "42rem",

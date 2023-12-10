@@ -1,3 +1,8 @@
+"use client";
+import React from "react";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import { JourneySidebar } from "@/src/components/Journey/JourneySidebar";
 
 export default function ProfileLayout({
@@ -5,13 +10,17 @@ export default function ProfileLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <section className="flex">
-      <aside>
-        <JourneySidebar />
-      </aside>
+  const [queryClient] = React.useState(() => new QueryClient());
 
-      {children}
-    </section>
+  return (
+    <QueryClientProvider client={queryClient}>
+      <section className="flex">
+        <aside>
+          <JourneySidebar />
+        </aside>
+
+        {children}
+      </section>
+    </QueryClientProvider>
   );
 }
