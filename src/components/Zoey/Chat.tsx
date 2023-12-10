@@ -6,6 +6,7 @@ import { SearchBar } from "~/Form/SearchBar";
 import { BouncingDots } from "~/Loader/BouncingDots";
 import Link from "next/link";
 import { Card } from "../lib/Card";
+import { executeFunction } from "@/src/utils/functions";
 
 export type Message = {
   id: number;
@@ -35,18 +36,18 @@ export function Chat({ initialMessage }: { initialMessage: string }) {
       {
         id: Date.now(),
         text: reply.data,
+        link: reply.link,
+        action: reply.action,
       },
     ]);
   };
 
   const fetchMessage = (text: string) => {
-    return fetch("https://zoey.zeroin.earth/", {
-      method: "POST",
-      body: JSON.stringify({ message: text }),
-    })
-      .then((res) => res.json())
-      .then((body: Reply) => {
-        handleReply(body);
+    return executeFunction("6574e9e37e61852c56d2", { message: text })
+      .then((res) => res.responseBody)
+      .then((body: string) => {
+        handleReply(JSON.parse(body) as Reply);
+        return body;
       });
   };
 
@@ -68,7 +69,7 @@ export function Chat({ initialMessage }: { initialMessage: string }) {
   return (
     <section className={`w-full p-10`}>
       {messages.map((message, i) => (
-        <div key={i}>
+        <div key={i} className="mb-4">
           <p
             className={
               i % 2 === 1
@@ -97,7 +98,15 @@ export function Chat({ initialMessage }: { initialMessage: string }) {
               />
             </div>
           )}
-          {message.link != null && <Link href={message.link}>Directions</Link>}
+          {message.link != null && message.link !== "" && (
+            <Link
+              className="text-blue-500 underline"
+              target="_blank"
+              href={message.link}
+            >
+              Directions
+            </Link>
+          )}
         </div>
       ))}
       {isFetching && (
