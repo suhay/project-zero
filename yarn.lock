@@ -2192,6 +2192,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/eslint-plugin-query@npm:^5.12.1":
+  version: 5.12.1
+  resolution: "@tanstack/eslint-plugin-query@npm:5.12.1"
+  dependencies:
+    "@typescript-eslint/utils": ^5.54.0
+  peerDependencies:
+    eslint: ^8.0.0
+  checksum: bdb7e24772276935917f1e160b05c185ec4b897d1916264516610a8654dd4ce3646bb915e36e200c2d9c72859930587ba6199df107e5d38f895f83b505639764
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:5.13.4":
+  version: 5.13.4
+  resolution: "@tanstack/query-core@npm:5.13.4"
+  checksum: 9ebda1325d2774d766d0c07d3ded3f231fa785147bdf59372240d09c992b2636e5c6aa3660c1de348de395c0de5b1f8aadf28397e1134dbe2d56c38e37b7af1c
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.13.4":
+  version: 5.13.4
+  resolution: "@tanstack/react-query@npm:5.13.4"
+  dependencies:
+    "@tanstack/query-core": 5.13.4
+  peerDependencies:
+    react: ^18.0.0
+  checksum: 5a9afef4d59eb5ac00acdc9d3c5f25c76f2a4d69609a354ff8d81d0260b571d192c3a382b1027d37b1ae8b1e1a63d3d8fba0cec00338ec53bda01721dad8f279
+  languageName: node
+  linkType: hard
+
 "@testing-library/dom@npm:^9.0.0":
   version: 9.3.3
   resolution: "@testing-library/dom@npm:9.3.3"
@@ -2822,7 +2851,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:^5.58.0":
+"@typescript-eslint/utils@npm:^5.54.0, @typescript-eslint/utils@npm:^5.58.0":
   version: 5.62.0
   resolution: "@typescript-eslint/utils@npm:5.62.0"
   dependencies:
@@ -10354,6 +10383,8 @@ __metadata:
     "@emotion/styled": ^11.11.0
     "@mui/material": ^5.14.18
     "@ramonak/react-progress-bar": ^5.1.1
+    "@tanstack/eslint-plugin-query": ^5.12.1
+    "@tanstack/react-query": ^5.13.4
     "@testing-library/jest-dom": ^6.1.4
     "@testing-library/react": ^14.0.0
     "@testing-library/user-event": ^14.5.1
