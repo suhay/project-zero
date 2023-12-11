@@ -1,12 +1,6 @@
-import { atom } from "jotai";
 import { Models } from "appwrite";
+import { atomWithReset } from "jotai/utils";
 
-export const UserAtom = atom<Models.User<Models.Preferences> | null>(null);
-
-export const SetUserAtom = atom<
+export const UserAtom = atomWithReset<Models.User<Models.Preferences> | null>(
   null,
-  [Models.User<Models.Preferences> | null],
-  void
->(null, (_get, set, update) => {
-  set(UserAtom, update);
-});
+);

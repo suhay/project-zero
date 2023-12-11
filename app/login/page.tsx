@@ -94,10 +94,10 @@ const LogIn = () => {
             {...register("email", { required: "Email is required" })}
           />
           <Password<Inputs>
-            label="New password"
+            label="Password"
             name="password"
             errors={errors}
-            autoComplete="current-password"
+            autoComplete="password"
             placeholder="Password"
             register={register}
             watch={watch}

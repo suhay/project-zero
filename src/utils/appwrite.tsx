@@ -1,4 +1,4 @@
-import { Client, Account, Databases, Graphql } from "appwrite";
+import { Client, Account, Functions, Databases, Graphql } from "appwrite";
 
 const client = new Client();
 
@@ -11,3 +11,5 @@ export const account = new Account(client);
 export const databases = new Databases(client);
 
 export const graphql = new Graphql(client);
+
+export const functions = new Functions(client);

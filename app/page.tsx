@@ -18,7 +18,7 @@ function HeroWrapper(props: { children: React.ReactNode }) {
 
 const Home = () => {
   return (
-    <div>
+    <div data-testId="home-page">
       <HeroWrapper>
         <Image
           src="/assets/home.png"

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useAtom } from "jotai";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ export function useUserData({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
 
-  const fetchUser = useCallback(async () => {
+  const fetchUser = async () => {
     if (loading) {
       return;
     }
@@ -32,18 +32,19 @@ export function useUserData({
         router.push(successPath);
       }
     } catch (error: any) {
-      // console.error("Error fetching user data:", error);
       setError(error);
+      if (error && failPath) {
+        router.push(failPath);
+      }
     } finally {
       setLoading(false);
     }
-  }, [loading, router, setUserProfile, successPath]);
+  };
 
   useEffect(() => {
     if (cacheOnly) {
       return;
     }
-
     if (userProfile != null) {
       if (successPath) {
         router.push(successPath);
@@ -52,12 +53,6 @@ export function useUserData({
     }
     fetchUser();
   }, []);
-
-  useEffect(() => {
-    if (error && failPath) {
-      router.push(failPath);
-    }
-  }, [error, failPath, router]);
 
   return {
     userProfile,
