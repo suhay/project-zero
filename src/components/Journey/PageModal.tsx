@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { PantryProductDocument, STATUS } from "@/constants";
 import { CategoryStatusContext } from "@/src/context/context";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Plus } from "react-feather";
 import { Models } from "appwrite";
 import { account } from "@/src/utils/appwrite";
-// import { savePantry } from "@/src/database/productData";
+import { savePantry } from "@/src/database/productData";
 
 const style = {
   position: "absolute" as const,
@@ -46,8 +46,8 @@ export default function PageModal({
 }) {
   //to save into db
   // const [pantryData, setPantryData] = useState<string[]>([]);
-  const [pantryData, setPantryData] = useState<Models.Document[]>([]);
-  const [, setUserDoc] = React.useState("");
+  const [, setPantryData] = useState<string[]>([]);
+  const [userDoc, setUserDoc] = React.useState("");
 
   const { setCategoryStatus } = useContext(CategoryStatusContext);
 
@@ -72,7 +72,12 @@ export default function PageModal({
     if (subCategory) {
       product.Status = STATUS.ACTIVE;
       // setPantryData((prevItem) => [...prevItem, product.$id]);
-      setPantryData((prevItem) => [...prevItem, product]);
+      setPantryData((prevItem) => [...prevItem, product.$id]);
+      pantrySignal.value = {
+        document: pantrySignal.value.document
+          ? [...pantrySignal.value.document, product]
+          : [product],
+      };
 
       //update category's status depends on current subCategory's product list length and each status
       if (checkCompleteStatus()) {
@@ -112,27 +117,17 @@ export default function PageModal({
     }
   };
 
-  useEffect(() => {
-    //if updateDocument doesn't work, need to persist pantryData during router change
-    pantrySignal.value = {
-      document: pantryData,
-    };
-    console.log(pantrySignal.value.document);
-  }, [pantryData]);
-
-  //appwrite Patch error occurs
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await savePantry(userDoc, pantryData);
-  //       console.log("savePantry", response);
-  //       response;
-  //     } catch (error) {
-  //       console.error("Error occurred:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [userDoc, pantryData]);
+  const fetchData = async () => {
+    try {
+      const idArray = pantrySignal.value.document?.map((doc) => doc.$id) || [];
+      const toBeSavedConcatenatedIds = idArray.join(",");
+      const response = await savePantry(userDoc, toBeSavedConcatenatedIds);
+      console.log("savePantry", response);
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+  fetchData();
 
   return (
     <div>

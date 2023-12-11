@@ -14,7 +14,7 @@ import { googleAuth, login } from "@/src/utils/auth";
 import { Button } from "~/Button";
 import { Error } from "~/Form/Error";
 import { Input } from "~/Form/Input";
-// import { saveUserToDB } from "@/src/database/productData";
+import { saveUserToDB } from "@/src/database/productData";
 
 type Inputs = {
   email: string;
@@ -25,7 +25,7 @@ const LogIn = () => {
   const router = useRouter();
   const [loginError, setLoginError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
-  const [, setUserDoc] = React.useState("");
+  const [userDoc, setUserDoc] = React.useState("");
 
   const {
     register,
@@ -53,18 +53,18 @@ const LogIn = () => {
     }
   };
 
-  //error while appwrite updating document
+  // error while appwrite updating document
   // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const result = await saveUserToDB(userDoc);
-  //       // console.log("userDoc", result);
-  //       result;
-  //     } catch (error) {
-  //       console.error("Error occurred:", error);
-  //     }
-  //   };
-  //   fetchData();
+  const fetchData = async () => {
+    try {
+      const result = await saveUserToDB(userDoc);
+      // console.log("userDoc", result);
+      result;
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+  fetchData();
   // }, [userDoc]);
 
   const signWithGoogle = () => {

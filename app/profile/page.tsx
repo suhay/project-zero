@@ -8,11 +8,12 @@ import { getUserPantryDB } from "@/src/database/productData";
 import { pantrySignal } from "@/src/components/Journey/PageModal";
 import { Card } from "@/src/components/lib/Card";
 import { Button } from "@/src/components/lib/Button";
+import { Models } from "appwrite";
 
 const Profile = () => {
   const router = useRouter();
   const [, setSelectedCategory] = useState("");
-  const [, setPantry] = useState<string[]>([]); //use updateDocument works
+  const [pantry, setPantry] = useState<Models.Document[]>([]); //use updateDocument works
   const { userProfile, loading } = useUserData({});
 
   const chooseCategory = (category: string) => {
@@ -20,14 +21,13 @@ const Profile = () => {
     router.push(`/profile/product/${category.toLowerCase()}`);
   };
 
+  //get user's pantry collection by (pantry product ids) and retrieve attributes from pantry array
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getUserPantryDB(userProfile?.$id || ""); //ID error
         if (result) {
-          const pantryIds = result.map((doc) => doc.id);
-          setPantry(pantryIds);
-          // console.log("getUserPantryDB", result);
+          setPantry(result);
         } else {
           console.error("getUserPantryDB returned undefined");
         }
@@ -39,7 +39,11 @@ const Profile = () => {
     fetchData();
   }, [userProfile?.$id]);
 
-  // console.log("pantrySignal.value.document", pantrySignal.value.document);
+  //workaround: format pantries id from a single string to render multiple data
+  const pantriesID = pantry[0]?.pantries.split(",");
+  const updatedPantries = pantrySignal.value.document?.filter(
+    (product) => pantriesID?.includes(product.$id),
+  );
 
   if (loading) {
     return (
@@ -56,7 +60,7 @@ const Profile = () => {
           <h2>
             {userProfile ? `Welcome, ${userProfile.name}!` : "Loading..."}
           </h2>
-          <div className="flex flex-wrap justify-center my-20 py-auto gap-6 md:gap-3 sm:w-full ">
+          <div className="flex flex-wrap justify-center my-20 mx-auto py-auto gap-6 md:gap-3 sm:w-full ">
             {CATEGORIES.map((c) => (
               <button
                 className="profile border-8 border-green-500/50 w-36 h-36 rounded-full hover:scale-105"
@@ -69,30 +73,31 @@ const Profile = () => {
               </button>
             ))}
           </div>
-          {/* when added product, pantry displays synced good - TODO persist after router render */}
-          Your Pantry
-          <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
-          <div className="flex">
-            {pantrySignal &&
-              pantrySignal.value.document?.map((product, i) => (
-                <span className="" key={i}>
-                  <Card.Product
-                    key={product.Name}
-                    tag={<Button.Tag tag={product.Tag} />}
-                    img={{
-                      src: "/assets/product-demo.png",
-                      alt: `${product.Name}`,
-                    }}
-                    provider={product.Company}
-                    title={product.Name}
-                    environment={product.Impact}
-                    quality={product.Quality}
-                  />
-                </span>
-              ))}
-          </div>
         </div>
       )}
+      <div className="profile">
+        Your Pantry
+        <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
+        <div className="flex flex-wrap gap-3">
+          {updatedPantries &&
+            updatedPantries.map((product, i) => (
+              <span key={i}>
+                <Card.Product
+                  key={product.Name}
+                  tag={<Button.Tag tag={product.Tag} />}
+                  img={{
+                    src: "/assets/product-demo.png",
+                    alt: `${product.Name}`,
+                  }}
+                  provider={product.Company}
+                  title={product.Name}
+                  environment={product.Impact}
+                  quality={product.Quality}
+                />
+              </span>
+            ))}
+        </div>
+      </div>
     </div>
   );
 };

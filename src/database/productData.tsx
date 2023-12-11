@@ -1,24 +1,9 @@
 import { ID, Permission, Query, Role } from "appwrite";
 import { databases } from "../utils/appwrite";
 
-export const dbData = async () => {
-  try {
-    const response = await databases.listDocuments(
-      process.env.NEXT_PUBLIC_APPWRITE_PRODUCTS_DATABASE_ID ?? "",
-      process.env.NEXT_PUBLIC_APPWRITE_HOUSEHOLD_COLLECTION_ID ?? "",
-    );
-
-    if (response.documents && Array.isArray(response.documents)) {
-      return response.documents;
-    }
-  } catch (error) {
-    console.log("DB Fetch Error", error);
-  }
-};
-
 export const indexCategory = async (category: string) => {
   try {
-    // in case the category is string []
+    // handle in case the category is set to string []
     // const categoryQueries = categories.map((category) => {
     //   return Query.equal("Categories", category);
     // });
@@ -99,7 +84,7 @@ export const saveUserToDB = async (user: string) => {
   }
 };
 
-export const savePantry = async (user: string, pantryItems: string[]) => {
+export const savePantry = async (user: string, pantryItems: string) => {
   try {
     //check pantry doc exists
     const pantryResponse = await databases.listDocuments(
@@ -119,16 +104,14 @@ export const savePantry = async (user: string, pantryItems: string[]) => {
     const userDocument = userResponse.documents;
     console.log("userDocument", userDocument);
 
-    //create or update user<->pantry data
-    if (pantryDocument.length <= 0) {
+    //if user doesn't exist and user has no pantry documents
+    if (userDocument.length <= 0 && pantryDocument.length <= 0) {
       const createPantryResponse = await databases.createDocument(
         process.env.NEXT_PUBLIC_APPWRITE_USER_DATABASE_ID ?? "",
         process.env.NEXT_PUBLIC_APPWRITE_PANTRY_COLLECTION_ID ?? "",
         ID.unique(),
-        { userId: user, products: pantryItems },
+        { userId: user, pantries: pantryItems },
         [
-          // Permission.update(Role.any()),
-          // Permission.delete(Role.any()),
           Permission.update(
             Role.user(process.env.NEXT_PUBLIC_APPWRITE_USER_PERMISSION ?? ""),
           ),
@@ -136,16 +119,14 @@ export const savePantry = async (user: string, pantryItems: string[]) => {
       );
       console.log("createPantryResponse", createPantryResponse);
     } else {
+      //if user already exists, update only pantry data(currently saves a whole concatenated Ids)
+      //TODO: improve pantry attributes saving and retrieving
       const userPantryResponse = await databases.updateDocument(
         process.env.NEXT_PUBLIC_APPWRITE_USER_DATABASE_ID ?? "",
-        process.env.NEXT_PUBLIC_APPWRITE_USER_COLLECTION_ID ?? "",
-        userDocument[0].$id,
-        { UserId: user, pantry: pantryItems } as {
-          pantry: string[];
-        }, //onboarding: ""
+        process.env.NEXT_PUBLIC_APPWRITE_PANTRY_COLLECTION_ID ?? "",
+        pantryDocument[0].$id,
+        { pantries: pantryItems },
         [
-          // Permission.update(Role.any()),
-          // Permission.delete(Role.any()),
           Permission.update(
             Role.user(process.env.NEXT_PUBLIC_APPWRITE_USER_PERMISSION ?? ""),
           ),
@@ -159,15 +140,14 @@ export const savePantry = async (user: string, pantryItems: string[]) => {
   }
 };
 
+//get current user's pantry data and render on profile pantry section
 export const getUserPantryDB = async (user: string) => {
   try {
     const userPantryDocResponse = await databases.listDocuments(
       process.env.NEXT_PUBLIC_APPWRITE_USER_DATABASE_ID ?? "",
-      process.env.NEXT_PUBLIC_APPWRITE_USER_COLLECTION_ID ?? "",
-      [Query.equal("UserId", user)],
+      process.env.NEXT_PUBLIC_APPWRITE_PANTRY_COLLECTION_ID ?? "",
+      [Query.equal("userId", user)],
     );
-    //return user's document data and get pantry
-    // console.log("userPantryDocResponse", userPantryDocResponse.documents);
     return userPantryDocResponse.documents;
   } catch (error) {
     console.log("Fetch Pantry Error", error);
