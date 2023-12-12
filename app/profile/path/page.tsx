@@ -187,8 +187,8 @@ function Path() {
   };
 
   return (
-    <div className="p-4">
-      <h1>Where are we going today?</h1>
+    <div className="profile p-10">
+      <h2>Where are we going today?</h2>
       <CurrentPath
         selectedTile={selectedTile}
         handleClickingBaseTileTitle={handleClickingBaseTileTitle}
@@ -221,8 +221,6 @@ function Path() {
           />
         </section>
       )}
-
-      {/* Display list of top products or products based on selection */}
     </div>
   );
 }

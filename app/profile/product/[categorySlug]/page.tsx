@@ -30,15 +30,15 @@ const Category = ({ params }: { params: { categorySlug: string } }) => {
         </div>
       </section>
       <section className="profile my-12">
-        <h3>Improve Products</h3>
-        <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
+        <h4>Improve Products</h4>
+        <hr className="my-2 mb-3 border-secondary-700" />
         <div className="flex flex-wrap gap-2">
           <Products displayProductCard={false} category={categoryName} />
         </div>
       </section>
       <section className="profile">
-        <h3>Your Interest Selections</h3>
-        <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
+        <h4>Your Interest Selections</h4>
+        <hr className="my-2 mb-3 border-secondary-700" />
         <Products displayProductCard={true} category={categoryName} />
       </section>
     </div>

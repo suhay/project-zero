@@ -70,13 +70,13 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
       <div className="flex flex-wrap m-auto items-center profile sm:mb-3">
         <Button.Back />
         <h2 className="ml-6 my-auto">{decodeURL}</h2>
-        <h3 className="ml-6 my-auto">Status: {categoryStatus?.status}</h3>
+        <p className="ml-6 my-auto">Status: {categoryStatus?.status}</p>
         <Button.Action
           tag="I don't need this product"
           onClick={handleRemoveSubItem}
         />
       </div>
-      <hr className="profile" />
+      <hr className="profile border-secondary-700" />
       <div className="flex flex-wrap gap-10 my-10 profile">
         {productType?.map((product: Models.Document, i) => (
           <div className="flex" key={i}>

@@ -16,7 +16,7 @@ export function Action({
   return (
     <button
       type={type}
-      className={`${buttonClass} ${variantClass[variant]} w-auto ml-auto mr-4`}
+      className={`${buttonClass} ${variantClass[variant]} w-auto ml-10 mr-4`}
       onClick={onClick}
     >
       {tag}

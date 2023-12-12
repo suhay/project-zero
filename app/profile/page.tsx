@@ -57,18 +57,20 @@ const Profile = () => {
   return (
     <div className="profile relative">
       {userProfile && (
-        <div className="mx-auto py-6">
+        <div className="profile mx-auto py-6">
           <h2>
             {userProfile ? `Welcome, ${userProfile.name}!` : "Loading..."}
           </h2>
-          <section className="flex flex-wrap justify-center my-20 mx-auto py-auto gap-6 md:gap-3 sm:w-full ">
-            <div className="border border-gray-300  p-4 rounded-lg flex flex-col w-1/2">
-              <h3 className="mb-4">
-                How each area is doing (scores out of 10, higher is better)
-              </h3>
+          <div className="text-left mb-2">Your Progress Overview </div>
+          <hr className="w-11/12 mb-4 border-secondary-700" />
+          <div className="flex flex-wrap justify-around py-auto gap-6 md:gap-3 sm:w-full ">
+            <div className="border border-gray-200 p-6 rounded-lg flex flex-col w-1/2">
               <RadarChart />
+              <p className="text-gray-500">
+                * scores out of 10, the higher the better
+              </p>
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-4">
               <Card.Stat
                 description="Plastics prevented in November"
                 stat="10kg"
@@ -79,45 +81,49 @@ const Profile = () => {
               />
               <Card.Stat description="Ranking" stat="Top 3%" />
             </div>
-          </section>
-          <div className="flex my-20 py-auto gap-6 flex-wrap">
-            {CATEGORIES.map((c) => (
-              <button
-                className="profile border-8 border-green-500/50 w-36 h-36 rounded-full hover:scale-105"
-                onClick={() => {
-                  chooseCategory(c.label);
-                }}
-                key={c.key}
-              >
-                {c.label}
-              </button>
-            ))}
+          </div>
+          <div className="mt-10">
+            Your Journey
+            <hr className="w-11/12 mt-2 border-secondary-700" />
+            <div className="flex my-20 py-auto gap-6 flex-wrap justify-around">
+              {CATEGORIES.map((c) => (
+                <button
+                  className="profile border-8 border-green-500/50 w-36 h-36 rounded-full hover:scale-105"
+                  onClick={() => {
+                    chooseCategory(c.label);
+                  }}
+                  key={c.key}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            Your Pantry
+            <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
+            <div className="flex flex-wrap gap-3 justify-around">
+              {updatedPantries &&
+                updatedPantries.map((product, i) => (
+                  <span key={i}>
+                    <Card.Product
+                      key={product.Name}
+                      tag={<Button.Tag tag={product.Tag} />}
+                      img={{
+                        src: "/assets/product-demo.png",
+                        alt: `${product.Name}`,
+                      }}
+                      provider={product.Company}
+                      title={product.Name}
+                      environment={product.Impact}
+                      quality={product.Quality}
+                    />
+                  </span>
+                ))}
+            </div>
           </div>
         </div>
       )}
-      <div className="profile">
-        Your Pantry
-        <hr className="my-2 mb-3 w-11/12 border-secondary-700" />
-        <div className="flex flex-wrap gap-3">
-          {updatedPantries &&
-            updatedPantries.map((product, i) => (
-              <span key={i}>
-                <Card.Product
-                  key={product.Name}
-                  tag={<Button.Tag tag={product.Tag} />}
-                  img={{
-                    src: "/assets/product-demo.png",
-                    alt: `${product.Name}`,
-                  }}
-                  provider={product.Company}
-                  title={product.Name}
-                  environment={product.Impact}
-                  quality={product.Quality}
-                />
-              </span>
-            ))}
-        </div>
-      </div>
     </div>
   );
 };
