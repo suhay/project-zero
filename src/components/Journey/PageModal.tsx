@@ -9,8 +9,8 @@ import { CategoryStatusContext } from "@/src/context/context";
 import { useContext, useState } from "react";
 import { Plus } from "react-feather";
 import { Models } from "appwrite";
-import { account } from "@/src/utils/appwrite";
 import { savePantry } from "@/src/database/productData";
+import { useUserData } from "@/src/hooks/useUserData";
 
 const style = {
   position: "absolute" as const,
@@ -47,8 +47,7 @@ export default function PageModal({
   //to save into db
   // const [pantryData, setPantryData] = useState<string[]>([]);
   const [, setPantryData] = useState<string[]>([]);
-  const [userDoc, setUserDoc] = React.useState("");
-
+  const { userProfile } = useUserData({});
   const { setCategoryStatus } = useContext(CategoryStatusContext);
 
   const [open, setOpen] = React.useState(false);
@@ -101,19 +100,6 @@ export default function PageModal({
           status: `${subCategory.key} not started`,
         });
       }
-
-      //get current user and update user's pantry data
-      const fetchData = async () => {
-        try {
-          const currentUser = await account.get();
-          // console.log("page modal get curr user", currentUser);
-          setUserDoc(currentUser.$id);
-        } catch (error) {
-          console.log("Get User Error", error);
-        }
-      };
-
-      fetchData();
     }
   };
 
@@ -121,8 +107,13 @@ export default function PageModal({
     try {
       const idArray = pantrySignal.value.document?.map((doc) => doc.$id) || [];
       const toBeSavedConcatenatedIds = idArray.join(",");
-      const response = await savePantry(userDoc, toBeSavedConcatenatedIds);
-      console.log("savePantry", response);
+      if (userProfile !== null && userProfile !== undefined) {
+        const response = await savePantry(
+          userProfile.$id,
+          toBeSavedConcatenatedIds,
+        );
+        console.log("savePantry", response);
+      }
     } catch (error) {
       console.error("Error occurred:", error);
     }

@@ -25,7 +25,6 @@ const LogIn = () => {
   const router = useRouter();
   const [loginError, setLoginError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
-  const [userDoc, setUserDoc] = React.useState("");
 
   const {
     register,
@@ -38,8 +37,9 @@ const LogIn = () => {
     try {
       setIsLoading(true);
       await login(data.email, data.password);
-      const currentUser = await account.get(); //print out
-      setUserDoc(currentUser.$id);
+      const currentUser = await account.get();
+      const result = await saveUserToDB(currentUser.$id);
+      console.log(result);
       router.push("/profile");
     } catch (e) {
       if (e instanceof AppwriteException) {
@@ -52,20 +52,6 @@ const LogIn = () => {
       setIsLoading(false);
     }
   };
-
-  // error while appwrite updating document
-  // useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const result = await saveUserToDB(userDoc);
-      // console.log("userDoc", result);
-      result;
-    } catch (error) {
-      console.error("Error occurred:", error);
-    }
-  };
-  fetchData();
-  // }, [userDoc]);
 
   const signWithGoogle = () => {
     googleAuth();
