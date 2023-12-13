@@ -14,6 +14,7 @@ import { googleAuth, login } from "@/src/utils/auth";
 import { Button } from "~/Button";
 import { Error } from "~/Form/Error";
 import { Input } from "~/Form/Input";
+import { saveUserToDB } from "@/src/database/productData";
 
 type Inputs = {
   email: string;
@@ -36,7 +37,9 @@ const LogIn = () => {
     try {
       setIsLoading(true);
       await login(data.email, data.password);
-      await account.get();
+      const currentUser = await account.get();
+      const result = await saveUserToDB(currentUser.$id);
+      console.log(result);
       router.push("/profile");
     } catch (e) {
       if (e instanceof AppwriteException) {

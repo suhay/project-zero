@@ -16,7 +16,7 @@ export function Stat({
       <dt className="text-center text-base leading-7 text-gray-600">
         {description}
       </dt>
-      <dd className="text-center order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">
+      <dd className="text-center order-first text-3xl font-semibold tracking-tight text-secondary-800 md:text-3xl sm:text-5xl">
         {stat}
       </dd>
     </div>

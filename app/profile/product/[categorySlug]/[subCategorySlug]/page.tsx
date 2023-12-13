@@ -1,9 +1,8 @@
 "use client";
-import { Key, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
-
-import { GOODS, STATUS } from "@/constants";
+import { PantryProductDocument, STATUS } from "@/constants";
 import PageModal from "@/src/components/Journey/PageModal";
 import { Button } from "@/src/components/lib/Button";
 import {
@@ -11,35 +10,54 @@ import {
   CategoryStatusContext,
 } from "@/src/context/context";
 import { Card } from "~/Card";
+import { Models } from "appwrite";
+import { indexProductType } from "@/src/database/productData";
 
 const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
   const router = useRouter();
   const { subCategorySlug } = params;
-  const decodeURL = decodeURIComponent(subCategorySlug);
-  // const subcategoryName = decodeURL.split(' ').map(word =>
-  //   word.charAt(0).toUpperCase() + word.slice(1) + ' ')
 
+  const [productType, setProductType] = useState<
+    Models.Document[] | undefined
+  >();
   const { categoryStatus } = useContext(CategoryStatusContext);
   const { setSubCategoryStatus } = useContext(ActionButtonContext);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let matchingSubCategory: any;
-  for (const good of GOODS) {
-    for (const subCategory of good.value) {
-      if (subCategory.key.toLowerCase() === decodeURL) {
-        matchingSubCategory = subCategory;
-        break;
+  const decodeURL = decodeURIComponent(subCategorySlug).includes(" ")
+    ? decodeURIComponent(subCategorySlug)
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ")
+    : decodeURIComponent(subCategorySlug);
+
+  //retrieve indexed product_type query data ("shampoo", toothpaste")
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await indexProductType(decodeURL);
+        setProductType(result);
+        //  console.log("result", result);
+        result;
+      } catch (error) {
+        console.error("Error occurred:", error);
       }
-    }
-    if (matchingSubCategory) {
-      break;
-    }
+    };
+
+    fetchData();
+  }, [decodeURL]);
+
+  let matchingSubCategory: PantryProductDocument | undefined;
+
+  if (productType && productType.length > 0) {
+    matchingSubCategory = {
+      key: productType[0].Type,
+      value: productType,
+      status: "",
+    };
   }
 
   const handleRemoveSubItem = () => {
-    console.log("decodeURL", decodeURL);
     //change good's icon and status
-    //TODO: sync/update categorySlug page status
     setSubCategoryStatus({
       name: decodeURL,
       status: STATUS.NONE,
@@ -49,50 +67,39 @@ const SubCategory = ({ params }: { params: { subCategorySlug: string } }) => {
 
   return (
     <section className="profile my-20">
-      <div className="flex m-auto items-center profile">
+      <div className="flex flex-wrap m-auto items-center profile sm:mb-3">
         <Button.Back />
         <h2 className="ml-6 my-auto">{decodeURL}</h2>
-        <h3 className="ml-6 my-auto">Status: {categoryStatus?.status}</h3>
+        <p className="ml-6 my-auto">Status: {categoryStatus?.status}</p>
         <Button.Action
           tag="I don't need this product"
           onClick={handleRemoveSubItem}
         />
       </div>
-      <hr className="profile" />
-      <div className="border-red-400 flex gap-10 my-10 profile">
-        {matchingSubCategory?.product.map(
-          (
-            product: {
-              title: string | undefined;
-              tag: string | undefined;
-              provider: string | undefined;
-              environment: string | number | undefined;
-              quality: string | number | undefined;
-            },
-            idx: Key | null | undefined,
-          ) => (
-            <div className="flex" key={product.title}>
-              <Card.Product
-                key={idx}
-                tag={<Button.Tag tag={product.tag} />}
-                img={{
-                  src: "/assets/product-demo.png",
-                  alt: `product.title`,
-                }}
-                provider={product.provider}
-                title={product.title}
-                environment={product.environment}
-                quality={product.quality}
-                modal={
-                  <PageModal
-                    product={product}
-                    subCategory={matchingSubCategory}
-                  />
-                }
-              />
-            </div>
-          ),
-        )}
+      <hr className="profile border-secondary-700" />
+      <div className="flex flex-wrap gap-10 my-10 profile">
+        {productType?.map((product: Models.Document, i) => (
+          <div className="flex" key={i}>
+            <Card.Product
+              key={i}
+              tag={<Button.Tag tag={product.Tag} />}
+              img={{
+                src: "/assets/product-demo.png",
+                alt: `${product.Name}`,
+              }}
+              provider={product.Company}
+              title={product.Name}
+              environment={product.Impact}
+              quality={product.Quality}
+              modal={
+                <PageModal
+                  product={product}
+                  subCategory={matchingSubCategory}
+                />
+              }
+            />
+          </div>
+        ))}
       </div>
       <div></div>
     </section>

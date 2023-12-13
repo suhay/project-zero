@@ -1,12 +1,16 @@
 import * as React from "react";
+import { signal } from "@preact/signals-react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { ProductDetails, STATUS } from "@/constants";
-import { CategoryStatusContext, PantryContext } from "@/src/context/context";
-import { useContext } from "react";
+import { PantryProductDocument, STATUS } from "@/constants";
+import { CategoryStatusContext } from "@/src/context/context";
+import { useContext, useState } from "react";
 import { Plus } from "react-feather";
+import { Models } from "appwrite";
+import { savePantry } from "@/src/database/productData";
+import { useUserData } from "@/src/hooks/useUserData";
 
 const style = {
   position: "absolute" as const,
@@ -20,69 +24,108 @@ const style = {
   p: 4,
 };
 
+type SignalValue = {
+  name: string;
+  status: string;
+};
+
+type PantrySignalValue = {
+  document: Models.Document[] | undefined;
+};
+
+//to pass to category page for checking status
+export const sub = signal<SignalValue>({ name: "", status: "" });
+export const pantrySignal = signal<PantrySignalValue>({ document: [] });
+
 export default function PageModal({
   product,
   subCategory,
 }: {
-  product: ProductDetails;
-  subCategory: { key: string; product: ProductDetails[]; status: string };
+  product: Models.Document;
+  subCategory: PantryProductDocument | undefined;
 }) {
-  const { setPantryProducts } = useContext(PantryContext);
+  //to save into db
+  // const [pantryData, setPantryData] = useState<string[]>([]);
+  const [, setPantryData] = useState<string[]>([]);
+  const { userProfile } = useUserData({});
   const { setCategoryStatus } = useContext(CategoryStatusContext);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const checkCompleteStatus = () => {
+    return subCategory?.value.every(
+      (product: Models.Document) => product.Status === STATUS.ACTIVE,
+    );
+  };
+
+  const checkActiveStatus = () => {
+    return subCategory?.value.some(
+      (product: Models.Document) => product.Status === STATUS.ACTIVE,
+    );
+  };
+
   const addToJourney = () => {
     //update current product's status to active
-    product.status = STATUS.ACTIVE;
+    if (subCategory) {
+      product.Status = STATUS.ACTIVE;
+      // setPantryData((prevItem) => [...prevItem, product.$id]);
+      setPantryData((prevItem) => [...prevItem, product.$id]);
+      pantrySignal.value = {
+        document: pantrySignal.value.document
+          ? [...pantrySignal.value.document, product]
+          : [product],
+      };
 
-    setPantryProducts([
-      {
-        key: subCategory,
-        value: product,
-      },
-    ]);
-
-    const checkCompleteStatus = () => {
-      return subCategory.product.every(
-        (product) => product.status === STATUS.ACTIVE,
-      );
-    };
-
-    const checkActiveStatus = () => {
-      return subCategory.product.some(
-        (product) => product.status === STATUS.ACTIVE,
-      );
-    };
-
-    //update category's status depends on current subCategory's product list length and each status
-    if (checkCompleteStatus()) {
-      subCategory.status = STATUS.COMPLETED;
-      setCategoryStatus({
-        category: subCategory.key,
-        status: `${STATUS.COMPLETED}(${subCategory.key})`,
-      });
-    } else if (checkActiveStatus()) {
-      subCategory.status = STATUS.ACTIVE;
-      setCategoryStatus({
-        category: subCategory.key,
-        status: `${STATUS.ACTIVE} (${subCategory.key})`,
-      });
-    } else {
-      subCategory.status = STATUS.NONE;
-      setCategoryStatus({
-        category: subCategory.key,
-        status: `${subCategory.key} not started`,
-      });
+      //update category's status depends on current subCategory's product list length and each status
+      if (checkCompleteStatus()) {
+        subCategory.status = STATUS.COMPLETED;
+        sub.value = { name: subCategory.key, status: STATUS.COMPLETED };
+        // sub.value = subCategory.status; //to delete from improve products section
+        setCategoryStatus({
+          category: subCategory.key,
+          status: `${STATUS.COMPLETED} (${subCategory.key})`,
+        });
+      } else if (checkActiveStatus()) {
+        subCategory.status = STATUS.ACTIVE;
+        setCategoryStatus({
+          category: subCategory.key,
+          status: `${STATUS.ACTIVE} (${subCategory.key})`,
+        });
+      } else {
+        subCategory.status = STATUS.NONE;
+        setCategoryStatus({
+          category: subCategory.key,
+          status: `${subCategory.key} not started`,
+        });
+      }
     }
-    // console.log("Modal after update", subCategory);
   };
+
+  const fetchData = async () => {
+    try {
+      const idArray = pantrySignal.value.document?.map((doc) => doc.$id) || [];
+      const toBeSavedConcatenatedIds = idArray.join(",");
+      if (userProfile !== null && userProfile !== undefined) {
+        const response = await savePantry(
+          userProfile.$id,
+          toBeSavedConcatenatedIds,
+        );
+        console.log("savePantry", response);
+      }
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+  fetchData();
+
   return (
     <div>
       <Button
         sx={{
           backgroundColor: "#475956",
-          width: "360px",
+          width: "280px",
           "&:hover": {
             backgroundColor: "#172a28",
           },
