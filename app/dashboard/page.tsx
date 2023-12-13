@@ -3,7 +3,10 @@ import DefaultDashboard from "@/src/components/Journey/DefaultDashboard";
 import { useUserData } from "@/src/hooks/useUserData";
 
 const Dashboard = () => {
-  const { userProfile } = useUserData({ successPath: "/profile" });
+  const { userProfile } = useUserData({
+    successPath: "/profile",
+    failPath: null,
+  });
 
   return (
     <div className="bg-secondary-300">
