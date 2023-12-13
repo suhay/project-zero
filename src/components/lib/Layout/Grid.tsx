@@ -11,7 +11,7 @@ export function Grid({
   const b = `basis-1/${numberOf}`;
 
   return (
-    <div className={`flex ${className}`}>
+    <div className={`flex p-3 ${className}`}>
       {children.map((col, i) => (
         <div
           key={i}

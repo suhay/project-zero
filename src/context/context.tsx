@@ -1,7 +1,8 @@
 "use client";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 
-import { ProductDetails, STATUS } from "@/constants";
+import { STATUS } from "@/constants";
+import { Models } from "appwrite";
 
 type CategoryStatus = {
   category: string;
@@ -75,10 +76,11 @@ export const SubCategoryStatusProvider = ({
 type PantryProduct = {
   key: {
     key: string;
-    product: ProductDetails[];
-    status: string;
+    product: Models.Document;
+    status?: string;
   };
-  value: ProductDetails;
+  value: Models.Document;
+  status?: string;
 };
 
 type PantryContextType = {

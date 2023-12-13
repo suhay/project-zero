@@ -47,8 +47,9 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ userName }) => {
             sx={{
               width: 32,
               height: 32,
-              backgroundColor: "#8c9983",
+              backgroundColor: "#e9ffdb",
               marginRight: 3,
+              color: "#172a28",
             }}
           >
             {userName[0]}
