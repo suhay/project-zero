@@ -11,20 +11,12 @@ import { Card } from "@/src/components/lib/Card";
 const Profile = () => {
   const router = useRouter();
   const [, setSelectedCategory] = useState("");
-  const { userProfile, loading } = useUserData({});
+  const { userProfile } = useUserData({});
 
   const chooseCategory = (category: string) => {
     setSelectedCategory(category);
     router.push(`/profile/product/${category.toLowerCase()}`);
   };
-
-  if (loading) {
-    return (
-      <div className="mx-auto py-6">
-        <h2>Loading...</h2>
-      </div>
-    );
-  }
 
   return (
     <div className="profile relative">

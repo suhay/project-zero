@@ -7,6 +7,8 @@ import { RaiseAwareness } from "@/src/components/LandingPage/RaiseAwareness";
 import { FosterCommunity } from "@/src/components/LandingPage/FosterCommunity";
 import { Goals } from "@/src/components/LandingPage/Goals";
 import { Feed } from "@/src/components/Community/Feed";
+import { AnneMarieBonneau } from "@/src/components/Quotes/AnneMarieBonneau";
+import { AlphaTesterForm } from "@/src/components/SignupForms/AlphaTester";
 
 function HeroWrapper(props: { children: React.ReactNode }) {
   return (
@@ -18,7 +20,7 @@ function HeroWrapper(props: { children: React.ReactNode }) {
 
 const Home = () => {
   return (
-    <div data-testId="home-page">
+    <div data-testid="home-page">
       <HeroWrapper>
         <Image
           src="/assets/home.png"
@@ -51,16 +53,9 @@ const Home = () => {
         <RaiseAwareness />
         <FosterCommunity />
       </div>
-      <div className="w-screen bg-primary-500 h-96 flex items-center justify-center flex-col">
-        <blockquote className="container text-white font-bold text-2xl">
-          We don’t need a handful of people doing zero waste perfectly. We need
-          millions of people doing it imperfectly.
-        </blockquote>
-        <div className="container text-right text-white text-2xl italic">
-          ~Anne-Marie Bonneau
-        </div>
-      </div>
+      <AnneMarieBonneau />
       <Goals />
+      <AlphaTesterForm />
       <Feed />
     </div>
   );

@@ -1,8 +1,12 @@
+import { LogoColor } from "./Logo/LogoColor";
+
 export function Footer() {
   return (
     <footer className="bg-gray-100">
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="flex justify-center text-teal-600">LOGO</div>
+        <div className="flex justify-center">
+          <LogoColor />
+        </div>
         <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">
           Creating a central point of information, education, and management to
           aid people in their journey towards zero-waste.
@@ -43,7 +47,7 @@ export function Footer() {
           </li>
         </ul>
 
-        <ul className="mt-12 flex justify-center gap-6 md:gap-8">
+        {/* <ul className="mt-12 flex justify-center gap-6 md:gap-8">
           <li>
             <a
               href="/"
@@ -154,7 +158,7 @@ export function Footer() {
               </svg>
             </a>
           </li>
-        </ul>
+        </ul> */}
       </div>
     </footer>
   );
