@@ -15,6 +15,7 @@ import {
   PantryProductProvider,
   SubCategoryStatusProvider,
 } from "@/src/context/context";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 export const metadata: Metadata = {
   title: "ZeroIn",
@@ -30,17 +31,21 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     >
       <body>
         <ThemeRegistry>
-          <CategoryStatusProvider>
-            <SubCategoryStatusProvider>
-              <PantryProductProvider>
-                <Navigation />
-                <main className="min-h-[calc(100vh-398px-24px)]">
-                  {children}
-                </main>
-                <Footer />
-              </PantryProductProvider>
-            </SubCategoryStatusProvider>
-          </CategoryStatusProvider>
+          <GoogleReCaptchaProvider
+            reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_V3 ?? ""}
+          >
+            <CategoryStatusProvider>
+              <SubCategoryStatusProvider>
+                <PantryProductProvider>
+                  <Navigation />
+                  <main className="min-h-[calc(100vh-398px-24px)]">
+                    {children}
+                  </main>
+                  <Footer />
+                </PantryProductProvider>
+              </SubCategoryStatusProvider>
+            </CategoryStatusProvider>
+          </GoogleReCaptchaProvider>
         </ThemeRegistry>
       </body>
     </html>

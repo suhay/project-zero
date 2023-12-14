@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 import { Input } from "~/Form/Input";
 import { Button } from "~/Button";
@@ -11,11 +12,11 @@ import { Layout } from "../lib/Layout";
 
 type Input = {
   email: string;
-  b_2de017cc5896a770dd4853b99_6c0ae287ae: string;
 };
 
 export function AlphaTesterForm() {
   const { register, handleSubmit } = useForm<Input>();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [alreadySignedUp, setAlreadySignedUp] = useState(true);
   const [justSignup, setJustSignedUp] = useState(false);
@@ -28,10 +29,22 @@ export function AlphaTesterForm() {
     }
   }, []);
 
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      return;
+    }
+
+    return await executeRecaptcha("alpha-submit");
+  }, [executeRecaptcha]);
+
   const onSubmit: SubmitHandler<Input> = async (data) => {
     setIsLoading(true);
+    const token = await handleReCaptchaVerify();
     executeFunction(process.env.NEXT_PUBLIC_APPWRITE_MAILCHIMP_FUNCTION ?? "", {
-      message: data,
+      message: {
+        ...data,
+        token,
+      },
     })
       .then(() => {
         setJustSignedUp(true);
@@ -69,12 +82,6 @@ export function AlphaTesterForm() {
                   placeholder="Email"
                   autoComplete="off"
                   {...register("email", { required: "Email is required" })}
-                />
-                <input
-                  type="text"
-                  tabIndex={-1}
-                  value=""
-                  {...register("b_2de017cc5896a770dd4853b99_6c0ae287ae")}
                 />
                 <Button.Simple
                   type="submit"
