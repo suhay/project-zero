@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 import { Button } from "@/src/components/lib/Button";
@@ -9,6 +11,7 @@ import { Goals } from "@/src/components/LandingPage/Goals";
 import { Feed } from "@/src/components/Community/Feed";
 import { AnneMarieBonneau } from "@/src/components/Quotes/AnneMarieBonneau";
 import { AlphaTesterForm } from "@/src/components/SignupForms/AlphaTester";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 function HeroWrapper(props: { children: React.ReactNode }) {
   return (
@@ -20,44 +23,52 @@ function HeroWrapper(props: { children: React.ReactNode }) {
 
 const Home = () => {
   return (
-    <div data-testid="home-page">
-      <HeroWrapper>
-        <Image
-          src="/assets/home.png"
-          alt=""
-          priority
-          style={{
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
-          fill
-          className="absolute inset-x-0 -z-10 transform-gpu overflow-hidden sm:-top-80"
-        />
-        <Layout.Grid
-          className="h-1/2 items-center container mx-auto"
-          basis={["basis-2/3", "basis-1/3"]}
-        >
-          <div className="text-left">
-            <h1 className="display">Start your zero-waste journey with us!</h1>
-            <p>The hardest part is knowing where to begin, but we can help.</p>
-            <div className="mt-2 flex items-center justify-start gap-x-6">
-              <Button.Link label="Get Started" href="/signup" />
-              <Button.LearnMore href="/" />
+    <GoogleReCaptchaProvider
+      reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_V3 ?? ""}
+    >
+      <div data-testid="home-page">
+        <HeroWrapper>
+          <Image
+            src="/assets/home.png"
+            alt=""
+            priority
+            style={{
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
+            fill
+            className="absolute inset-x-0 -z-10 transform-gpu overflow-hidden sm:-top-80"
+          />
+          <Layout.Grid
+            className="h-1/2 items-center container mx-auto"
+            basis={["basis-2/3", "basis-1/3"]}
+          >
+            <div className="text-left">
+              <h1 className="display">
+                Start your zero-waste journey with us!
+              </h1>
+              <p>
+                The hardest part is knowing where to begin, but we can help.
+              </p>
+              <div className="mt-2 flex items-center justify-start gap-x-6">
+                <Button.Link label="Get Started" href="/signup" />
+                <Button.LearnMore href="/" />
+              </div>
             </div>
-          </div>
-          <Layout.Spacer />
-        </Layout.Grid>
-      </HeroWrapper>
-      <div className="container mx-auto">
-        <ReduceWaste />
-        <RaiseAwareness />
-        <FosterCommunity />
+            <Layout.Spacer />
+          </Layout.Grid>
+        </HeroWrapper>
+        <div className="container mx-auto">
+          <ReduceWaste />
+          <RaiseAwareness />
+          <FosterCommunity />
+        </div>
+        <AnneMarieBonneau />
+        <Goals />
+        <AlphaTesterForm />
+        <Feed />
       </div>
-      <AnneMarieBonneau />
-      <Goals />
-      <AlphaTesterForm />
-      <Feed />
-    </div>
+    </GoogleReCaptchaProvider>
   );
 };
 
