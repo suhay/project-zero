@@ -19,8 +19,8 @@ const Sidebar: React.FC<SidebarParams> = ({ isShown, toggle }) => {
         isShown
           ? "w-full opacity-100 transition-opacity top-0"
           : isSmallScreen
-          ? "w-full opacity-100 transition-opacity top-0"
-          : "hidden"
+            ? "w-full opacity-100 transition-opacity top-0"
+            : "hidden"
       }`}
       data-testid="sidebar"
     >

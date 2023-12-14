@@ -30,7 +30,9 @@ export function AlphaTesterForm() {
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
     setIsLoading(true);
-    executeFunction("6578f61cea56839c8b62", { message: data })
+    executeFunction(process.env.NEXT_PUBLIC_APPWRITE_MAILCHIMP_FUNCTION ?? "", {
+      message: data,
+    })
       .then(() => {
         setJustSignedUp(true);
         localStorage.setItem("alphatester", "true");
@@ -70,9 +72,9 @@ export function AlphaTesterForm() {
                 />
                 <input
                   type="text"
-                  name="b_2de017cc5896a770dd4853b99_6c0ae287ae"
                   tabIndex={-1}
                   value=""
+                  {...register("b_2de017cc5896a770dd4853b99_6c0ae287ae")}
                 />
                 <Button.Simple
                   type="submit"
