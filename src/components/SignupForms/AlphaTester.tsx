@@ -34,7 +34,7 @@ export function AlphaTesterForm() {
       return;
     }
 
-    return await executeRecaptcha("alpha-submit");
+    return await executeRecaptcha("alphaSubmit");
   }, [executeRecaptcha]);
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
