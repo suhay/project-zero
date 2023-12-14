@@ -2,12 +2,15 @@
 import { useCallback, useEffect, useState } from "react";
 
 import Image from "next/image";
+import {
+  GoogleReCaptchaProvider,
+  useGoogleReCaptcha,
+} from "react-google-recaptcha-v3";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
-import { Input } from "~/Form/Input";
-import { Button } from "~/Button";
 import { executeFunction } from "@/src/utils/functions";
+import { Button } from "~/Button";
+import { Input } from "~/Form/Input";
 import { Layout } from "../lib/Layout";
 
 type Input = {
@@ -63,52 +66,56 @@ export function AlphaTesterForm() {
   }
 
   return (
-    <div className="container mx-auto">
-      <Layout.Grid className="items-center snap-start h-[512px] my-8">
-        <section>
-          {!justSignup && (
-            <>
-              <h2>Become an Alpha tester!</h2>
-              <form
-                className="mb-0 mt-6 space-y-4 p-4 sm:p-6 lg:p-8"
-                onSubmit={handleSubmit(onSubmit)}
-              >
+    <GoogleReCaptchaProvider
+      reCaptchaKey={process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_V3 ?? ""}
+    >
+      <div className="container mx-auto">
+        <Layout.Grid className="items-center snap-start h-[512px] my-8">
+          <section>
+            {!justSignup && (
+              <>
+                <h2>Become an Alpha tester!</h2>
+                <form
+                  className="mb-0 mt-6 space-y-4 p-4 sm:p-6 lg:p-8"
+                  onSubmit={handleSubmit(onSubmit)}
+                >
+                  <p className="text-center text-lg font-medium">
+                    Let's break some things and earn points doing it!
+                  </p>
+                  <Input
+                    label="Email"
+                    type="email"
+                    placeholder="Email"
+                    autoComplete="off"
+                    {...register("email", { required: "Email is required" })}
+                  />
+                  <Button.Simple
+                    type="submit"
+                    label="Sign up"
+                    isLoading={isLoading}
+                  />
+                </form>
+              </>
+            )}
+            {justSignup && (
+              <div className="text-center">
                 <p className="text-center text-lg font-medium">
-                  Let's break some things and earn points doing it!
+                  Thanks for signing up! We’ll be in touch soon.
                 </p>
-                <Input
-                  label="Email"
-                  type="email"
-                  placeholder="Email"
-                  autoComplete="off"
-                  {...register("email", { required: "Email is required" })}
-                />
-                <Button.Simple
-                  type="submit"
-                  label="Sign up"
-                  isLoading={isLoading}
-                />
-              </form>
-            </>
-          )}
-          {justSignup && (
-            <div className="text-center">
-              <p className="text-center text-lg font-medium">
-                Thanks for signing up! We’ll be in touch soon.
-              </p>
-            </div>
-          )}
-        </section>
-        <section className="flex justify-center">
-          <Image
-            src="/assets/local-scoop.jpg"
-            alt={""}
-            width={512}
-            height={512}
-          />
-        </section>
-      </Layout.Grid>
-      <div className="flex border border-gray-600" />
-    </div>
+              </div>
+            )}
+          </section>
+          <section className="flex justify-center">
+            <Image
+              src="/assets/local-scoop.jpg"
+              alt={""}
+              width={512}
+              height={512}
+            />
+          </section>
+        </Layout.Grid>
+        <div className="flex border border-gray-600" />
+      </div>
+    </GoogleReCaptchaProvider>
   );
 }
